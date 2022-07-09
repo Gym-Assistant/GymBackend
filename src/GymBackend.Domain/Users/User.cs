@@ -30,4 +30,9 @@ public class User : IdentityUser<Guid>
     /// not valid. Must be in UTC format.
     /// </summary>
     public DateTime LastTokenResetAt { get; set; } = DateTime.UtcNow;
+
+    /// <summary>
+    /// User characteristics.
+    /// </summary>
+    public ICollection<UserCharacteristic> Characteristics { get; set; }
 }

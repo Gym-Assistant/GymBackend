@@ -14,6 +14,16 @@ public interface IAppDbContext : IDisposable
     DbSet<User> Users { get; }
 
     /// <summary>
+    /// User characteristic set.
+    /// </summary>
+    DbSet<UserCharacteristic> UserCharacteristics { get; }
+
+    /// <summary>
+    /// Characteristic stamp.
+    /// </summary>
+    DbSet<CharacteristicStamp> CharacteristicStamps { get; }
+
+    /// <summary>
     /// Save pending changes.
     /// </summary>
     /// <param name="cancellationToken">Token to cancel the request.</param>

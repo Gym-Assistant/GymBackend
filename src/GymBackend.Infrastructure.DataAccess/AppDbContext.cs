@@ -10,10 +10,19 @@ namespace GymBackend.Infrastructure.DataAccess;
 /// </summary>
 public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IAppDbContext
 {
+    #region Characteristic
+
+    /// <inheritdoc />
+    public DbSet<UserCharacteristic> UserCharacteristics { get; private set; }
+
+    /// <inheritdoc />
+    public DbSet<CharacteristicStamp> CharacteristicStamps { get; private set; }
+
+    #endregion
+
     /// <summary>
     /// Constructor.
     /// </summary>
-    /// <param name="options">The options to be used by a <see cref="Microsoft.EntityFrameworkCore.DbContext" />.</param>
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
@@ -22,5 +31,21 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<UserCharacteristic>()
+            .HasOne(p => p.User)
+            .WithMany(p => p.Characteristics)
+            .HasForeignKey(p => p.UserId);
+
+        modelBuilder.Entity<UserCharacteristic>()
+            .HasIndex(p => p.UserId);
+
+        modelBuilder.Entity<CharacteristicStamp>()
+            .HasOne(p => p.UserCharacteristic)
+            .WithMany(p => p.Values)
+            .HasForeignKey(p => p.UserCharacteristicId);
+
+        modelBuilder.Entity<CharacteristicStamp>()
+            .HasIndex(p => p.UserCharacteristicId);
     }
 }
