@@ -1,4 +1,4 @@
-using GymBackend.UseCases.Users.Common.Dtos;
+using GymBackend.UseCases.Common.Dtos.Dtos;
 
 namespace GymBackend.UseCases.Users.GetUserById;
 

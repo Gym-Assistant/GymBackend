@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using GymBackend.UseCases.Common.Dtos.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using GymBackend.UseCases.Users.AuthenticateUser;
-using GymBackend.UseCases.Users.Common.Dtos;
 using GymBackend.UseCases.Users.GetUserById;
 using GymBackend.Web.Infrastructure.Web;
 
@@ -70,6 +70,7 @@ public class AuthController : ControllerBase
         };
         return await mediator.Send(query, cancellationToken);
     }
+
 
     #endregion Authentication
 }
