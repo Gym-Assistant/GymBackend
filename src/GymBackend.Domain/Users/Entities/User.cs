@@ -12,14 +12,12 @@ public class User : IdentityUser<Guid>
     /// First name.
     /// </summary>
     [MaxLength(255)]
-    [Required]
     public string FirstName { get; set; }
 
     /// <summary>
     /// Last name.
     /// </summary>
     [MaxLength(255)]
-    [Required]
     public string LastName { get; set; }
 
     /// <summary>
