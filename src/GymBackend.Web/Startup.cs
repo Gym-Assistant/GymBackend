@@ -60,7 +60,7 @@ public class Startup
         services.AddIdentity<Domain.Users.Entities.User, Domain.Users.Entities.AppIdentityRole>(options =>
             {
                 // off all required in password in Identity Settings
-                options.Password.RequiredLength = 5;
+                options.Password.RequiredLength = 3;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
