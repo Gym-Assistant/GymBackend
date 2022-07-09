@@ -1,6 +1,6 @@
 using AutoMapper;
+using GymBackend.Domain.Users;
 using MediatR;
-using GymBackend.Domain.Users.Entities;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using Saritasa.Tools.EFCore;
 

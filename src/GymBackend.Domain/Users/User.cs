@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
-namespace GymBackend.Domain.Users.Entities;
+namespace GymBackend.Domain.Users;
 
 /// <summary>
 /// Custom application user entity.

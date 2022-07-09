@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using GymBackend.Domain.Users.Entities;
+﻿using GymBackend.Domain.Users;
+using Microsoft.EntityFrameworkCore;
 
 namespace GymBackend.Infrastructure.Abstractions.Interfaces;
 

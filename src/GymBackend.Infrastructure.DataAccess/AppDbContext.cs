@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using GymBackend.Domain.Users;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using GymBackend.Domain.Users.Entities;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 
 namespace GymBackend.Infrastructure.DataAccess;

@@ -1,4 +1,4 @@
-﻿using GymBackend.Domain.Users.Entities;
+﻿using GymBackend.Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;

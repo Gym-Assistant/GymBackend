@@ -1,5 +1,5 @@
 using AutoMapper;
-using GymBackend.Domain.Users.Entities;
+using GymBackend.Domain.Users;
 using GymBackend.UseCases.Common.Dtos.Dtos;
 
 namespace GymBackend.UseCases.Users;

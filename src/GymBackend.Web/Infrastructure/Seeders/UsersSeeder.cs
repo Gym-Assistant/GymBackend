@@ -1,6 +1,6 @@
 using Bogus;
+using GymBackend.Domain.Users;
 using Microsoft.AspNetCore.Identity;
-using GymBackend.Domain.Users.Entities;
 
 namespace GymBackend.Web.Infrastructure.Seeders;
 

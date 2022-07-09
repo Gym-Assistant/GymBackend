@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using GymBackend.Domain.Users;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.AspNetCore.Identity;
-using GymBackend.Domain.Users.Entities;
 
 namespace GymBackend.Web.Commands;
 

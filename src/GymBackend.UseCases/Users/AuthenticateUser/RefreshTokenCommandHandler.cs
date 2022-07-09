@@ -1,7 +1,7 @@
 using System.Security.Claims;
+using GymBackend.Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using GymBackend.Domain.Users.Entities;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using Saritasa.Tools.Domain.Exceptions;
 
