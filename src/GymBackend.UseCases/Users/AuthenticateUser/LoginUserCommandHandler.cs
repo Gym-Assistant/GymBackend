@@ -36,7 +36,7 @@ internal class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Login
     {
         // Password sign in.
         var result = await signInManager.PasswordSignInAsync(request.Email, request.Password,
-            lockoutOnFailure: false, isPersistent: request.RememberMe);
+            lockoutOnFailure: false, isPersistent: false);
         ValidateSignInResult(result, request.Email);
 
         // Get user and log.
