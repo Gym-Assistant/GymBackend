@@ -21,5 +21,11 @@
     "Port": "{{smtpPort}}",
     "UseSsl": "{{smtpSsl}}",
     "FromAddress": "{{smtpFrom}}"
+  },
+  "Authorization": {
+    "Vk": {
+      "AppId": "secrete_key",
+      "AppSecret": "secrete_key"
+    }
   }
 }
