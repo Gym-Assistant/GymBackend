@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using AutoMapper.Configuration.Annotations;
 using MediatR;
 
 namespace GymBackend.UseCases.Users.UpdateUserProfile;

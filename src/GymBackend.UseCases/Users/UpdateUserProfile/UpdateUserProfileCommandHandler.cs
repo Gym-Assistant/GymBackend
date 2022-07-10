@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using GymBackend.Domain.Users;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;

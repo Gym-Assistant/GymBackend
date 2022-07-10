@@ -2,7 +2,6 @@ using AutoMapper;
 using GymBackend.Domain.Users;
 using MediatR;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
-using GymBackend.UseCases.Common.Dtos;
 using GymBackend.UseCases.Common.Dtos.User;
 using Saritasa.Tools.EFCore;
 
