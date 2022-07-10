@@ -1,4 +1,4 @@
-namespace GymBackend.UseCases.Common.Dtos.Dtos;
+namespace GymBackend.UseCases.Common.Dtos.User;
 
 /// <summary>
 /// User DTO.

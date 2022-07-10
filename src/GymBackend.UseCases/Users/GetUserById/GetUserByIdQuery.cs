@@ -1,3 +1,5 @@
+using GymBackend.UseCases.Common.Dtos;
+using GymBackend.UseCases.Common.Dtos.User;
 using MediatR;
 
 namespace GymBackend.UseCases.Users.GetUserById;
