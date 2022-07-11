@@ -19,6 +19,9 @@ public class UserMappingProfile : Profile
         CreateMap<User, UserDto>();
         CreateMap<User, UserDetailsDto>();
         CreateMap<User, UserProfileDto>();
+        CreateMap<CharacteristicStamp, CharacteristicStampDto>();
+        CreateMap<UserCharacteristic, UserCharacteristicDto>();
+        CreateMap<UserCharacteristic, UserCharacteristicLiteDto>();
 
         // Command -> Entity.
         CreateMap<UpdateUserProfileCommand, User>();

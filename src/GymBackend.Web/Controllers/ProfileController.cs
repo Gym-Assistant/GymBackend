@@ -32,7 +32,7 @@ public class ProfileController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>User profile.</returns>
     [HttpGet("{userId}")]
-    public async Task<UserProfileDto> Get(Guid userId, CancellationToken cancellationToken) =>
+    public async Task<UserProfileDto> GetUserProfileById(Guid userId, CancellationToken cancellationToken) =>
         await mediator.Send(new GetUserProfileByUserIdQuery(userId), cancellationToken);
 
     /// <summary>
@@ -43,7 +43,7 @@ public class ProfileController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPut("{userId}")]
     [Authorize]
-    public async Task Put(UpdateUserProfileCommand command, Guid userId, CancellationToken cancellationToken)
+    public async Task UpdateProfile(UpdateUserProfileCommand command, Guid userId, CancellationToken cancellationToken)
     {
         command = command with
         {
