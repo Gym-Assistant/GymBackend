@@ -1,4 +1,5 @@
 using GymBackend.UseCases.Common.Dtos.User;
+using GymBackend.UseCases.Users.ActivateCharacteristicById;
 using GymBackend.UseCases.Users.AddNewCharacteristicValue;
 using GymBackend.UseCases.Users.CreateUserCharacteristic;
 using GymBackend.UseCases.Users.DeleteCharacteristicValuesById;
@@ -52,6 +53,25 @@ public class UserCharacteristicController : ControllerBase
         command = command with
         {
             UserId = userId
+        };
+        await mediator.Send(command, cancellationToken);
+    }
+
+    /// <summary>
+    /// Update characteristic status.
+    /// </summary>
+    /// <param name="userId">User id.</param>
+    /// <param name="characteristicId">Characteristic Id.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>User profile.</returns>
+    [HttpPut("{characteristicId}")]
+    [Authorize]
+    public async Task UpdateCharacteristicStatus(Guid userId, Guid characteristicId, CancellationToken cancellationToken)
+    {
+        var command = new ChangeActivateStatusCharacteristicByIdCommand()
+        {
+            UserId = userId,
+            CharacteristicId = characteristicId
         };
         await mediator.Send(command, cancellationToken);
     }
