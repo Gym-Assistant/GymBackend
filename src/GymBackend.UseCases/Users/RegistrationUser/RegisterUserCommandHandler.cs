@@ -1,4 +1,4 @@
-﻿using GymBackend.Domain.Users.Entities;
+﻿using GymBackend.Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -9,7 +9,7 @@ namespace GymBackend.UseCases.Users.RegistrationUser;
 /// <summary>
 /// Handler for <see cref="RegisterUserCommand"/>.
 /// </summary>
-public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Guid>
+internal class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Guid>
 {
     private readonly UserManager<User> userManager;
     private readonly ILogger<RegisterUserCommandHandler> logger;

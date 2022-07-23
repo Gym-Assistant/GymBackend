@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using GymBackend.Domain.Users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
@@ -39,7 +40,7 @@ public class Startup
         // CORS.
         string[] frontendOrigin = null;
         // TODO: uncomment if you need to specify additional FrontendOrigins for CORS (if you have an Angular/React/etc project).
-        //frontendOrigin = Saritasa.Tools.Common.Utils.StringUtils.NullSafe(configuration["AppSettings:FrontendOrigin"])
+        // frontendOrigin = Saritasa.Tools.Common.Utils.StringUtils.NullSafe(configuration["AppSettings:FrontendOrigin"])
         //        .Split(';', StringSplitOptions.RemoveEmptyEntries);
         services.AddCors(new CorsOptionsSetup(
             environment.IsDevelopment(),
@@ -57,7 +58,7 @@ public class Startup
         services.Configure<ApiBehaviorOptions>(new ApiBehaviorOptionsSetup().Setup);
 
         // Identity.
-        services.AddIdentity<Domain.Users.Entities.User, Domain.Users.Entities.AppIdentityRole>(options =>
+        services.AddIdentity<User, AppIdentityRole>(options =>
             {
                 // off all required in password in Identity Settings
                 options.Password.RequiredLength = 3;

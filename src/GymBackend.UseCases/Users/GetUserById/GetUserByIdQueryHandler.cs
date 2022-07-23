@@ -1,7 +1,8 @@
 using AutoMapper;
+using GymBackend.Domain.Users;
 using MediatR;
-using GymBackend.Domain.Users.Entities;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
+using GymBackend.UseCases.Common.Dtos.User;
 using Saritasa.Tools.EFCore;
 
 namespace GymBackend.UseCases.Users.GetUserById;

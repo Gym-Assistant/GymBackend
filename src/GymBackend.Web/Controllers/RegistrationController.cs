@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using GymBackend.UseCases.Users.AddDefaultCharacteristicForUser;
 using GymBackend.UseCases.Users.RegistrationUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,7 @@ public class RegistrationController
     [ProducesResponseType(400)]
     public async Task Register([Required] RegisterUserCommand command, CancellationToken cancellationToken)
     {
-        await mediator.Send(command, cancellationToken);
+        var userId = await mediator.Send(command, cancellationToken);
+        await mediator.Send(new AddDefaultCharacteristicForUserCommand(userId), cancellationToken);
     }
 }

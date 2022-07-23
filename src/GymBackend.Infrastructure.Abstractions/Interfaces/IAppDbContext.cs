@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using GymBackend.Domain.Users.Entities;
+﻿using GymBackend.Domain.Users;
+using Microsoft.EntityFrameworkCore;
 
 namespace GymBackend.Infrastructure.Abstractions.Interfaces;
 
@@ -12,6 +12,16 @@ public interface IAppDbContext : IDisposable
     /// Users.
     /// </summary>
     DbSet<User> Users { get; }
+
+    /// <summary>
+    /// User characteristic set.
+    /// </summary>
+    DbSet<UserCharacteristic> UserCharacteristics { get; }
+
+    /// <summary>
+    /// Characteristic stamp.
+    /// </summary>
+    DbSet<CharacteristicStamp> CharacteristicStamps { get; }
 
     /// <summary>
     /// Save pending changes.

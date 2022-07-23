@@ -1,6 +1,7 @@
 using AutoMapper;
-using GymBackend.Domain.Users.Entities;
-using GymBackend.UseCases.Common.Dtos.Dtos;
+using GymBackend.Domain.Users;
+using GymBackend.UseCases.Common.Dtos.User;
+using GymBackend.UseCases.Users.UpdateUserProfile;
 
 namespace GymBackend.UseCases.Users;
 
@@ -14,6 +15,15 @@ public class UserMappingProfile : Profile
     /// </summary>
     public UserMappingProfile()
     {
+        // Entity -> Dto.
         CreateMap<User, UserDto>();
+        CreateMap<User, UserDetailsDto>();
+        CreateMap<User, UserProfileDto>();
+        CreateMap<CharacteristicStamp, CharacteristicStampDto>();
+        CreateMap<UserCharacteristic, UserCharacteristicDto>();
+        CreateMap<UserCharacteristic, UserCharacteristicLiteDto>();
+
+        // Command -> Entity.
+        CreateMap<UpdateUserProfileCommand, User>();
     }
 }
