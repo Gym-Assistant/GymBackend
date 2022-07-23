@@ -20,7 +20,7 @@ public record CharacteristicStampDto
     /// <summary>
     /// Characteristic.
     /// </summary>
-    public UserCharacteristicLiteDto UserCharacteristicLite { get; init; }
+    public UserCharacteristicLiteDto UserCharacteristic { get; init; }
 
     /// <summary>
     /// When its characteristic created.
@@ -30,5 +30,5 @@ public record CharacteristicStampDto
     /// <summary>
     /// Value.
     /// </summary>
-    public float Value { get; init; }
+    public double Value { get; init; }
 }

@@ -1,12 +1,11 @@
-using GymBackend.Domain.Users;
+﻿using GymBackend.Domain.Users;
 
 namespace GymBackend.UseCases.Common.Dtos.User;
 
 /// <summary>
-/// Lite dto for <see cref="UserCharacteristic"/>.
-/// This dto doesn't contain collection of characteristic values.
+/// Dto for <see cref="UserCharacteristic"/>.
 /// </summary>
-public record UserCharacteristicLiteDto
+public record UserCharacteristicDto
 {
     /// <summary>
     /// Id.
@@ -22,4 +21,14 @@ public record UserCharacteristicLiteDto
     /// Characteristic active status.
     /// </summary>
     public bool IsActive { get; init; }
+
+    /// <summary>
+    /// Values of characteristic.
+    /// </summary>
+    public ICollection<CharacteristicStampDto> Values { get; init; }
+
+    /// <summary>
+    /// When characteristic created.
+    /// </summary>
+    public DateTime CreatedAt { get; init; }
 }

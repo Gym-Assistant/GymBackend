@@ -31,5 +31,5 @@ public record CharacteristicStamp
     /// <summary>
     /// Value.
     /// </summary>
-    public float Value { get; init; }
+    public double Value { get; init; }
 }
