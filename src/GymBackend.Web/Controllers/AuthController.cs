@@ -71,6 +71,5 @@ public class AuthController : ControllerBase
         return await mediator.Send(query, cancellationToken);
     }
 
-
     #endregion Authentication
 }

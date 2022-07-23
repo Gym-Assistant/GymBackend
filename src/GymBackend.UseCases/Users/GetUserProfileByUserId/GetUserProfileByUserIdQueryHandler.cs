@@ -28,5 +28,4 @@ internal class GetUserProfileByUserIdQueryHandler : BaseQueryHandler, IRequestHa
 
         return userProfileDto;
     }
-
 }

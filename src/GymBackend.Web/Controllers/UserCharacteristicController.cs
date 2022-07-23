@@ -109,7 +109,6 @@ public class UserCharacteristicController : ControllerBase
         return await mediator.Send(query, cancellationToken);
     }
 
-
     /// <summary>
     /// Delete characteristic stamp.
     /// </summary>

@@ -92,6 +92,10 @@ public static class DefaultCharacteristics
 
     #endregion
 
+    /// <summary>
+    /// Get all default characteristics.
+    /// </summary>
+    /// <returns>All default characteristics.</returns>
     public static IEnumerable<string> GetAll()
     {
         return new[]

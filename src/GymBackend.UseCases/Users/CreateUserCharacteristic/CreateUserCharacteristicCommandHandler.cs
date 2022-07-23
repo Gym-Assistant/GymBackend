@@ -14,11 +14,11 @@ internal class CreateUserCharacteristicCommandHandler : BaseCommandHandler,
     IRequestHandler<CreateUserCharacteristicCommand, Guid>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
-    
+
     /// <summary>
     /// Constructor.
     /// </summary>
-    public CreateUserCharacteristicCommandHandler(IMapper mapper, IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor) 
+    public CreateUserCharacteristicCommandHandler(IMapper mapper, IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor)
         : base(mapper, dbContext)
     {
         this.loggedUserAccessor = loggedUserAccessor;
