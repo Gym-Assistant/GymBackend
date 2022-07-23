@@ -6,22 +6,22 @@ using GymBackend.UseCases.Common.Dtos.User;
 using MediatR;
 using Saritasa.Tools.EFCore;
 
-namespace GymBackend.UseCases.Users.GetAllValuesForCharacteristic;
+namespace GymBackend.UseCases.Users.GetAllVCharacteristicStamps;
 
 /// <summary>
-/// Handler for <see cref="GetAllValuesForCharacteristicQuery"/>.
+/// Handler for <see cref="GetAllCharacteristicStampsQuery"/>.
 /// </summary>
-public class GetAllValuesForCharacteristicQueryHandler : BaseQueryHandler, IRequestHandler<GetAllValuesForCharacteristicQuery, IEnumerable<CharacteristicStampDto>>
+internal class GetAllVCharacteristicStampsQueryHandler : BaseQueryHandler, IRequestHandler<GetAllCharacteristicStampsQuery, IEnumerable<CharacteristicStampDto>>
 {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetAllValuesForCharacteristicQueryHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
+    public GetAllVCharacteristicStampsQueryHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
     {
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<CharacteristicStampDto>> Handle(GetAllValuesForCharacteristicQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<CharacteristicStampDto>> Handle(GetAllCharacteristicStampsQuery request, CancellationToken cancellationToken)
     {
         var userCharacteristicDto = await DbContext.UserCharacteristics.ProjectTo<UserCharacteristicDto>(Mapper.ConfigurationProvider)
             .GetAsync(dto => dto.IsActive == true && dto.Id == request.CharacteristicId, cancellationToken);

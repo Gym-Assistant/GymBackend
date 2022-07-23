@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace GymBackend.UseCases.Users.DeleteCharacteristicValuesById;
+namespace GymBackend.UseCases.Users.DeleteCharacteristicStampById;
 
 /// <summary>
 /// Delete characteristic value by id.
@@ -8,4 +8,4 @@ namespace GymBackend.UseCases.Users.DeleteCharacteristicValuesById;
 /// <param name="UserId">UserId.</param>
 /// <param name="CharacteristicId">Characteristic Id.</param>
 /// <param name="CharacteristicStampId">Characteristic Stamp Id.</param>
-public record DeleteCharacteristicValuesByIdCommand(Guid UserId, Guid CharacteristicId, Guid CharacteristicStampId) : IRequest;
+public record DeleteCharacteristicStampByIdCommand(Guid UserId, Guid CharacteristicId, Guid CharacteristicStampId) : IRequest;

@@ -34,7 +34,7 @@ public record UserCharacteristic
     public bool IsActive { get; init; }
 
     /// <summary>
-    /// Values of characteristic.
+    /// Characteristic stamps.
     /// </summary>
     public ICollection<CharacteristicStamp> Values { get; init; }
 

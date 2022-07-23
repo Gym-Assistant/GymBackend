@@ -6,22 +6,22 @@ using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Saritasa.Tools.EFCore;
 
-namespace GymBackend.UseCases.Users.DeleteCharacteristicValuesById;
+namespace GymBackend.UseCases.Users.DeleteCharacteristicStampById;
 
 /// <summary>
-/// Handler for <see cref="DeleteCharacteristicValuesByIdCommand"/>.
+/// Handler for <see cref="DeleteCharacteristicStampByIdCommand"/>.
 /// </summary>
-public class DeleteCharacteristicValuesByIdCommandHandler : BaseCommandHandler, IRequestHandler<DeleteCharacteristicValuesByIdCommand, Unit>
+internal class DeleteCharacteristicStampByIdCommandHandler : BaseCommandHandler, IRequestHandler<DeleteCharacteristicStampByIdCommand, Unit>
 {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public DeleteCharacteristicValuesByIdCommandHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
+    public DeleteCharacteristicStampByIdCommandHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
     {
     }
 
     /// <inheritdoc />
-    public async Task<Unit> Handle(DeleteCharacteristicValuesByIdCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeleteCharacteristicStampByIdCommand request, CancellationToken cancellationToken)
     {
         var characteristicStamp =
             await DbContext.CharacteristicStamps

@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 using MediatR;
 
-namespace GymBackend.UseCases.Users.AddNewCharacteristicValue;
+namespace GymBackend.UseCases.Users.AddNewCharacteristicStamp;
 
 /// <summary>
 /// Add new characteristic value for some user.
 /// </summary>
-public record AddNewCharacteristicValueCommand : IRequest<Guid>
+public record AddNewCharacteristicStampCommand : IRequest<Guid>
 {
     /// <summary>
     /// User Id.

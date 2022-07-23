@@ -1,10 +1,10 @@
 using GymBackend.UseCases.Common.Dtos.User;
 using GymBackend.UseCases.Users.ActivateCharacteristicById;
-using GymBackend.UseCases.Users.AddNewCharacteristicValue;
+using GymBackend.UseCases.Users.AddNewCharacteristicStamp;
 using GymBackend.UseCases.Users.CreateUserCharacteristic;
-using GymBackend.UseCases.Users.DeleteCharacteristicValuesById;
+using GymBackend.UseCases.Users.DeleteCharacteristicStampById;
 using GymBackend.UseCases.Users.GetAllUserCharacteristicByUserId;
-using GymBackend.UseCases.Users.GetAllValuesForCharacteristic;
+using GymBackend.UseCases.Users.GetAllVCharacteristicStamps;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -85,7 +85,7 @@ public class UserCharacteristicController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPost("{characteristicId}")]
     [Authorize]
-    public async Task<Guid> AddNewValue(Guid userId, Guid characteristicId, AddNewCharacteristicValueCommand command, CancellationToken cancellationToken)
+    public async Task<Guid> AddNewCharacteristicStamp(Guid userId, Guid characteristicId, AddNewCharacteristicStampCommand command, CancellationToken cancellationToken)
     {
         command = command with
         {
@@ -103,9 +103,9 @@ public class UserCharacteristicController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpGet("{characteristicId}")]
     [Authorize]
-    public async Task<IEnumerable<CharacteristicStampDto>> GetAllValuesForCharacteristic(Guid userId, Guid characteristicId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<CharacteristicStampDto>> GetAllCharacteristicStamps(Guid userId, Guid characteristicId, CancellationToken cancellationToken)
     {
-        var query = new GetAllValuesForCharacteristicQuery(UserId: userId, CharacteristicId: characteristicId);
+        var query = new GetAllCharacteristicStampsQuery(UserId: userId, CharacteristicId: characteristicId);
         return await mediator.Send(query, cancellationToken);
     }
 
@@ -115,13 +115,13 @@ public class UserCharacteristicController : ControllerBase
     /// </summary>
     /// <param name="userId">User id.</param>
     /// <param name="characteristicId">Characteristic Id.</param>
-    /// <param name="characteristicStampId">Characteristic value Id.</param>
+    /// <param name="characteristicStampId">Characteristic stamp Id.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpDelete("{characteristicId}/stamp/{characteristicStampId}")]
     [Authorize]
-    public async Task DeleteValuesForCharacteristic(Guid userId, Guid characteristicId, Guid characteristicStampId, CancellationToken cancellationToken)
+    public async Task DeleteCharacteristicStamp(Guid userId, Guid characteristicId, Guid characteristicStampId, CancellationToken cancellationToken)
     {
-        var command = new DeleteCharacteristicValuesByIdCommand(userId, characteristicId, characteristicStampId);
+        var command = new DeleteCharacteristicStampByIdCommand(userId, characteristicId, characteristicStampId);
         await mediator.Send(command, cancellationToken);
     }
 }

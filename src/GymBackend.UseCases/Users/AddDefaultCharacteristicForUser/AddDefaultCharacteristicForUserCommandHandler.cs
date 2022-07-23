@@ -10,7 +10,7 @@ namespace GymBackend.UseCases.Users.AddDefaultCharacteristicForUser;
 /// <summary>
 /// Handler for <see cref="AddDefaultCharacteristicForUserCommand"/>.
 /// </summary>
-public class AddDefaultCharacteristicForUserCommandHandler : BaseCommandHandler, IRequestHandler<AddDefaultCharacteristicForUserCommand, Unit>
+internal class AddDefaultCharacteristicForUserCommandHandler : BaseCommandHandler, IRequestHandler<AddDefaultCharacteristicForUserCommand, Unit>
 {
     /// <summary>
     /// Constructor.

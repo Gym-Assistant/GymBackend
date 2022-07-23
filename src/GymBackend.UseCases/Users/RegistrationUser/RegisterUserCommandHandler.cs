@@ -9,7 +9,7 @@ namespace GymBackend.UseCases.Users.RegistrationUser;
 /// <summary>
 /// Handler for <see cref="RegisterUserCommand"/>.
 /// </summary>
-public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Guid>
+internal class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Guid>
 {
     private readonly UserManager<User> userManager;
     private readonly ILogger<RegisterUserCommandHandler> logger;

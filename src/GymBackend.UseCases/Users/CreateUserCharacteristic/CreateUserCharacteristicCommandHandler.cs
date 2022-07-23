@@ -10,7 +10,7 @@ namespace GymBackend.UseCases.Users.CreateUserCharacteristic;
 /// <summary>
 /// Handler for <see cref="CreateUserCharacteristicCommand"/>.
 /// </summary>
-public class CreateUserCharacteristicCommandHandler : BaseCommandHandler,
+internal class CreateUserCharacteristicCommandHandler : BaseCommandHandler,
     IRequestHandler<CreateUserCharacteristicCommand, Guid>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;

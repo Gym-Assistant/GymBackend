@@ -10,7 +10,7 @@ namespace GymBackend.UseCases.Users.GetUserProfileByUserId;
 /// <summary>
 /// Handler for <see cref="GetUserProfileByUserIdQuery"/>.
 /// </summary>
-public class GetUserProfileByUserIdQueryHandler : BaseQueryHandler, IRequestHandler<GetUserProfileByUserIdQuery, UserProfileDto>
+internal class GetUserProfileByUserIdQueryHandler : BaseQueryHandler, IRequestHandler<GetUserProfileByUserIdQuery, UserProfileDto>
 {
     /// <summary>
     /// Constructor.

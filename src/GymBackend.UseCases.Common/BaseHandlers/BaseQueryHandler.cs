@@ -7,7 +7,7 @@ namespace GymBackend.UseCases.Common.BaseHandlers;
 /// <summary>
 /// Base logic for query handlers.
 /// </summary>
-public class BaseQueryHandler
+public abstract class BaseQueryHandler
 {
     /// <summary>
     /// Automapper.

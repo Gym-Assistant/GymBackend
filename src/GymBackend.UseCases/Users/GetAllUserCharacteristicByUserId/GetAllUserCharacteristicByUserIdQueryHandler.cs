@@ -10,7 +10,7 @@ namespace GymBackend.UseCases.Users.GetAllUserCharacteristicByUserId;
 /// <summary>
 /// Handler for <see cref="GetAllUserCharacteristicByUserIdQuery"/>.
 /// </summary>
-public class GetAllUserCharacteristicByUserIdQueryHandler : BaseQueryHandler, IRequestHandler<GetAllUserCharacteristicByUserIdQuery, IEnumerable<UserCharacteristicLiteDto>>
+internal class GetAllUserCharacteristicByUserIdQueryHandler : BaseQueryHandler, IRequestHandler<GetAllUserCharacteristicByUserIdQuery, IEnumerable<UserCharacteristicLiteDto>>
 {
     /// <summary>
     /// Constructor.

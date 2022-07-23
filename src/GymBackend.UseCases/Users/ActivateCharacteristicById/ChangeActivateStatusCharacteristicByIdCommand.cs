@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Saritasa.Tools.Common.Utils;
 
 namespace GymBackend.UseCases.Users.ActivateCharacteristicById;
 
