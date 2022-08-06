@@ -1,4 +1,5 @@
 ﻿using GymBackend.Domain.Users;
+using GymBackend.Domain.Workouts;
 using Microsoft.EntityFrameworkCore;
 
 namespace GymBackend.Infrastructure.Abstractions.Interfaces;
@@ -22,6 +23,36 @@ public interface IAppDbContext : IDisposable
     /// Characteristic stamp.
     /// </summary>
     DbSet<CharacteristicStamp> CharacteristicStamps { get; }
+
+    /// <summary>
+    /// Workout.
+    /// </summary>
+    DbSet<Workout> Workouts { get; }
+
+    /// <summary>
+    /// Exercises.
+    /// </summary>
+    DbSet<Exercise> Exercises { get; }
+
+    /// <summary>
+    /// Training sessions.
+    /// </summary>
+    DbSet<TrainSession> TrainSessions { get; }
+
+    /// <summary>
+    /// Workout templates.
+    /// </summary>
+    DbSet<WorkoutTemplate> WorkoutTemplates { get; }
+
+    /// <summary>
+    /// Workout packages.
+    /// </summary>
+    DbSet<WorkoutPackage> WorkoutPackages { get; }
+
+    /// <summary>
+    /// Sets.
+    /// </summary>
+    DbSet<Sets> Sets { get; }
 
     /// <summary>
     /// Save pending changes.
