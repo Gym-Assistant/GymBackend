@@ -3,6 +3,7 @@ using GymBackend.Domain.Workouts;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
+using Npgsql;
 
 namespace GymBackend.Infrastructure.DataAccess;
 
@@ -46,6 +47,19 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
     public DbSet<WorkoutPackage> WorkoutPackages { get; private set; }
 
     #endregion
+
+    /// <summary>
+    /// Register enum types. Must be called before db context register.
+    /// </summary>
+    public static void RegisterTypes()
+    {
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<WorkoutStatus>();
+    }
+
+    private AppDbContext()
+    {
+        RegisterTypes();
+    }
 
     /// <summary>
     /// Constructor.
@@ -127,5 +141,12 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
 
         modelBuilder.Entity<WorkoutPackage>()
             .HasIndex(p => p.CreatedById);
+
+        SetupEnum(modelBuilder);
+    }
+
+    private void SetupEnum(ModelBuilder modelBuilder)
+    {
+        modelBuilder.HasPostgresEnum<WorkoutStatus>();
     }
 }
