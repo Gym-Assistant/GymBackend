@@ -53,12 +53,8 @@ internal class StartWorkoutCommandHandler : BaseCommandHandler, IRequestHandler<
 
         if (lastWorkout.WorkoutStatus == WorkoutStatus.InProgress)
         {
-            lastWorkout = lastWorkout with
-            {
-                WorkoutStatus = WorkoutStatus.IsOver
-            };
+            lastWorkout.WorkoutStatus = WorkoutStatus.IsOver;
 
-            DbContext.Workouts.Update(lastWorkout);
             await DbContext.SaveChangesAsync(cancellationToken);
         }
     }

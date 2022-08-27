@@ -8,7 +8,6 @@ using Saritasa.Tools.EFCore;
 
 namespace GymBackend.UseCases.Workout.GetWorkoutById;
 
-
 /// <summary>
 /// Handler for <see cref="GetWorkoutByIdQuery"/>.
 /// </summary>

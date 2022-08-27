@@ -3,7 +3,6 @@ using GymBackend.Domain.Workouts;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
-using Saritasa.Tools.Common.Utils;
 using Saritasa.Tools.Domain.Exceptions;
 using Saritasa.Tools.EFCore;
 
@@ -19,8 +18,9 @@ public class EndWorkoutCommandHandler : BaseCommandHandler, IRequestHandler<EndW
     /// <summary>
     /// Constructor.
     /// </summary>
-    public EndWorkoutCommandHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
+    public EndWorkoutCommandHandler(IMapper mapper, IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
     {
+        this.loggedUserAccessor = loggedUserAccessor;
     }
 
     /// <inheritdoc />
@@ -33,11 +33,7 @@ public class EndWorkoutCommandHandler : BaseCommandHandler, IRequestHandler<EndW
             throw new ForbiddenException("You cannot change status of this workout.");
         }
 
-        workout = workout with
-        {
-            WorkoutStatus = WorkoutStatus.IsOver
-        };
-        DbContext.Workouts.Update(workout);
+        workout.WorkoutStatus = WorkoutStatus.IsOver;
         await DbContext.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
