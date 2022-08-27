@@ -3,6 +3,7 @@ using GymBackend.Domain.Workouts;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace GymBackend.UseCases.Workout.StartWorkout;
 
@@ -40,10 +41,15 @@ internal class StartWorkoutCommandHandler : BaseCommandHandler, IRequestHandler<
 
     private async Task CloseLastWorkoutAsync(CancellationToken cancellationToken)
     {
-        var lastWorkout = DbContext.Workouts
+        var lastWorkout = await DbContext.Workouts
             .Where(w => w.CreatedById == loggedUserAccessor.GetCurrentUserId())
             .OrderByDescending(w => w.CreatedAt)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (lastWorkout == null)
+        {
+            return;
+        }
 
         if (lastWorkout.WorkoutStatus == WorkoutStatus.InProgress)
         {
