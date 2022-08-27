@@ -12,35 +12,35 @@ public record WorkoutTemplate
     /// Id.
     /// </summary>
     [Key]
-    public Guid Id { get; init; }
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Name of template.
     /// </summary>
-    public string Name { get; init; }
+    public string Name { get; set; }
 
     /// <summary>
     /// Description of template.
     /// </summary>
-    public string Description { get; init; }
+    public string Description { get; set; }
 
     /// <summary>
     /// Exercises.
     /// </summary>
-    public ICollection<Exercise> Exercises { get; init; }
+    public ICollection<Exercise> Exercises { get; set; }
 
     /// <summary>
     /// User Id.
     /// </summary>
-    public Guid CreatedById { get; init; }
+    public Guid CreatedById { get; set; }
 
     /// <summary>
     /// Created by.
     /// </summary>
-    public User CreatedBy { get; init; }
+    public User CreatedBy { get; set; }
 
     /// <summary>
     /// Created At.
     /// </summary>
-    public DateTime CreatedAt { get; init; }
+    public DateTime CreatedAt { get; set; }
 }

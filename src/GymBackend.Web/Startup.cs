@@ -83,6 +83,7 @@ public class Startup
         );
 
         // Database.
+        AppDbContext.RegisterTypes();
         services.AddDbContext<AppDbContext>(
             new DbContextOptionsSetup(configuration.GetConnectionString("AppDatabase")).Setup);
         services.AddAsyncInitializer<DatabaseInitializer>();

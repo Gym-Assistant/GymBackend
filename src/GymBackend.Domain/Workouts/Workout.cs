@@ -12,30 +12,35 @@ public record Workout
     /// Id.
     /// </summary>
     [Key]
-    public Guid Id { get; init; }
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Exercises.
     /// </summary>
-    public ICollection<Exercise> Exercises { get; init; }
+    public ICollection<Exercise> Exercises { get; set; }
 
     /// <summary>
     /// Train session in this workout.
     /// </summary>
-    public ICollection<TrainSession> TrainSessions { get; init; }
+    public ICollection<TrainSession> TrainSessions { get; set; }
 
     /// <summary>
     /// User Id.
     /// </summary>
-    public Guid CreatedById { get; init; }
+    public Guid CreatedById { get; set; }
 
     /// <summary>
     /// Created by.
     /// </summary>
-    public User CreatedBy { get; init; }
+    public User CreatedBy { get; set; }
 
     /// <summary>
     /// Created At.
     /// </summary>
-    public DateTime CreatedAt { get; init; }
+    public DateTime CreatedAt { get; set; }
+
+    /// <summary>
+    /// Workout status.
+    /// </summary>
+    public WorkoutStatus WorkoutStatus { get; set; }
 }

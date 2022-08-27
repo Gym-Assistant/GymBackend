@@ -12,40 +12,40 @@ public record Sets
     /// Id.
     /// </summary>
     [Key]
-    public Guid Id { get; init; }
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Train session Id.
     /// </summary>
-    public Guid TrainSessionId { get; init; }
+    public Guid TrainSessionId { get; set; }
 
     /// <summary>
     /// Train session.
     /// </summary>
-    public TrainSession TrainSession { get; init; }
+    public TrainSession TrainSession { get; set; }
 
     /// <summary>
     /// Number of repetitions.
     /// </summary>
-    public int Reps { get; init; }
+    public int Reps { get; set; }
 
     /// <summary>
     /// The weight of the projectile.
     /// </summary>
-    public double Weight { get; init; }
+    public double Weight { get; set; }
 
     /// <summary>
     /// User Id.
     /// </summary>
-    public Guid CreatedById { get; init; }
+    public Guid CreatedById { get; set; }
 
     /// <summary>
     /// Created by.
     /// </summary>
-    public User CreatedBy { get; init; }
+    public User CreatedBy { get; set; }
 
     /// <summary>
     /// Created At.
     /// </summary>
-    public DateTime CreatedAt { get; init; }
+    public DateTime CreatedAt { get; set; }
 }
