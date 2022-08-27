@@ -5,7 +5,7 @@ namespace GymBackend.UseCases.Common.Pagination;
 /// <summary>
 /// Base class for filters that contains page, page size and sorting entries.
 /// </summary>
-public abstract class PageQueryFilter
+public abstract record PageQueryFilter
 {
     /// <summary>
     /// Page number to return. Starts with 1.
