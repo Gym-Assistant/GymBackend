@@ -34,6 +34,26 @@ internal class StartWorkoutCommandHandler : BaseCommandHandler, IRequestHandler<
         DbContext.Workouts.Add(workout);
         await DbContext.SaveChangesAsync(cancellationToken);
 
+        await CloseLastWorkoutAsync(cancellationToken);
         return workout.Id;
+    }
+
+    private async Task CloseLastWorkoutAsync(CancellationToken cancellationToken)
+    {
+        var lastWorkout = DbContext.Workouts
+            .Where(w => w.CreatedById == loggedUserAccessor.GetCurrentUserId())
+            .OrderByDescending(w => w.CreatedAt)
+            .FirstOrDefault();
+
+        if (lastWorkout.WorkoutStatus == WorkoutStatus.InProgress)
+        {
+            lastWorkout = lastWorkout with
+            {
+                WorkoutStatus = WorkoutStatus.IsOver
+            };
+
+            DbContext.Workouts.Update(lastWorkout);
+            await DbContext.SaveChangesAsync(cancellationToken);
+        }
     }
 }
