@@ -11,25 +11,25 @@ public record CharacteristicStamp
     /// Id.
     /// </summary>
     [Key]
-    public Guid Id { get; init; }
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Characteristic Id.
     /// </summary>
-    public Guid UserCharacteristicId { get; init; }
+    public Guid UserCharacteristicId { get; set; }
 
     /// <summary>
     /// Characteristic.
     /// </summary>
-    public UserCharacteristic UserCharacteristic { get; init; }
+    public UserCharacteristic UserCharacteristic { get; set; }
 
     /// <summary>
     /// When its characteristic created.
     /// </summary>
-    public DateTime CreatedAt { get; init; }
+    public DateTime CreatedAt { get; set; }
 
     /// <summary>
     /// Value.
     /// </summary>
-    public double Value { get; init; }
+    public double Value { get; set; }
 }

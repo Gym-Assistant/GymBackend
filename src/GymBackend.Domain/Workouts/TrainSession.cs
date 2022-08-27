@@ -12,45 +12,45 @@ public record TrainSession
     /// Id.
     /// </summary>
     [Key]
-    public Guid Id { get; init; }
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Exercise Id.
     /// </summary>
-    public Guid ExerciseId { get; init; }
+    public Guid ExerciseId { get; set; }
 
     /// <summary>
     /// Related exercise.
     /// </summary>
-    public Exercise Exercise { get; init; }
+    public Exercise Exercise { get; set; }
 
     /// <summary>
     /// Sets.
     /// </summary>
-    public ICollection<Sets> Sets { get; init; }
+    public ICollection<Sets> Sets { get; set; }
 
     /// <summary>
     /// Workout Id.
     /// </summary>
-    public Guid WorkoutId { get; init; }
+    public Guid WorkoutId { get; set; }
 
     /// <summary>
     /// Related workout.
     /// </summary>
-    public Workout Workout { get; init; }
+    public Workout Workout { get; set; }
 
     /// <summary>
     /// User Id.
     /// </summary>
-    public Guid CreatedById { get; init; }
+    public Guid CreatedById { get; set; }
 
     /// <summary>
     /// Created by.
     /// </summary>
-    public User CreatedBy { get; init; }
+    public User CreatedBy { get; set; }
 
     /// <summary>
     /// Created At.
     /// </summary>
-    public DateTime CreatedAt { get; init; }
+    public DateTime CreatedAt { get; set; }
 }

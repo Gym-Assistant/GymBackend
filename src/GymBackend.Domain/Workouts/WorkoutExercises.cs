@@ -8,20 +8,20 @@ public record WorkoutExercises
     /// <summary>
     /// Workout Id.
     /// </summary>
-    public Guid WorkoutId { get; init; }
+    public Guid WorkoutId { get; set; }
 
     /// <summary>
     /// Workout.
     /// </summary>
-    public Workout Workout { get; init; }
+    public Workout Workout { get; set; }
 
     /// <summary>
     /// Exercise Id.
     /// </summary>
-    public Guid ExerciseId { get; init; }
+    public Guid ExerciseId { get; set; }
 
     /// <summary>
     /// Exercise.
     /// </summary>
-    public Exercise Exercise { get; init; }
+    public Exercise Exercise { get; set; }
 }
