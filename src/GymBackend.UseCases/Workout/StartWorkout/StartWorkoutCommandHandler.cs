@@ -26,6 +26,8 @@ internal class StartWorkoutCommandHandler : BaseCommandHandler, IRequestHandler<
     /// <inheritdoc />
     public async Task<Guid> Handle(StartWorkoutCommand request, CancellationToken cancellationToken)
     {
+        await CloseLastWorkoutAsync(cancellationToken);
+
         var workout = new Domain.Workouts.Workout()
         {
             CreatedById = loggedUserAccessor.GetCurrentUserId(),
@@ -35,7 +37,6 @@ internal class StartWorkoutCommandHandler : BaseCommandHandler, IRequestHandler<
         DbContext.Workouts.Add(workout);
         await DbContext.SaveChangesAsync(cancellationToken);
 
-        await CloseLastWorkoutAsync(cancellationToken);
         return workout.Id;
     }
 
