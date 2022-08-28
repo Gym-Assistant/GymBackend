@@ -2,6 +2,7 @@
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Saritasa.Tools.EFCore;
 
@@ -26,7 +27,9 @@ public class AddExerciseToWorkoutCommandHandler : BaseCommandHandler, IRequestHa
     /// <inheritdoc />
     public async Task<Unit> Handle(AddExerciseToWorkoutCommand request, CancellationToken cancellationToken)
     {
-        var workout = await DbContext.Workouts.GetAsync(workout => workout.Id == request.WorkoutId, cancellationToken);
+        var workout = await DbContext.Workouts
+            .Include(workout => workout.Exercises)
+            .GetAsync(workout => workout.Id == request.WorkoutId, cancellationToken);
         var exercise = await DbContext.Exercises.GetAsync(exercise => exercise.Id == request.ExerciseId, cancellationToken);
 
         // We cannot add exercise to workout when its not our workout.

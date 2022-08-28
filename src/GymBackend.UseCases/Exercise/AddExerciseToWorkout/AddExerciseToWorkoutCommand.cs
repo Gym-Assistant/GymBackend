@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using MediatR;
 
 namespace GymBackend.UseCases.Exercise.AddExerciseToWorkout;
@@ -17,6 +18,6 @@ public record AddExerciseToWorkoutCommand : IRequest
     /// <summary>
     /// Workout id.
     /// </summary>
-    [Required]
+    [JsonIgnore]
     public Guid WorkoutId { get; init; }
 }
