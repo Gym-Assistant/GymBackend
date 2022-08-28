@@ -1,5 +1,6 @@
 ﻿using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.Dtos.Workout;
+using GymBackend.UseCases.Exercise.AddExerciseToWorkout;
 using GymBackend.UseCases.Workout.EndWorkout;
 using GymBackend.UseCases.Workout.GetAllWorkouts;
 using GymBackend.UseCases.Workout.GetWorkoutById;
@@ -68,6 +69,7 @@ public class WorkoutController : ControllerBase
     /// </summary>
     /// <param name="workoutId">WorkoutId.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
+    // TODO its not clear, maybe made it as http put and rename EndWorkout -> EditWorkout?
     [HttpPost("{workoutId}")]
     public async Task EndWorkout([FromRoute] Guid workoutId, CancellationToken cancellationToken) =>
         await mediator.Send(new EndWorkoutCommand(workoutId), cancellationToken);
@@ -80,4 +82,20 @@ public class WorkoutController : ControllerBase
     [HttpDelete("{workoutId}")]
     public async Task RemoveWorkoutById([FromRoute] Guid workoutId, CancellationToken cancellationToken) =>
         await mediator.Send(new RemoveWorkoutByIdCommand(workoutId), cancellationToken);
+
+    /// <summary>
+    /// Add exercise to workout.
+    /// </summary>
+    /// <param name="workoutId">WorkoutId.</param>
+    /// <param name="command">Command.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPost("{workoutId}/add-exercise")]
+    public async Task AddExerciseToWorkout([FromRoute] Guid workoutId, [FromBody] AddExerciseToWorkoutCommand command, CancellationToken cancellationToken)
+    {
+        command = command with
+        {
+            WorkoutId = workoutId
+        };
+        await mediator.Send(command, cancellationToken);
+    }
 }
