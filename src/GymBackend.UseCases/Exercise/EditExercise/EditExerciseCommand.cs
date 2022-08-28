@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using MediatR;
 
 namespace GymBackend.UseCases.Exercise.EditExercise;
@@ -11,6 +12,7 @@ public record EditExerciseCommand : IRequest
     /// <summary>
     /// Id.
     /// </summary>
+    [JsonIgnore]
     public Guid Id { get; set; }
 
     /// <summary>
