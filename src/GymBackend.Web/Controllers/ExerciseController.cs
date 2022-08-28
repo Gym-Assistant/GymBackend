@@ -43,7 +43,6 @@ public class ExerciseController : ControllerBase
     public async Task<PagedListMetadataDto<LightExerciseDto>> GetAllExercises([FromQuery] GetAllExercisesQuery query, CancellationToken cancellationToken)
         => await mediator.Send(query, cancellationToken);
 
-
     /// <summary>
     /// Get exerciseId by exerciseId.
     /// </summary>
