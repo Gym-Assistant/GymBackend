@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using Npgsql;
+using GymBackend.Domain.FoodRecords;
 
 namespace GymBackend.Infrastructure.DataAccess;
 
@@ -45,6 +46,13 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
 
     /// <inheritdoc />
     public DbSet<WorkoutPackage> WorkoutPackages { get; private set; }
+
+    #endregion
+
+    #region FoodRecords
+
+    /// <inheritdoc />
+    public DbSet<Food> Foods { get; private set; }
 
     #endregion
 

@@ -1,4 +1,5 @@
-﻿using GymBackend.Domain.Users;
+﻿using GymBackend.Domain.FoodRecords;
+using GymBackend.Domain.Users;
 using GymBackend.Domain.Workouts;
 using Microsoft.EntityFrameworkCore;
 
@@ -53,6 +54,11 @@ public interface IAppDbContext : IDisposable
     /// Sets.
     /// </summary>
     DbSet<Sets> Sets { get; }
+
+    /// <summary>
+    /// Foods set.
+    /// </summary>
+    DbSet<Food> Foods { get; }
 
     /// <summary>
     /// Save pending changes.

@@ -36,6 +36,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodBackend.UseCases", "Foo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodBackend.UseCases.Common", "FoodBackend.UseCases.Common\FoodBackend.UseCases.Common.csproj", "{930DA924-CE49-4BFA-B082-DAC8A9ACD782}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodBackend.Infrastructure.Abstractions", "FoodBackend.Infrastructure.Abstractions\FoodBackend.Infrastructure.Abstractions.csproj", "{6BAE8F30-E226-4666-846E-C862C5A84B64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{930DA924-CE49-4BFA-B082-DAC8A9ACD782}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{930DA924-CE49-4BFA-B082-DAC8A9ACD782}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{930DA924-CE49-4BFA-B082-DAC8A9ACD782}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BAE8F30-E226-4666-846E-C862C5A84B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BAE8F30-E226-4666-846E-C862C5A84B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BAE8F30-E226-4666-846E-C862C5A84B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BAE8F30-E226-4666-846E-C862C5A84B64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,7 @@
 using MediatR;
 using GymBackend.UseCases.Users.AuthenticateUser;
+using FoodBackend.UseCases.Food.AddFood;
+using System.Reflection;
 
 namespace GymBackend.Web.Infrastructure.DependencyInjection;
 
@@ -15,5 +17,6 @@ internal static class MediatRModule
     public static void Register(IServiceCollection services)
     {
         services.AddMediatR(typeof(LoginUserCommand).Assembly);
+        services.AddMediatR(typeof(CreateFoodCommand).GetTypeInfo().Assembly);
     }
 }
