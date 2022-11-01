@@ -17,6 +17,6 @@ internal static class MediatRModule
     public static void Register(IServiceCollection services)
     {
         services.AddMediatR(typeof(LoginUserCommand).Assembly);
-        services.AddMediatR(typeof(CreateFoodCommand).GetTypeInfo().Assembly);
+        services.AddMediatR(typeof(CreateFoodCommand).Assembly);
     }
 }

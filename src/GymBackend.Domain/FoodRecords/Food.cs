@@ -21,20 +21,20 @@ public record Food
     /// <summary>
     /// Food callories value.
     /// </summary>
-    public int Callories { get; set; }
+    public int? Callories { get; set; }
 
     /// <summary>
     /// Food protein value.
     /// </summary>
-    public double Protein { get; set; }
+    public double? Protein { get; set; }
 
     /// <summary>
     /// Food carbohydrates value.
     /// </summary>
-    public double Carbohydrates { get; set; }
+    public double? Carbohydrates { get; set; }
 
     /// <summary>
     /// Food fat value.
     /// </summary>
-    public double Fat { get; set; }
+    public double? Fat { get; set; }
 }

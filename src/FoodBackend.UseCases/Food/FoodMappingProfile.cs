@@ -13,7 +13,6 @@ public class FoodMappingProfile : Profile
     /// </summary>
     public FoodMappingProfile()
     {
-        CreateMap<CreateFoodCommand, GymBackend.Domain.FoodRecords.Food>();
-        CreateMap<GymBackend.Domain.FoodRecords.Food, CreateFoodCommand>();
+        CreateMap<CreateFoodCommand, GymBackend.Domain.FoodRecords.Food>().ReverseMap();
     }
 }

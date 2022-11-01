@@ -18,6 +18,6 @@ public class AutoMapperModule
         services.AddAutoMapper(
             typeof(TokenModel).Assembly);
         services.AddAutoMapper(
-            typeof(FoodMappingProfile).GetTypeInfo().Assembly);
+            typeof(FoodMappingProfile).Assembly);
     }
 }
