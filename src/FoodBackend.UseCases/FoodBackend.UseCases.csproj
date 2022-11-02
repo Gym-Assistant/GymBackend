@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FoodBackend.UseCases.Common\FoodBackend.UseCases.Common.csproj" />
     <ProjectReference Include="..\GymBackend.UseCases.Common\GymBackend.UseCases.Common.csproj" />
   </ItemGroup>
 

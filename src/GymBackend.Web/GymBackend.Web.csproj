@@ -40,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FoodBackend.UseCases.Common\FoodBackend.UseCases.Common.csproj" />
     <ProjectReference Include="..\FoodBackend.UseCases\FoodBackend.UseCases.csproj" />
     <ProjectReference Include="..\GymBackend.Infrastructure.DataAccess\GymBackend.Infrastructure.DataAccess.csproj" />
     <ProjectReference Include="..\GymBackend.UseCases\GymBackend.UseCases.csproj" />
