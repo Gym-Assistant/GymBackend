@@ -1,3 +1,4 @@
+using FoodBackend.Infrastructure.Abstractions.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.Infrastructure.DataAccess;
@@ -21,6 +22,7 @@ internal static class SystemModule
         services.AddSingleton<IJsonHelper, SystemTextJsonHelper>();
         services.AddScoped<IAuthenticationTokenService, SystemJwtTokenService>();
         services.AddScoped<IAppDbContext, AppDbContext>();
+        services.AddScoped<IFoodDbContext, AppDbContext>();
         services.AddScoped<ILoggedUserAccessor, LoggedUserAccessor>();
     }
 }

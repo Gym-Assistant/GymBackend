@@ -22,4 +22,11 @@ public interface IFoodDbContext : IDisposable
     /// Food characteristic types.
     /// </summary>
     DbSet<FoodCharacteristicType> FoodCharacteristicTypes { get; }
+    
+    /// <summary>
+    /// Save pending changes.
+    /// </summary>
+    /// <param name="cancellationToken">Token to cancel the request.</param>
+    /// <returns></returns>
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
