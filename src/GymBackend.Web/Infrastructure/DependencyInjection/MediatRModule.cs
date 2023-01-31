@@ -1,4 +1,4 @@
-using FoodBackend.UseCases.Food.CreateFood;
+using FoodBackend.UseCases.FoodElementary.CreateFoodElementary;
 using MediatR;
 using GymBackend.UseCases.Users.AuthenticateUser;
 
@@ -16,6 +16,6 @@ internal static class MediatRModule
     public static void Register(IServiceCollection services)
     {
         services.AddMediatR(typeof(LoginUserCommand).Assembly);
-        services.AddMediatR(typeof(CreateFoodCommand).Assembly);
+        services.AddMediatR(typeof(CreateFoodElementaryCommand).Assembly);
     }
 }

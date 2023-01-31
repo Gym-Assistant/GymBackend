@@ -16,6 +16,7 @@
     <ItemGroup>
       <ProjectReference Include="..\FoodBackend.Infrastructure.Abstractions\FoodBackend.Infrastructure.Abstractions.csproj" />
       <ProjectReference Include="..\FoodBackend.UseCases.Common\FoodBackend.UseCases.Common.csproj" />
+      <ProjectReference Include="..\GymBackend.Infrastructure.Abstractions\GymBackend.Infrastructure.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

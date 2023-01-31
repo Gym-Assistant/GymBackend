@@ -1,4 +1,5 @@
 ﻿using FoodBackend.Domain.Foodstuffs;
+using FoodBackend.Domain.MealStuffs;
 using FoodBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.Domain.Users;
 using GymBackend.Domain.Workouts;
@@ -53,13 +54,35 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
     #region Foods
 
     /// <inheritdoc/>
-    public DbSet<Food> Foods { get; private set; }
+    public DbSet<FoodElementary> FoodElementaries { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<ConsumedElementaryWeight> ConsumedElementaryWeights { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<FoodRecipe> FoodRecipes { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<ConsumedRecipeWeight> ConsumedRecipeWeights { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<FoodElementaryWeight> FoodElementaryWeights { get; private set; }
 
     /// <inheritdoc/>
     public DbSet<FoodCharacteristic> FoodCharacteristics { get; private set; }
 
     /// <inheritdoc/>
     public DbSet<FoodCharacteristicType> FoodCharacteristicTypes { get; private set; }
+
+    #endregion
+
+    #region Meals
+
+    /// <inheritdoc/>
+    public DbSet<CourseMeal> CourseMeals { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<MealType> MealTypes { get; private set; }
 
     #endregion
 
@@ -156,28 +179,6 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
 
         modelBuilder.Entity<WorkoutPackage>()
             .HasIndex(p => p.CreatedById);
-
-        modelBuilder.Entity<FoodCharacteristic>()
-            .HasOne(p => p.Food)
-            .WithMany(p => p.Characteristics)
-            .HasForeignKey(p => p.FoodId);
-
-        modelBuilder.Entity<FoodCharacteristic>()
-            .HasIndex(p => p.FoodId);
-
-        modelBuilder.Entity<FoodCharacteristic>()
-            .HasOne(p => p.CharacteristicType)
-            .WithOne();
-
-        modelBuilder.Entity<FoodCharacteristic>()
-            .HasIndex(p => p.CharacteristicTypeId);
-
-        modelBuilder.Entity<FoodCharacteristicType>()
-            .HasOne(p => p.CreatedBy)
-            .WithOne();
-
-        modelBuilder.Entity<FoodCharacteristicType>()
-            .HasIndex(p => p.UserId);
 
         SetupEnum(modelBuilder);
     }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using GymBackend.Domain.Users;
 
 namespace FoodBackend.Domain.Foodstuffs;
 
@@ -8,20 +9,20 @@ namespace FoodBackend.Domain.Foodstuffs;
 public record FoodCharacteristic
 {
     /// <summary>
-    /// Food characteristic id.
+    /// Characteristic id.
     /// </summary>
     [Key]
     public Guid Id { get; set; }
 
     /// <summary>
-    /// Id of food, which owns characteristic.
+    /// Id of food elementary, which owns characteristic.
     /// </summary>
-    public Guid FoodId { get; set; }
+    public Guid FoodElementaryId { get; set; }
 
     /// <summary>
     /// Food, which owns characteristic.
     /// </summary>
-    public Food Food { get; set; }
+    public FoodElementary FoodElementary { get; set; }
 
     /// <summary>
     /// Type of food characteristic id.
@@ -37,4 +38,19 @@ public record FoodCharacteristic
     /// Food characteristic value.
     /// </summary>
     public double Value { get; set; }
+    
+    /// <summary>
+    /// Id of user creator.
+    /// </summary>
+    public Guid? UserId { get; set; }
+    
+    /// <summary>
+    /// User creator.
+    /// </summary>
+    public User? User { get; set; }
+    
+    /// <summary>
+    /// Is food characteristic default statement.
+    /// </summary>
+    public double IsDefault { get; set; }
 }

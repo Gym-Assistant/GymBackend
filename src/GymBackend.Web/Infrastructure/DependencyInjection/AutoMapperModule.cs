@@ -1,4 +1,4 @@
-﻿using FoodBackend.UseCases.Food;
+﻿using FoodBackend.UseCases.FoodElementary;
 using GymBackend.UseCases.Users.AuthenticateUser;
 
 namespace GymBackend.Web.Infrastructure.DependencyInjection;
@@ -16,6 +16,6 @@ public class AutoMapperModule
     {
         services.AddAutoMapper(
             typeof(TokenModel).Assembly);
-        services.AddAutoMapper(typeof(FoodMappingProfile).Assembly);
+        services.AddAutoMapper(typeof(FoodElementaryMappingProfile).Assembly);
     }
 }
