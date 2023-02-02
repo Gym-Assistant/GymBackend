@@ -17,5 +17,6 @@ public class FoodElementaryMappingProfile : Profile
         // Command -> Entity.
         CreateMap<CreateFoodElementaryCommand, Domain.Foodstuffs.FoodElementary>();
         CreateMap<Domain.Foodstuffs.FoodElementary, LightFoodElementaryDto>();
+        CreateMap<Domain.Foodstuffs.FoodElementary, DetailFoodElementaryDto>();
     }
 }

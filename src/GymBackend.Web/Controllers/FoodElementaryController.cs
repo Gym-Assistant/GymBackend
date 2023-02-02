@@ -3,7 +3,9 @@ using FoodBackend.UseCases.FoodElementary.CreateFoodElementary;
 using FoodBackend.UseCases.FoodElementary.DeleteFoodElementaryById;
 using FoodBackend.UseCases.FoodElementary.EditFoodElementary;
 using FoodBackend.UseCases.FoodElementary.GetAllFoodElementaries;
+using FoodBackend.UseCases.FoodElementary.GetAllFoodElementariesDetail;
 using FoodBackend.UseCases.FoodElementary.GetFoodElementaryById;
+using FoodBackend.UseCases.FoodElementary.GetFoodElementaryDetailById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +32,7 @@ public class FoodElementaryController
     }
 
     /// <summary>
-    /// Get all food elementaries.
+    /// Get all food elementaries with basic information.
     /// </summary>
     /// <param name="query">Query.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
@@ -41,7 +43,7 @@ public class FoodElementaryController
         => await mediator.Send(query, cancellationToken);
 
     /// <summary>
-    /// Get food elementary by id.
+    /// Get food elementary by id with basic information.
     /// </summary>
     /// <param name="foodElementaryId">Food elementary id.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
@@ -81,4 +83,25 @@ public class FoodElementaryController
     [Authorize]
     public async Task RemoveFoodElementary(Guid foodElementaryId, CancellationToken cancellationToken) =>
         await mediator.Send(new RemoveFoodElementaryByIdCommand(foodElementaryId), cancellationToken);
+
+    /// <summary>
+    /// Get all food elementaries with full information.
+    /// </summary>
+    /// <param name="query">Query.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Paged list.</returns>
+    [HttpGet("detail")]
+    public async Task<PagedListMetadataDto<DetailFoodElementaryDto>> GetAllFoodElementariesDetail([FromQuery] GetAllFoodElementariesDetailQuery query,
+        CancellationToken cancellationToken)
+        => await mediator.Send(query, cancellationToken);
+
+    /// <summary>
+    /// Get food elementary by id with full information.
+    /// </summary>
+    /// <param name="foodElementaryId">Food elementary id.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Food elementary by entered id.</returns>
+    [HttpGet("detail/{foodElementaryId}")]
+    public async Task<DetailFoodElementaryDto> GetFoodElementaryDetailById(Guid foodElementaryId, CancellationToken cancellationToken)
+        => await mediator.Send(new GetFoodElementaryDetailByIdQuery(foodElementaryId), cancellationToken);
 }
