@@ -1,10 +1,11 @@
 ﻿using FoodBackend.UseCases.Common.Dtos;
+using FoodBackend.UseCases.CourseMeal.AddElementaryToCourseMeal;
+using FoodBackend.UseCases.CourseMeal.AddRecipeToCourseMeal;
 using FoodBackend.UseCases.CourseMeal.CreateCourseMeal;
 using FoodBackend.UseCases.CourseMeal.EditCourseMeal;
 using FoodBackend.UseCases.CourseMeal.GetAllCourseMeal;
 using FoodBackend.UseCases.CourseMeal.GetCourseMealById;
 using FoodBackend.UseCases.CourseMeal.RemoveCourseMealById;
-using GymBackend.Infrastructure.Abstractions.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -79,4 +80,24 @@ public class CourseMealController : ControllerBase
     [HttpDelete("{courseMealId}")]
     public async Task RemoveCourseMeal(Guid courseMealId, CancellationToken cancellationToken) =>
         await mediator.Send(new RemoveCourseMealByIdCommand(courseMealId), cancellationToken);
+
+    /// <summary>
+    /// Add food elementary to course meal.
+    /// </summary>
+    /// <param name="courseMealId">Course meal id.</param>
+    /// <param name="command">Command.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPut("{courseMealId}/addfoodelementary")]
+    public async Task AddFoodElementaryToCourseMeal(Guid courseMealId, AddElementaryToCourseMealCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command with { CourseMealId = courseMealId }, cancellationToken);
+
+    /// <summary>
+    /// Add food recipe to course meal.
+    /// </summary>
+    /// <param name="courseMealId">Course meal id.</param>
+    /// <param name="command">Command.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPut("{courseMealId}/addrecipe")]
+    public async Task AddFoodRecipeToCourseMeal(Guid courseMealId, AddRecipeToCourseMealCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command with { CourseMealId = courseMealId }, cancellationToken);
 }

@@ -4,7 +4,6 @@ using FoodBackend.UseCases.MealType.EditMealType;
 using FoodBackend.UseCases.MealType.GetAllMealTypes;
 using FoodBackend.UseCases.MealType.GetMealTypeById;
 using FoodBackend.UseCases.MealType.RemoveMealTypeById;
-using GymBackend.Infrastructure.Abstractions.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
