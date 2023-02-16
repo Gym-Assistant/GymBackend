@@ -50,7 +50,7 @@ internal class CreateFoodCharacteristicCommandHandler : BaseCommandHandler, IReq
         
         foodElementary.Characteristics.Add(foodCharacteristic);
 
-        DbContext.FoodCharacteristics.Add(foodCharacteristic);
+        await DbContext.FoodCharacteristics.AddAsync(foodCharacteristic, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
 
         return foodCharacteristic.Id;

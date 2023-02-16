@@ -27,7 +27,7 @@ internal class CreateFoodElementaryCommandHandler : BaseCommandHandler,
     {
         var food = Mapper.Map<Domain.Foodstuffs.FoodElementary>(request);
         food.UserId = loggedUserAccessor.GetCurrentUserId();
-        DbContext.FoodElementaries.Add(food);
+        await DbContext.FoodElementaries.AddAsync(food, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
 
         return food.Id;

@@ -27,7 +27,7 @@ internal class CreateFoodCharacteristicTypeCommandHandler : BaseCommandHandler, 
     {
         var foodCharacteristicType = Mapper.Map<FoodCharacteristicType>(request);
         foodCharacteristicType.UserId = loggedUserAccessor.GetCurrentUserId();
-        DbContext.FoodCharacteristicTypes.Add(foodCharacteristicType);
+        await DbContext.FoodCharacteristicTypes.AddAsync(foodCharacteristicType, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
 
         return foodCharacteristicType.Id;

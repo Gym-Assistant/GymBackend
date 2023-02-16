@@ -27,7 +27,7 @@ internal class CreateMealTypeCommandHandler : BaseCommandHandler, IRequestHandle
     {
         var mealType = Mapper.Map<Domain.MealStuffs.MealType>(request);
         mealType.UserId = loggedUserAccessor.GetCurrentUserId();
-        DbContext.MealTypes.Add(mealType);
+        await DbContext.MealTypes.AddAsync(mealType, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
 
         return mealType.Id;

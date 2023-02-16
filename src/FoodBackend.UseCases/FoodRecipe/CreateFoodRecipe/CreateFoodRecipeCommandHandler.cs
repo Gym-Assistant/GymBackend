@@ -26,7 +26,7 @@ internal class CreateFoodRecipeCommandHandler : BaseCommandHandler, IRequestHand
     {
         var food = Mapper.Map<Domain.Foodstuffs.FoodRecipe>(request);
         food.UserId = loggedUserAccessor.GetCurrentUserId();
-        DbContext.FoodRecipes.Add(food);
+        await DbContext.FoodRecipes.AddAsync(food, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
 
         return food.Id;

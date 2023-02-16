@@ -50,7 +50,7 @@ internal class AddElementaryToCourseMealCommandHandler : BaseCommandHandler, IRe
             Weight = request.Weight,
             UserId = loggedUserAccessor.GetCurrentUserId()
         };
-        DbContext.ConsumedElementaryWeights.Add(consumedElementaryWeight);
+        await DbContext.ConsumedElementaryWeights.AddAsync(consumedElementaryWeight, cancellationToken);
         courseMeal.ConsumedElementaryWeights.Add(consumedElementaryWeight);
         
         await DbContext.SaveChangesAsync(cancellationToken);

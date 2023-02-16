@@ -50,7 +50,7 @@ internal class AddRecipeToCourseMealCommandHandler : BaseCommandHandler, IReques
             Weight = request.Weight,
             UserId = loggedUserAccessor.GetCurrentUserId()
         };
-        DbContext.ConsumedRecipeWeights.Add(consumedRecipeWeight);
+        await DbContext.ConsumedRecipeWeights.AddAsync(consumedRecipeWeight, cancellationToken);
         courseMeal.ConsumedRecipeWeights.Add(consumedRecipeWeight);
         
         await DbContext.SaveChangesAsync(cancellationToken);
