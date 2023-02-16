@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FoodBackend.Domain\FoodBackend.Domain.csproj" />
     <ProjectReference Include="..\GymBackend.Domain\GymBackend.Domain.csproj" />
   </ItemGroup>
 

@@ -1,6 +1,5 @@
 ﻿using FoodBackend.Domain.Foodstuffs;
 using FoodBackend.Domain.MealStuffs;
-using FoodBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.Domain.Users;
 using GymBackend.Domain.Workouts;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -13,7 +12,7 @@ namespace GymBackend.Infrastructure.DataAccess;
 /// <summary>
 /// Application unit of work.
 /// </summary>
-public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IAppDbContext, IFoodDbContext
+public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IAppDbContext
 {
     #region Characteristic
 
