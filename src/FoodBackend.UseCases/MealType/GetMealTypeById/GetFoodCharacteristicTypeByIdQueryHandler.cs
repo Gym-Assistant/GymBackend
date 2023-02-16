@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using FoodBackend.Infrastructure.Abstractions.Interfaces;
 using FoodBackend.UseCases.Common.Dtos;
+using GymBackend.Infrastructure.Abstractions.Interfaces;
+using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
 using Saritasa.Tools.EFCore;
 
@@ -10,26 +11,22 @@ namespace FoodBackend.UseCases.MealType.GetMealTypeById;
 /// <summary>
 /// Get meal type query handler.
 /// </summary>
-internal class GetMealTypeByIdQueryHandler : 
+internal class GetMealTypeByIdQueryHandler : BaseQueryHandler,
     IRequestHandler<GetMealTypeByIdQuery, LightMealTypeDto>
 {
-    private readonly IFoodDbContext dbContext;
-    private readonly IMapper mapper;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetMealTypeByIdQueryHandler(IFoodDbContext dbContext, IMapper mapper)
+    public GetMealTypeByIdQueryHandler(IAppDbContext dbContext, IMapper mapper) : base(mapper, dbContext)
     {
-        this.mapper = mapper;
-        this.dbContext = dbContext;
     }
     
     /// <inheritdoc />
     public async Task<LightMealTypeDto> Handle(GetMealTypeByIdQuery request, CancellationToken cancellationToken)
     {
-        var mealType = await dbContext.MealTypes
-            .ProjectTo<LightMealTypeDto>(mapper.ConfigurationProvider)
+        var mealType = await DbContext.MealTypes
+            .ProjectTo<LightMealTypeDto>(Mapper.ConfigurationProvider)
             .GetAsync(mealType => mealType.Id == request.MealTypeId,
                 cancellationToken);
 

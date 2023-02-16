@@ -1,5 +1,6 @@
-﻿using FoodBackend.Infrastructure.Abstractions.Interfaces;
+﻿using AutoMapper;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
+using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
 using Saritasa.Tools.Domain.Exceptions;
 using Saritasa.Tools.EFCore;
@@ -9,24 +10,23 @@ namespace FoodBackend.UseCases.FoodCharacteristic.EditFoodCharacteristicType;
 /// <summary>
 /// Edit food characteristic type handler.
 /// </summary>
-internal class EditFoodCharacteristicTypeCommandHandler : IRequestHandler<EditFoodCharacteristicTypeCommand>
+internal class EditFoodCharacteristicTypeCommandHandler : BaseCommandHandler, IRequestHandler<EditFoodCharacteristicTypeCommand>
 {
-    private readonly IFoodDbContext dbContext;
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public EditFoodCharacteristicTypeCommandHandler(ILoggedUserAccessor loggedUserAccessor, IFoodDbContext dbContext)
+    public EditFoodCharacteristicTypeCommandHandler(ILoggedUserAccessor loggedUserAccessor, IAppDbContext dbContext,
+        IMapper mapper) : base(mapper, dbContext)
     {
-        this.dbContext = dbContext;
         this.loggedUserAccessor = loggedUserAccessor;
     }
     
     /// <inheritdoc />
     public async Task<Unit> Handle(EditFoodCharacteristicTypeCommand request, CancellationToken cancellationToken)
     {
-        var foodCharacteristicType = await dbContext.FoodCharacteristicTypes.GetAsync(
+        var foodCharacteristicType = await DbContext.FoodCharacteristicTypes.GetAsync(
             foodCharacteristicType => foodCharacteristicType.Id == request.FoodCharacteristicTypeId, cancellationToken);
 
         if (foodCharacteristicType.UserId != loggedUserAccessor.GetCurrentUserId())
@@ -39,7 +39,7 @@ internal class EditFoodCharacteristicTypeCommandHandler : IRequestHandler<EditFo
             foodCharacteristicType.Name = request.Name;
         }
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await DbContext.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;
     }

@@ -1,5 +1,6 @@
-﻿using FoodBackend.Infrastructure.Abstractions.Interfaces;
+﻿using AutoMapper;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
+using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
 using Saritasa.Tools.Domain.Exceptions;
 using Saritasa.Tools.EFCore;
@@ -9,25 +10,24 @@ namespace FoodBackend.UseCases.FoodCharacteristic.RemoveFoodCharacteristicTypeBy
 /// <summary>
 /// Remove food characteristic type by id command handler.
 /// </summary>
-internal class RemoveFoodCharacteristicTypeByIdCommandHandler : IRequestHandler<RemoveFoodCharacteristicTypeByIdCommand>
+internal class RemoveFoodCharacteristicTypeByIdCommandHandler : BaseCommandHandler,
+    IRequestHandler<RemoveFoodCharacteristicTypeByIdCommand>
 {
-    private readonly IFoodDbContext dbContext;
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public RemoveFoodCharacteristicTypeByIdCommandHandler(IFoodDbContext dbContext,
-        ILoggedUserAccessor loggedUserAccessor)
+    public RemoveFoodCharacteristicTypeByIdCommandHandler(IAppDbContext dbContext, IMapper mapper,
+        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
     {
-        this.dbContext = dbContext;
         this.loggedUserAccessor = loggedUserAccessor;
     }
 
     /// <inheritdoc />
     public async Task<Unit> Handle(RemoveFoodCharacteristicTypeByIdCommand request, CancellationToken cancellationToken)
     {
-        var foodCharacteristicType = await dbContext.FoodCharacteristicTypes
+        var foodCharacteristicType = await DbContext.FoodCharacteristicTypes
             .GetAsync(foodCharacteristicType => foodCharacteristicType.Id == request.FoodCharacteristicTypeId,
                 cancellationToken);
         if (foodCharacteristicType.UserId != loggedUserAccessor.GetCurrentUserId())
@@ -35,8 +35,8 @@ internal class RemoveFoodCharacteristicTypeByIdCommandHandler : IRequestHandler<
             throw new ForbiddenException("You can't remove food characteristic type that you didn't create.");
         }
 
-        dbContext.FoodCharacteristicTypes.Remove(foodCharacteristicType);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        DbContext.FoodCharacteristicTypes.Remove(foodCharacteristicType);
+        await DbContext.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;
     }

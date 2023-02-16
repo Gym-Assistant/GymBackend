@@ -1,6 +1,7 @@
-﻿using FoodBackend.Domain.Foodstuffs;
-using FoodBackend.Infrastructure.Abstractions.Interfaces;
+﻿using AutoMapper;
+using FoodBackend.Domain.Foodstuffs;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
+using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
@@ -11,24 +12,23 @@ namespace FoodBackend.UseCases.FoodRecipe.AddIngredientToRecipe;
 /// <summary>
 /// Add ingredient to recipe command handler.
 /// </summary>
-internal class AddIngredientToRecipeCommandHandler : IRequestHandler<AddIngredientToRecipeCommand>
+internal class AddIngredientToRecipeCommandHandler : BaseCommandHandler, IRequestHandler<AddIngredientToRecipeCommand>
 {
-    private readonly IFoodDbContext dbContext;
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public AddIngredientToRecipeCommandHandler(IFoodDbContext dbContext, ILoggedUserAccessor loggedUserAccessor)
+    public AddIngredientToRecipeCommandHandler(IAppDbContext dbContext, IMapper mapper,
+        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
     {
-        this.dbContext = dbContext;
         this.loggedUserAccessor = loggedUserAccessor;
     }
     
     /// <inheritdoc />
     public async Task<Unit> Handle(AddIngredientToRecipeCommand request, CancellationToken cancellationToken)
     {
-        var foodRecipe = await dbContext.FoodRecipes
+        var foodRecipe = await DbContext.FoodRecipes
             .Include(foodRecipe => foodRecipe.Ingredients)
             .Include(foodRecipe => foodRecipe.IngredientWeights)
             .GetAsync(foodRecipe => foodRecipe.Id == request.FoodRecipeId, cancellationToken);
@@ -37,7 +37,7 @@ internal class AddIngredientToRecipeCommandHandler : IRequestHandler<AddIngredie
             throw new ForbiddenException("You can't edit food recipe that you didn't create.");
         }
         
-        var foodElementary = await dbContext.FoodElementaries
+        var foodElementary = await DbContext.FoodElementaries
             .GetAsync(foodElementary => foodElementary.Id == request.FoodElementaryId, cancellationToken);
         foodRecipe.Ingredients.Add(foodElementary);
 
@@ -49,10 +49,10 @@ internal class AddIngredientToRecipeCommandHandler : IRequestHandler<AddIngredie
             FoodRecipe = foodRecipe,
             Weight = request.FoodElementaryWeight
         };
-        dbContext.FoodElementaryWeights.Add(elementaryWeight);
+        DbContext.FoodElementaryWeights.Add(elementaryWeight);
         foodRecipe.IngredientWeights.Add(elementaryWeight);
         
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await DbContext.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
     }

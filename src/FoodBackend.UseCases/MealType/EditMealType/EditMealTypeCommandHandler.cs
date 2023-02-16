@@ -1,5 +1,6 @@
-﻿using FoodBackend.Infrastructure.Abstractions.Interfaces;
+﻿using AutoMapper;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
+using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
 using Saritasa.Tools.Domain.Exceptions;
 using Saritasa.Tools.EFCore;
@@ -9,24 +10,23 @@ namespace FoodBackend.UseCases.MealType.EditMealType;
 /// <summary>
 /// Edit meal type handler.
 /// </summary>
-internal class EditMealTypeCommandHandler : IRequestHandler<EditMealTypeCommand>
+internal class EditMealTypeCommandHandler : BaseCommandHandler, IRequestHandler<EditMealTypeCommand>
 {
-    private readonly IFoodDbContext dbContext;
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public EditMealTypeCommandHandler(ILoggedUserAccessor loggedUserAccessor, IFoodDbContext dbContext)
+    public EditMealTypeCommandHandler(ILoggedUserAccessor loggedUserAccessor, IMapper mapper,
+        IAppDbContext dbContext) : base(mapper, dbContext)
     {
-        this.dbContext = dbContext;
         this.loggedUserAccessor = loggedUserAccessor;
     }
     
     /// <inheritdoc />
     public async Task<Unit> Handle(EditMealTypeCommand request, CancellationToken cancellationToken)
     {
-        var mealType = await dbContext.MealTypes
+        var mealType = await DbContext.MealTypes
             .GetAsync(mealType => mealType.Id == request.MealTypeId, cancellationToken);
         if (mealType.UserId != loggedUserAccessor.GetCurrentUserId())
         {
@@ -38,7 +38,7 @@ internal class EditMealTypeCommandHandler : IRequestHandler<EditMealTypeCommand>
             mealType.Name = request.Name;
         }
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await DbContext.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;
     }

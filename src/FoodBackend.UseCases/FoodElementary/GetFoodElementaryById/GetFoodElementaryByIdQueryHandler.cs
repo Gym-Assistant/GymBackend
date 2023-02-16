@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using FoodBackend.Infrastructure.Abstractions.Interfaces;
 using FoodBackend.UseCases.Common.Dtos;
+using GymBackend.Infrastructure.Abstractions.Interfaces;
+using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
 using Saritasa.Tools.EFCore;
 
@@ -10,25 +11,20 @@ namespace FoodBackend.UseCases.FoodElementary.GetFoodElementaryById;
 /// <summary>
 /// Get food elementary by id query handler.
 /// </summary>
-internal class GetFoodElementaryByIdQueryHandler : IRequestHandler<GetFoodElementaryByIdQuery, LightFoodElementaryDto>
+internal class GetFoodElementaryByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetFoodElementaryByIdQuery, LightFoodElementaryDto>
 {
-    private readonly IFoodDbContext dbContext;
-    private readonly IMapper mapper;
-    
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetFoodElementaryByIdQueryHandler(IFoodDbContext dbContext, IMapper mapper)
+    public GetFoodElementaryByIdQueryHandler(IAppDbContext dbContext, IMapper mapper) : base(mapper, dbContext)
     {
-        this.dbContext = dbContext;
-        this.mapper = mapper;
     }
     
     /// <inheritdoc />
     public async Task<LightFoodElementaryDto> Handle(GetFoodElementaryByIdQuery request, CancellationToken cancellationToken)
     {
-        var food = await dbContext.FoodElementaries
-            .ProjectTo<LightFoodElementaryDto>(mapper.ConfigurationProvider)
+        var food = await DbContext.FoodElementaries
+            .ProjectTo<LightFoodElementaryDto>(Mapper.ConfigurationProvider)
             .GetAsync(food => food.Id == request.FoodElementaryId, cancellationToken);
 
         return food;

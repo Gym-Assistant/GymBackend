@@ -1,5 +1,6 @@
-﻿using FoodBackend.Infrastructure.Abstractions.Interfaces;
+﻿using AutoMapper;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
+using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
 using Saritasa.Tools.Domain.Exceptions;
 using Saritasa.Tools.EFCore;
@@ -9,24 +10,23 @@ namespace FoodBackend.UseCases.FoodCharacteristic.EditFoodCharacteristic;
 /// <summary>
 /// Edit food characteristic handler.
 /// </summary>
-internal class EditFoodCharacteristicCommandHandler : IRequestHandler<EditFoodCharacteristicCommand>
+internal class EditFoodCharacteristicCommandHandler : BaseCommandHandler, IRequestHandler<EditFoodCharacteristicCommand>
 {
-    private readonly IFoodDbContext dbContext;
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public EditFoodCharacteristicCommandHandler(IFoodDbContext dbContext, ILoggedUserAccessor loggedUserAccessor)
+    public EditFoodCharacteristicCommandHandler(IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor,
+        IMapper mapper) : base(mapper, dbContext)
     {
-        this.dbContext = dbContext;
         this.loggedUserAccessor = loggedUserAccessor;
     }
     
     /// <inheritdoc />
     public async Task<Unit> Handle(EditFoodCharacteristicCommand request, CancellationToken cancellationToken)
     {
-        var foodCharacteristic = await dbContext.FoodCharacteristics
+        var foodCharacteristic = await DbContext.FoodCharacteristics
             .GetAsync(foodCharacteristic => foodCharacteristic.Id == request.FoodCharacteristicId,
                 cancellationToken);
         
@@ -40,7 +40,7 @@ internal class EditFoodCharacteristicCommandHandler : IRequestHandler<EditFoodCh
             foodCharacteristic.Value = request.Value;
         }
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await DbContext.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;
     }

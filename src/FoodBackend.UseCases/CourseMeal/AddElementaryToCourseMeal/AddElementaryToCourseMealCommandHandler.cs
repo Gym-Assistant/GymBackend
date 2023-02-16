@@ -1,6 +1,7 @@
-﻿using FoodBackend.Domain.Foodstuffs;
-using FoodBackend.Infrastructure.Abstractions.Interfaces;
+﻿using AutoMapper;
+using FoodBackend.Domain.Foodstuffs;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
+using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
@@ -11,24 +12,23 @@ namespace FoodBackend.UseCases.CourseMeal.AddElementaryToCourseMeal;
 /// <summary>
 /// Add elementary to course meal handler.
 /// </summary>
-internal class AddElementaryToCourseMealCommandHandler : IRequestHandler<AddElementaryToCourseMealCommand>
+internal class AddElementaryToCourseMealCommandHandler : BaseCommandHandler, IRequestHandler<AddElementaryToCourseMealCommand>
 {
-    private readonly IFoodDbContext dbContext;
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public AddElementaryToCourseMealCommandHandler(IFoodDbContext dbContext, ILoggedUserAccessor loggedUserAccessor)
+    public AddElementaryToCourseMealCommandHandler(IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor,
+        IMapper mapper) : base(mapper, dbContext)
     {
-        this.dbContext = dbContext;
         this.loggedUserAccessor = loggedUserAccessor;
     }
 
     /// <inheritdoc/>
     public async Task<Unit> Handle(AddElementaryToCourseMealCommand request, CancellationToken cancellationToken)
     {
-        var courseMeal = await dbContext.CourseMeals
+        var courseMeal = await DbContext.CourseMeals
             .Include(courseMeal => courseMeal.ConsumedFoodElementaries)
             .Include(courseMeal => courseMeal.ConsumedElementaryWeights)
             .GetAsync(courseMeal => courseMeal.Id == request.CourseMealId, cancellationToken);
@@ -37,7 +37,7 @@ internal class AddElementaryToCourseMealCommandHandler : IRequestHandler<AddElem
             throw new ForbiddenException("You can't edit course meal that not belong to you.");
         }
         
-        var foodElementary = await dbContext.FoodElementaries
+        var foodElementary = await DbContext.FoodElementaries
             .GetAsync(foodElementary => foodElementary.Id == request.FoodElementaryId, cancellationToken);
         courseMeal.ConsumedFoodElementaries.Add(foodElementary);
 
@@ -50,10 +50,10 @@ internal class AddElementaryToCourseMealCommandHandler : IRequestHandler<AddElem
             Weight = request.Weight,
             UserId = loggedUserAccessor.GetCurrentUserId()
         };
-        dbContext.ConsumedElementaryWeights.Add(consumedElementaryWeight);
+        DbContext.ConsumedElementaryWeights.Add(consumedElementaryWeight);
         courseMeal.ConsumedElementaryWeights.Add(consumedElementaryWeight);
         
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await DbContext.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;
     }

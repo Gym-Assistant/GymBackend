@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using FoodBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
+using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
 
 namespace FoodBackend.UseCases.FoodElementary.CreateFoodElementary;
@@ -8,29 +8,27 @@ namespace FoodBackend.UseCases.FoodElementary.CreateFoodElementary;
 /// <summary>
 /// Crete food elementary command handler.
 /// </summary>
-internal class CreateFoodElementaryCommandHandler : IRequestHandler<CreateFoodElementaryCommand, Guid>
+internal class CreateFoodElementaryCommandHandler : BaseCommandHandler,
+    IRequestHandler<CreateFoodElementaryCommand, Guid>
 {
-    private readonly IFoodDbContext dbContext;
-    private readonly IMapper mapper;
     private readonly ILoggedUserAccessor loggedUserAccessor;
-    
+
     /// <summary>
     /// Constructor.
     /// </summary>
-    public CreateFoodElementaryCommandHandler(IFoodDbContext dbContext, IMapper mapper, ILoggedUserAccessor loggedUserAccessor)
+    public CreateFoodElementaryCommandHandler(IAppDbContext dbContext, IMapper mapper,
+        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
     {
-        this.dbContext = dbContext;
-        this.mapper = mapper;
         this.loggedUserAccessor = loggedUserAccessor;
     }
     
     /// <inheritdoc />>
     public async Task<Guid> Handle(CreateFoodElementaryCommand request, CancellationToken cancellationToken)
     {
-        var food = mapper.Map<Domain.Foodstuffs.FoodElementary>(request);
+        var food = Mapper.Map<Domain.Foodstuffs.FoodElementary>(request);
         food.UserId = loggedUserAccessor.GetCurrentUserId();
-        dbContext.FoodElementaries.Add(food);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        DbContext.FoodElementaries.Add(food);
+        await DbContext.SaveChangesAsync(cancellationToken);
 
         return food.Id;
     }
