@@ -88,6 +88,7 @@ public class CourseMealController : ControllerBase
     /// <param name="command">Command.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPut("{courseMealId}/addfoodelementary")]
+    [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
     public async Task AddFoodElementaryToCourseMeal(Guid courseMealId, AddElementaryToCourseMealCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { CourseMealId = courseMealId }, cancellationToken);
 
@@ -98,6 +99,7 @@ public class CourseMealController : ControllerBase
     /// <param name="command">Command.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPut("{courseMealId}/addrecipe")]
+    [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
     public async Task AddFoodRecipeToCourseMeal(Guid courseMealId, AddRecipeToCourseMealCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { CourseMealId = courseMealId }, cancellationToken);
 }

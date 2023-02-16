@@ -90,6 +90,7 @@ public class FoodRecipeController
     /// <param name="command">Command.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPut("{foodRecipeId}/ingredients")]
+    [ApiExplorerSettings(GroupName = "ChangeFoodRecipe")]
     [Authorize]
     public async Task AddIngredientToFoodRecipe(Guid foodRecipeId, AddIngredientToRecipeCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { FoodRecipeId = foodRecipeId }, cancellationToken);
