@@ -1,5 +1,5 @@
 ﻿using FoodBackend.UseCases.Common.Dtos;
-using FoodBackend.UseCases.Common.Pagination;
+using GymBackend.UseCases.Common.Pagination;
 using MediatR;
 using Saritasa.Tools.Common.Pagination;
 
@@ -9,4 +9,4 @@ namespace FoodBackend.UseCases.FoodCharacteristic.GetAllFoodCharacteristicTypes;
 /// Get all food characteristic types query.
 /// </summary>
 public record GetAllFoodCharacteristicTypesQuery : 
-    PaginationParameters, IRequest<PagedListMetadataDto<LightFoodCharacteristicTypeDto>>;
+    PageQueryFilter, IRequest<PagedListMetadataDto<LightFoodCharacteristicTypeDto>>;
