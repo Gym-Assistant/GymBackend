@@ -30,7 +30,7 @@ internal class EditCourseMealCommandHandler : BaseCommandHandler, IRequestHandle
             .GetAsync(courseMeal => courseMeal.Id == request.CourseMealId, cancellationToken);
         if (courseMeal.UserId != loggedUserAccessor.GetCurrentUserId())
         {
-            throw new ForbiddenException("You can't edit course meal that you didn't create.");
+            throw new ForbiddenException("You can't edit course meal that you haven't created.");
         }
         
         if (request.MealTypeId != null)
