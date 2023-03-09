@@ -35,21 +35,10 @@ internal class CreateFoodCharacteristicCommandHandler : BaseCommandHandler, IReq
         {
             throw new ForbiddenException("You can't edit food elementary that you didn't create.");
         }
-        
-        var characteristicType = await DbContext.FoodCharacteristicTypes
-            .GetAsync(type => type.Id == request.CharacteristicTypeId, cancellationToken);
-        var foodCharacteristic = new Domain.Foodstuffs.FoodCharacteristic
-        {
-            FoodElementaryId = foodElementary.Id,
-            FoodElementary = foodElementary,
-            CharacteristicTypeId = characteristicType.Id,
-            CharacteristicType = characteristicType,
-            UserId = loggedUserAccessor.GetCurrentUserId(),
-            Value = request.Value
-        };
-        
-        foodElementary.Characteristics.Add(foodCharacteristic);
 
+        var foodCharacteristic = Mapper.Map<Domain.Foodstuffs.FoodCharacteristic>(request);
+        foodCharacteristic.UserId = loggedUserAccessor.GetCurrentUserId();
+        foodElementary.Characteristics.Add(foodCharacteristic);
         await DbContext.FoodCharacteristics.AddAsync(foodCharacteristic, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
 

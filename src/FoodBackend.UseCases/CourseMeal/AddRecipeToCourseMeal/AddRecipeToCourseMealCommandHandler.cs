@@ -40,19 +40,10 @@ internal class AddRecipeToCourseMealCommandHandler : BaseCommandHandler, IReques
         var foodRecipe = await DbContext.FoodRecipes
             .GetAsync(foodRecipe => foodRecipe.Id == request.FoodRecipeId, cancellationToken);
         courseMeal.ConsumedFoodRecipes.Add(foodRecipe);
-
-        var consumedRecipeWeight = new ConsumedRecipeWeight
-        {
-            FoodRecipeId = foodRecipe.Id,
-            FoodRecipe = foodRecipe,
-            CourseMealId = courseMeal.Id,
-            CourseMeal = courseMeal,
-            Weight = request.Weight,
-            UserId = loggedUserAccessor.GetCurrentUserId()
-        };
+        var consumedRecipeWeight = Mapper.Map<ConsumedRecipeWeight>(request);
+        consumedRecipeWeight.UserId = loggedUserAccessor.GetCurrentUserId();
         await DbContext.ConsumedRecipeWeights.AddAsync(consumedRecipeWeight, cancellationToken);
         courseMeal.ConsumedRecipeWeights.Add(consumedRecipeWeight);
-        
         await DbContext.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;

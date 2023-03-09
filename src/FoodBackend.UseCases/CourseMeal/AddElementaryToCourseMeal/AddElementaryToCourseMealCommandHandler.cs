@@ -40,19 +40,10 @@ internal class AddElementaryToCourseMealCommandHandler : BaseCommandHandler, IRe
         var foodElementary = await DbContext.FoodElementaries
             .GetAsync(foodElementary => foodElementary.Id == request.FoodElementaryId, cancellationToken);
         courseMeal.ConsumedFoodElementaries.Add(foodElementary);
-
-        var consumedElementaryWeight = new ConsumedElementaryWeight
-        {
-            FoodElementaryId = foodElementary.Id,
-            FoodElementary = foodElementary,
-            CourseMealId = courseMeal.Id,
-            CourseMeal = courseMeal,
-            Weight = request.Weight,
-            UserId = loggedUserAccessor.GetCurrentUserId()
-        };
+        var consumedElementaryWeight = Mapper.Map<ConsumedElementaryWeight>(request);
+        consumedElementaryWeight.UserId = loggedUserAccessor.GetCurrentUserId();
         await DbContext.ConsumedElementaryWeights.AddAsync(consumedElementaryWeight, cancellationToken);
         courseMeal.ConsumedElementaryWeights.Add(consumedElementaryWeight);
-        
         await DbContext.SaveChangesAsync(cancellationToken);
         
         return Unit.Value;

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FoodBackend.Domain.Foodstuffs;
 using FoodBackend.UseCases.Common.Dtos;
+using FoodBackend.UseCases.FoodRecipe.AddIngredientToRecipe;
 using FoodBackend.UseCases.FoodRecipe.CreateFoodRecipe;
 
 namespace FoodBackend.UseCases.FoodRecipe;
@@ -17,5 +19,6 @@ public class FoodRecipeMappingProfile : Profile
         // Command -> Entity.
         CreateMap<CreateFoodRecipeCommand, Domain.Foodstuffs.FoodRecipe>();
         CreateMap<Domain.Foodstuffs.FoodRecipe, LightFoodRecipeDto>();
+        CreateMap<AddIngredientToRecipeCommand, FoodElementaryWeight>();
     }
 }

@@ -40,18 +40,9 @@ internal class AddIngredientToRecipeCommandHandler : BaseCommandHandler, IReques
         var foodElementary = await DbContext.FoodElementaries
             .GetAsync(foodElementary => foodElementary.Id == request.FoodElementaryId, cancellationToken);
         foodRecipe.Ingredients.Add(foodElementary);
-
-        var elementaryWeight = new FoodElementaryWeight
-        {
-            FoodElementaryId = foodElementary.Id,
-            FoodElementary = foodElementary,
-            FoodRecipeId = foodRecipe.Id,
-            FoodRecipe = foodRecipe,
-            Weight = request.FoodElementaryWeight
-        };
+        var elementaryWeight = Mapper.Map<FoodElementaryWeight>(request);
         await DbContext.FoodElementaryWeights.AddAsync(elementaryWeight, cancellationToken);
         foodRecipe.IngredientWeights.Add(elementaryWeight);
-        
         await DbContext.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;

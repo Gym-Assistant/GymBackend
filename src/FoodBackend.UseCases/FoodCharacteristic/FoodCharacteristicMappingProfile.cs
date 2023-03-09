@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FoodBackend.Domain.Foodstuffs;
 using FoodBackend.UseCases.Common.Dtos;
+using FoodBackend.UseCases.FoodCharacteristic.CreateFoodCharacteristic;
 using FoodBackend.UseCases.FoodCharacteristic.CreateFoodCharacteristicType;
 
 namespace FoodBackend.UseCases.FoodCharacteristic;
@@ -21,5 +22,6 @@ public class FoodCharacteristicMappingProfile : Profile
             .ForMember(dest=> dest.FoodId, opt=>opt.MapFrom(src=>src.FoodElementaryId));
         CreateMap<Domain.Foodstuffs.FoodCharacteristic, DetailFoodCharacteristicDto>()
             .ForMember(dest=>dest.CharacteristicName, opt=>opt.MapFrom(src=>src.CharacteristicType.Name));
+        CreateMap<CreateFoodCharacteristicCommand, Domain.Foodstuffs.FoodCharacteristic>();
     }
 }

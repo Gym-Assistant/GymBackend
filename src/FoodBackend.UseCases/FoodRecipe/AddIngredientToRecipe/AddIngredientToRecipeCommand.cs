@@ -19,5 +19,5 @@ public record AddIngredientToRecipeCommand : IRequest
     /// <summary>
     /// Food elementary weight value in grams.
     /// </summary>
-    public double FoodElementaryWeight { get; init; }
+    public double Weight { get; init; }
 }
