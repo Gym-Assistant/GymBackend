@@ -97,6 +97,11 @@ public interface IAppDbContext : IDisposable
     DbSet<CourseMeal> CourseMeals { get; }
 
     /// <summary>
+    /// Course meal days.
+    /// </summary>
+    DbSet<CourseMealDay> CourseMealDays { get; }
+
+    /// <summary>
     /// Meal types.
     /// </summary>
     DbSet<MealType> MealTypes { get; }

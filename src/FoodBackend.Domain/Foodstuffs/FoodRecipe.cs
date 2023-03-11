@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using FoodBackend.Domain.MealStuffs;
 using GymBackend.Domain.Users;
 
 namespace FoodBackend.Domain.Foodstuffs;
@@ -43,4 +44,9 @@ public record FoodRecipe
     /// Ingredient weights collection.
     /// </summary>
     public ICollection<FoodElementaryWeight> IngredientWeights { get; set; }
+    
+    /// <summary>
+    /// Related course meals.
+    /// </summary>
+    public ICollection<CourseMeal> CourseMeals { get; set; }
 }

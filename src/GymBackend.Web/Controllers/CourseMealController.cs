@@ -1,7 +1,9 @@
 ﻿using FoodBackend.UseCases.Common.Dtos;
+using FoodBackend.UseCases.CourseMeal.AddCourseMealToDay;
 using FoodBackend.UseCases.CourseMeal.AddElementaryToCourseMeal;
 using FoodBackend.UseCases.CourseMeal.AddRecipeToCourseMeal;
 using FoodBackend.UseCases.CourseMeal.CreateCourseMeal;
+using FoodBackend.UseCases.CourseMeal.CreateCourseMealDay;
 using FoodBackend.UseCases.CourseMeal.EditCourseMeal;
 using FoodBackend.UseCases.CourseMeal.GetAllCourseMeal;
 using FoodBackend.UseCases.CourseMeal.GetCourseMealById;
@@ -102,4 +104,25 @@ public class CourseMealController : ControllerBase
     [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
     public async Task AddFoodRecipeToCourseMeal(Guid courseMealId, AddRecipeToCourseMealCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { CourseMealId = courseMealId }, cancellationToken);
+
+    /// <summary>
+    /// Create new course meal day.
+    /// </summary>
+    /// <param name="command">Command.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPost("coursemealday")]
+    [ApiExplorerSettings(GroupName = "CourseMealDay")]
+    public async Task<Guid> CreateCourseMealDay(CancellationToken cancellationToken)
+        => await mediator.Send(new CreateCourseMealDayCommand(), cancellationToken);
+
+    /// <summary>
+    /// Add course meal to day.
+    /// </summary>
+    /// <param name="command">Command.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <param name="courseMealDayId">Course meal day id.</param>
+    [HttpPut("coursemealday/{courseMealDayId}")]
+    [ApiExplorerSettings(GroupName = "CourseMealDay")]
+    public async Task<Unit> AddCourseMealToDay(Guid courseMealDayId, AddCourseMealToDayCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command with { CourseMealDayId = courseMealDayId }, cancellationToken);
 }

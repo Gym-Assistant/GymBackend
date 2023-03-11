@@ -46,9 +46,9 @@ public record CourseMeal
     public ICollection<ConsumedRecipeWeight> ConsumedRecipeWeights { get; set; }
 
     /// <summary>
-    /// Date when meal was created.
+    /// Time when meal was created.
     /// </summary>
-    public DateTime CreationDate { get; set; }
+    public TimeOnly CreatedAt { get; set; }
     
     /// <summary>
     /// Meal type id.

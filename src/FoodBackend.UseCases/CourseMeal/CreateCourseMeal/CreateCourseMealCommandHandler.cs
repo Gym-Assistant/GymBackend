@@ -31,7 +31,7 @@ internal class CreateCourseMealCommandHandler : BaseCommandHandler, IRequestHand
                 cancellationToken);
         courseMeal.MealType = mealType;
         courseMeal.UserId = loggedUserAccessor.GetCurrentUserId();
-        courseMeal.CreationDate = DateTime.UtcNow;
+        courseMeal.CreatedAt = TimeOnly.FromDateTime(DateTime.UtcNow);
         await DbContext.CourseMeals.AddAsync(courseMeal, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
 
