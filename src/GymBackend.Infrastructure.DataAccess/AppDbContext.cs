@@ -1,4 +1,6 @@
-﻿using GymBackend.Domain.Users;
+﻿using FoodBackend.Domain.Foodstuffs;
+using FoodBackend.Domain.MealStuffs;
+using GymBackend.Domain.Users;
 using GymBackend.Domain.Workouts;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +47,44 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
 
     /// <inheritdoc />
     public DbSet<WorkoutPackage> WorkoutPackages { get; private set; }
+
+    #endregion
+
+    #region Foods
+
+    /// <inheritdoc/>
+    public DbSet<FoodElementary> FoodElementaries { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<ConsumedElementaryWeight> ConsumedElementaryWeights { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<FoodRecipe> FoodRecipes { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<ConsumedRecipeWeight> ConsumedRecipeWeights { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<FoodElementaryWeight> FoodElementaryWeights { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<FoodCharacteristic> FoodCharacteristics { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<FoodCharacteristicType> FoodCharacteristicTypes { get; private set; }
+
+    #endregion
+
+    #region Meals
+
+    /// <inheritdoc/>
+    public DbSet<CourseMeal> CourseMeals { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<CourseMealDay> CourseMealDays { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<MealType> MealTypes { get; private set; }
 
     #endregion
 
@@ -141,6 +181,34 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
 
         modelBuilder.Entity<WorkoutPackage>()
             .HasIndex(p => p.CreatedById);
+
+        modelBuilder.Entity<FoodRecipe>()
+            .HasMany(p => p.Ingredients)
+            .WithMany(p => p.FoodRecipes)
+            .UsingEntity(p => p.ToTable(nameof(FoodRecipeFoodElementary)));
+
+        modelBuilder.Entity<CourseMeal>()
+            .HasMany(p => p.ConsumedFoodRecipes)
+            .WithMany(p => p.CourseMeals)
+            .UsingEntity(p => p.ToTable(nameof(CourseMealFoodRecipe)));
+
+        modelBuilder.Entity<CourseMeal>()
+            .HasMany(p => p.ConsumedFoodElementaries)
+            .WithMany(p => p.CourseMeals)
+            .UsingEntity(p => p.ToTable(nameof(CourseMealFoodElementary)));
+
+        modelBuilder.Entity<FoodCharacteristic>()
+            .HasIndex(p => p.UserId);
+
+        modelBuilder.Entity<FoodCharacteristic>()
+            .HasOne(p=>p.FoodElementary)
+            .WithMany(p=>p.Characteristics)
+            .HasForeignKey(p=>p.FoodElementaryId);
+
+        modelBuilder.Entity<FoodElementaryWeight>()
+            .HasOne(p=>p.FoodRecipe)
+            .WithMany(p=>p.IngredientWeights)
+            .HasForeignKey(p=>p.FoodRecipeId);
 
         SetupEnum(modelBuilder);
     }
