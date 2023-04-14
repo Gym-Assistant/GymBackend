@@ -11,7 +11,7 @@ namespace FoodBackend.UseCases.CourseMeal.AddCourseMealToDay;
 /// <summary>
 /// Add course meal to course meal day command handler.
 /// </summary>
-internal class AddCourseMealToDayCommandHandler : BaseCommandHandler, IRequestHandler<AddCourseMealToDayCommand>
+internal class AddCourseMealToDayCommandHandler : BaseCommandHandler, IRequestHandler<AddCourseMealToDayCommand, Unit>
 {
     private ILoggedUserAccessor loggedUserAccessor;
     

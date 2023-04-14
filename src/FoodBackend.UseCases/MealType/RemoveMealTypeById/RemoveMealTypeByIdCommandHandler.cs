@@ -10,7 +10,7 @@ namespace FoodBackend.UseCases.MealType.RemoveMealTypeById;
 /// <summary>
 /// Remove meal type by id command handler.
 /// </summary>
-internal class RemoveMealTypeByIdCommandHandler : BaseCommandHandler, IRequestHandler<RemoveMealTypeByIdCommand>
+internal class RemoveMealTypeByIdCommandHandler : BaseCommandHandler, IRequestHandler<RemoveMealTypeByIdCommand, Unit>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
@@ -36,7 +36,6 @@ internal class RemoveMealTypeByIdCommandHandler : BaseCommandHandler, IRequestHa
 
         DbContext.MealTypes.Remove(mealType);
         await DbContext.SaveChangesAsync(cancellationToken);
-        
         return Unit.Value;
     }
 }

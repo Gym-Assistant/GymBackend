@@ -10,7 +10,7 @@ namespace FoodBackend.UseCases.FoodElementary.DeleteFoodElementaryById;
 /// <summary>
 /// Remove food by id command handler.
 /// </summary>
-internal class RemoveFoodElementaryByIdCommandHandler : BaseCommandHandler, IRequestHandler<RemoveFoodElementaryByIdCommand>
+internal class RemoveFoodElementaryByIdCommandHandler : BaseCommandHandler, IRequestHandler<RemoveFoodElementaryByIdCommand, Unit>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 

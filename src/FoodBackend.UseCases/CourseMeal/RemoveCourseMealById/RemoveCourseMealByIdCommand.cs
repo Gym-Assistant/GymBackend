@@ -7,4 +7,4 @@ namespace FoodBackend.UseCases.CourseMeal.RemoveCourseMealById;
 /// Remove course meal by id command.
 /// </summary>
 /// <param name="CourseMealId">Course meal Id.</param>
-public record RemoveCourseMealByIdCommand(Guid CourseMealId) : IRequest;
+public record RemoveCourseMealByIdCommand(Guid CourseMealId) : IRequest<Unit>;

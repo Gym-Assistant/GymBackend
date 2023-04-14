@@ -3,7 +3,7 @@ using MediatR;
 
 namespace FoodBackend.UseCases.FoodRecipe.AddIngredientToRecipe;
 
-public record AddIngredientToRecipeCommand : IRequest
+public record AddIngredientToRecipeCommand : IRequest<Unit>
 {
     /// <summary>
     /// Recipe Id.

@@ -12,7 +12,7 @@ namespace FoodBackend.UseCases.CourseMeal.AddRecipeToCourseMeal;
 /// <summary>
 /// Add recipe to course meal command handler.
 /// </summary>
-internal class AddRecipeToCourseMealCommandHandler : BaseCommandHandler, IRequestHandler<AddRecipeToCourseMealCommand>
+internal class AddRecipeToCourseMealCommandHandler : BaseCommandHandler, IRequestHandler<AddRecipeToCourseMealCommand, Unit>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 

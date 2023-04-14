@@ -5,4 +5,4 @@ namespace FoodBackend.UseCases.FoodCharacteristic.RemoveFoodCharacteristicTypeBy
 /// <summary>
 /// Remove food characteristic type by id.
 /// </summary>
-public record RemoveFoodCharacteristicTypeByIdCommand(Guid FoodCharacteristicTypeId) : IRequest;
+public record RemoveFoodCharacteristicTypeByIdCommand(Guid FoodCharacteristicTypeId) : IRequest<Unit>;

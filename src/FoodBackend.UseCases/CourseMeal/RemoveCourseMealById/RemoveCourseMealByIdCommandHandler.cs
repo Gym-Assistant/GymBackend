@@ -10,7 +10,7 @@ namespace FoodBackend.UseCases.CourseMeal.RemoveCourseMealById;
 /// <summary>
 /// Remove food characteristic type by id command handler.
 /// </summary>
-internal class RemoveCourseMealByIdCommandHandler : BaseCommandHandler, IRequestHandler<RemoveCourseMealByIdCommand>
+internal class RemoveCourseMealByIdCommandHandler : BaseCommandHandler, IRequestHandler<RemoveCourseMealByIdCommand, Unit>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 

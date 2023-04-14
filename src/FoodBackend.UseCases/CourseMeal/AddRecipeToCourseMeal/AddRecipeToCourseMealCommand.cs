@@ -6,7 +6,7 @@ namespace FoodBackend.UseCases.CourseMeal.AddRecipeToCourseMeal;
 /// <summary>
 /// Add recipe to course meal command.
 /// </summary>
-public record AddRecipeToCourseMealCommand : IRequest
+public record AddRecipeToCourseMealCommand : IRequest<Unit>
 {
     /// <summary>
     /// Course meal id.

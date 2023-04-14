@@ -10,7 +10,7 @@ namespace FoodBackend.UseCases.FoodRecipe.EditFoodRecipe;
 /// <summary>
 /// Edit food recipe command handler.
 /// </summary>
-internal class EditFoodRecipeCommandHandler : BaseCommandHandler, IRequestHandler<EditFoodRecipeCommand>
+internal class EditFoodRecipeCommandHandler : BaseCommandHandler, IRequestHandler<EditFoodRecipeCommand, Unit>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
@@ -32,14 +32,11 @@ internal class EditFoodRecipeCommandHandler : BaseCommandHandler, IRequestHandle
         {
             throw new ForbiddenException("You can't edit food recipe that you didn't create.");
         }
-
         if (request.Name != null)
         {
             food.Name = request.Name;
         }
-
         await DbContext.SaveChangesAsync(cancellationToken);
-
         return Unit.Value;
     }
 }

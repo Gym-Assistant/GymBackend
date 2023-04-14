@@ -6,7 +6,7 @@ namespace FoodBackend.UseCases.MealType.EditMealType;
 /// <summary>
 /// Edit meal type command.
 /// </summary>
-public record EditMealTypeCommand : IRequest
+public record EditMealTypeCommand : IRequest<Unit>
 {
     /// <summary>
     /// Id.

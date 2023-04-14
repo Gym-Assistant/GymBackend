@@ -11,7 +11,7 @@ namespace FoodBackend.UseCases.FoodCharacteristic.RemoveFoodCharacteristicById;
 /// Remove food characteristic by id command handler.
 /// </summary>
 internal class RemoveFoodCharacteristicByIdCommandHandler : BaseCommandHandler,
-    IRequestHandler<RemoveFoodCharacteristicByIdCommand>
+    IRequestHandler<RemoveFoodCharacteristicByIdCommand, Unit>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 

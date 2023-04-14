@@ -10,7 +10,7 @@ namespace FoodBackend.UseCases.FoodCharacteristic.EditFoodCharacteristicType;
 /// <summary>
 /// Edit food characteristic type handler.
 /// </summary>
-internal class EditFoodCharacteristicTypeCommandHandler : BaseCommandHandler, IRequestHandler<EditFoodCharacteristicTypeCommand>
+internal class EditFoodCharacteristicTypeCommandHandler : BaseCommandHandler, IRequestHandler<EditFoodCharacteristicTypeCommand, Unit>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
