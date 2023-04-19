@@ -123,6 +123,6 @@ public class CourseMealController : ControllerBase
     /// <param name="courseMealDayId">Course meal day id.</param>
     [HttpPut("coursemealday/{courseMealDayId}")]
     [ApiExplorerSettings(GroupName = "CourseMealDay")]
-    public async Task<Unit> AddCourseMealToDay(Guid courseMealDayId, AddCourseMealToDayCommand command, CancellationToken cancellationToken)
+    public async Task AddCourseMealToDay(Guid courseMealDayId, AddCourseMealToDayCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { CourseMealDayId = courseMealDayId }, cancellationToken);
 }

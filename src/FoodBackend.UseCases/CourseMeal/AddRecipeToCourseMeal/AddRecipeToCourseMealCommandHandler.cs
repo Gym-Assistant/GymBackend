@@ -26,7 +26,7 @@ internal class AddRecipeToCourseMealCommandHandler : BaseCommandHandler, IReques
     }
 
     /// <inheritdoc/>
-    public async Task<Unit> Handle(AddRecipeToCourseMealCommand request, CancellationToken cancellationToken)
+    public async Task Handle(AddRecipeToCourseMealCommand request, CancellationToken cancellationToken)
     {
         var courseMeal = await DbContext.CourseMeals
             .Include(courseMeal => courseMeal.ConsumedFoodRecipes)
@@ -45,7 +45,5 @@ internal class AddRecipeToCourseMealCommandHandler : BaseCommandHandler, IReques
         await DbContext.ConsumedRecipeWeights.AddAsync(consumedRecipeWeight, cancellationToken);
         courseMeal.ConsumedRecipeWeights.Add(consumedRecipeWeight);
         await DbContext.SaveChangesAsync(cancellationToken);
-        
-        return Unit.Value;
     }
 }

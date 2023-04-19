@@ -12,7 +12,7 @@ namespace FoodBackend.UseCases.FoodRecipe.AddIngredientToRecipe;
 /// <summary>
 /// Add ingredient to recipe command handler.
 /// </summary>
-internal class AddIngredientToRecipeCommandHandler : BaseCommandHandler, IRequestHandler<AddIngredientToRecipeCommand>
+internal class AddIngredientToRecipeCommandHandler : BaseCommandHandler, IRequestHandler<AddIngredientToRecipeCommand, Unit>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 

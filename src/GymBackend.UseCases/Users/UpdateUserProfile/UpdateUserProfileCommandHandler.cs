@@ -23,7 +23,7 @@ internal class UpdateUserProfileCommandHandler : BaseCommandHandler, IRequestHan
     }
 
     /// <inheritdoc />
-    public async Task<Unit> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
     {
         if (request.Id != loggedUserAccessor.GetCurrentUserId())
         {
@@ -41,7 +41,5 @@ internal class UpdateUserProfileCommandHandler : BaseCommandHandler, IRequestHan
         }
 
         await DbContext.SaveChangesAsync(cancellationToken);
-
-        return Unit.Value;
     }
 }

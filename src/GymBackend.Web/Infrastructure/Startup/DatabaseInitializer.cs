@@ -21,8 +21,8 @@ internal sealed class DatabaseInitializer : IAsyncInitializer
     }
 
     /// <inheritdoc />
-    public async Task InitializeAsync()
+    public async Task InitializeAsync(CancellationToken cancellationToken)
     {
-        await appDbContext.Database.MigrateAsync();
+        await appDbContext.Database.MigrateAsync(cancellationToken);
     }
 }

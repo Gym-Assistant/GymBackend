@@ -24,7 +24,7 @@ internal class EditFoodCharacteristicTypeCommandHandler : BaseCommandHandler, IR
     }
     
     /// <inheritdoc />
-    public async Task<Unit> Handle(EditFoodCharacteristicTypeCommand request, CancellationToken cancellationToken)
+    public async Task Handle(EditFoodCharacteristicTypeCommand request, CancellationToken cancellationToken)
     {
         var foodCharacteristicType = await DbContext.FoodCharacteristicTypes.GetAsync(
             foodCharacteristicType => foodCharacteristicType.Id == request.FoodCharacteristicTypeId, cancellationToken);
@@ -40,7 +40,5 @@ internal class EditFoodCharacteristicTypeCommandHandler : BaseCommandHandler, IR
         }
 
         await DbContext.SaveChangesAsync(cancellationToken);
-        
-        return Unit.Value;
     }
 }

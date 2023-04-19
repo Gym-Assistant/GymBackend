@@ -10,7 +10,7 @@ namespace FoodBackend.UseCases.MealType.EditMealType;
 /// <summary>
 /// Edit meal type handler.
 /// </summary>
-internal class EditMealTypeCommandHandler : BaseCommandHandler, IRequestHandler<EditMealTypeCommand>
+internal class EditMealTypeCommandHandler : BaseCommandHandler, IRequestHandler<EditMealTypeCommand, Unit>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
@@ -32,14 +32,11 @@ internal class EditMealTypeCommandHandler : BaseCommandHandler, IRequestHandler<
         {
             throw new ForbiddenException("You can't edit meal type that you didn't create.");
         }
-        
         if (request.Name != null)
         {
             mealType.Name = request.Name;
         }
-
         await DbContext.SaveChangesAsync(cancellationToken);
-        
         return Unit.Value;
     }
 }

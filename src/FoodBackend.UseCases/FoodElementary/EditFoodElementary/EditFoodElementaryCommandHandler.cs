@@ -10,7 +10,7 @@ namespace FoodBackend.UseCases.FoodElementary.EditFoodElementary;
 /// <summary>
 /// Edit food elementary command handler.
 /// </summary>
-internal class EditFoodElementaryCommandHandler : BaseCommandHandler, IRequestHandler<EditFoodElementaryCommand>
+internal class EditFoodElementaryCommandHandler : BaseCommandHandler, IRequestHandler<EditFoodElementaryCommand, Unit>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
