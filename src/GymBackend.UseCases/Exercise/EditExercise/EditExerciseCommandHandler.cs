@@ -23,7 +23,7 @@ public class EditExerciseCommandHandler : BaseCommandHandler, IRequestHandler<Ed
     }
 
     /// <inheritdoc />
-    public async Task<Unit> Handle(EditExerciseCommand request, CancellationToken cancellationToken)
+    public async Task Handle(EditExerciseCommand request, CancellationToken cancellationToken)
     {
         var exercise = await DbContext.Exercises.GetAsync(exercise => exercise.Id == request.Id, cancellationToken);
         if (exercise.CreatedById != loggedUserAccessor.GetCurrentUserId())
@@ -42,7 +42,5 @@ public class EditExerciseCommandHandler : BaseCommandHandler, IRequestHandler<Ed
         }
 
         await DbContext.SaveChangesAsync(cancellationToken);
-
-        return Unit.Value;
     }
 }

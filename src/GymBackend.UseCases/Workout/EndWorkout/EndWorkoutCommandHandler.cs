@@ -24,7 +24,7 @@ public class EndWorkoutCommandHandler : BaseCommandHandler, IRequestHandler<EndW
     }
 
     /// <inheritdoc />
-    public async Task<Unit> Handle(EndWorkoutCommand request, CancellationToken cancellationToken)
+    public async Task Handle(EndWorkoutCommand request, CancellationToken cancellationToken)
     {
         var workout = await DbContext.Workouts.GetAsync(workout => workout.Id == request.WorkoutId, cancellationToken);
 
@@ -35,7 +35,5 @@ public class EndWorkoutCommandHandler : BaseCommandHandler, IRequestHandler<EndW
 
         workout.WorkoutStatus = WorkoutStatus.IsOver;
         await DbContext.SaveChangesAsync(cancellationToken);
-
-        return Unit.Value;
     }
 }

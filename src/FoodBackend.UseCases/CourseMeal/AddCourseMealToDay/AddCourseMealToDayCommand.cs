@@ -6,7 +6,7 @@ namespace FoodBackend.UseCases.CourseMeal.AddCourseMealToDay;
 /// <summary>
 /// Add course meal to course meal day command.
 /// </summary>
-public record AddCourseMealToDayCommand : IRequest<Unit>
+public record AddCourseMealToDayCommand : IRequest
 {
     /// <summary>
     /// Course meal day id.

@@ -10,7 +10,7 @@ namespace GymBackend.UseCases.Workout.RemoveWorkout;
 /// <summary>
 /// Handler for <see cref="RemoveWorkoutByIdCommand"/>.
 /// </summary>
-public class RemoveWorkoutByIdCommandHandler : BaseCommandHandler, IRequestHandler<RemoveWorkoutByIdCommand, Unit>
+public class RemoveWorkoutByIdCommandHandler : BaseCommandHandler, IRequestHandler<RemoveWorkoutByIdCommand>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
@@ -24,7 +24,7 @@ public class RemoveWorkoutByIdCommandHandler : BaseCommandHandler, IRequestHandl
     }
 
     /// <inheritdoc />
-    public async Task<Unit> Handle(RemoveWorkoutByIdCommand request, CancellationToken cancellationToken)
+    public async Task Handle(RemoveWorkoutByIdCommand request, CancellationToken cancellationToken)
     {
         var workout = await DbContext.Workouts.GetAsync(workout => workout.Id == request.WorkoutId, cancellationToken);
 
@@ -35,6 +35,5 @@ public class RemoveWorkoutByIdCommandHandler : BaseCommandHandler, IRequestHandl
 
         DbContext.Workouts.Remove(workout);
         await DbContext.SaveChangesAsync(cancellationToken);
-        return Unit.Value;
     }
 }

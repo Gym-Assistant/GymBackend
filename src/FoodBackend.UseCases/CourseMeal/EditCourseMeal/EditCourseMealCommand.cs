@@ -6,7 +6,7 @@ namespace FoodBackend.UseCases.CourseMeal.EditCourseMeal;
 /// <summary>
 /// Edit course meal command.
 /// </summary>
-public record EditCourseMealCommand : IRequest<Unit>
+public record EditCourseMealCommand : IRequest
 {
     /// <summary>
     /// Id.

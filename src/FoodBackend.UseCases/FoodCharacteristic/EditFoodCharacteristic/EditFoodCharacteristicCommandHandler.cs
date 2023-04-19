@@ -10,7 +10,7 @@ namespace FoodBackend.UseCases.FoodCharacteristic.EditFoodCharacteristic;
 /// <summary>
 /// Edit food characteristic handler.
 /// </summary>
-internal class EditFoodCharacteristicCommandHandler : BaseCommandHandler, IRequestHandler<EditFoodCharacteristicCommand, Unit>
+internal class EditFoodCharacteristicCommandHandler : BaseCommandHandler, IRequestHandler<EditFoodCharacteristicCommand>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
@@ -24,7 +24,7 @@ internal class EditFoodCharacteristicCommandHandler : BaseCommandHandler, IReque
     }
     
     /// <inheritdoc />
-    public async Task<Unit> Handle(EditFoodCharacteristicCommand request, CancellationToken cancellationToken)
+    public async Task Handle(EditFoodCharacteristicCommand request, CancellationToken cancellationToken)
     {
         var foodCharacteristic = await DbContext.FoodCharacteristics
             .GetAsync(foodCharacteristic => foodCharacteristic.Id == request.FoodCharacteristicId,
@@ -41,7 +41,5 @@ internal class EditFoodCharacteristicCommandHandler : BaseCommandHandler, IReque
         }
 
         await DbContext.SaveChangesAsync(cancellationToken);
-        
-        return Unit.Value;
     }
 }

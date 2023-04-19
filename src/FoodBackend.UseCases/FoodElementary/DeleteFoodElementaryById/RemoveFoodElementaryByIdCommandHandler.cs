@@ -10,7 +10,7 @@ namespace FoodBackend.UseCases.FoodElementary.DeleteFoodElementaryById;
 /// <summary>
 /// Remove food by id command handler.
 /// </summary>
-internal class RemoveFoodElementaryByIdCommandHandler : BaseCommandHandler, IRequestHandler<RemoveFoodElementaryByIdCommand, Unit>
+internal class RemoveFoodElementaryByIdCommandHandler : BaseCommandHandler, IRequestHandler<RemoveFoodElementaryByIdCommand>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
@@ -24,7 +24,7 @@ internal class RemoveFoodElementaryByIdCommandHandler : BaseCommandHandler, IReq
     }
     
     /// <inheritdoc />
-    public async Task<Unit> Handle(RemoveFoodElementaryByIdCommand request, CancellationToken cancellationToken)
+    public async Task Handle(RemoveFoodElementaryByIdCommand request, CancellationToken cancellationToken)
     {
         var food = await DbContext.FoodElementaries
             .GetAsync(food => food.Id == request.FoodElementaryId, cancellationToken);
@@ -36,7 +36,5 @@ internal class RemoveFoodElementaryByIdCommandHandler : BaseCommandHandler, IReq
         
         DbContext.FoodElementaries.Remove(food);
         await DbContext.SaveChangesAsync(cancellationToken);
-        
-        return Unit.Value;
     }
 }

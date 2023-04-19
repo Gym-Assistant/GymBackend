@@ -11,7 +11,7 @@ namespace GymBackend.UseCases.Users.DeleteCharacteristicStampById;
 /// <summary>
 /// Handler for <see cref="DeleteCharacteristicStampByIdCommand"/>.
 /// </summary>
-internal class DeleteCharacteristicStampByIdCommandHandler : BaseCommandHandler, IRequestHandler<DeleteCharacteristicStampByIdCommand, Unit>
+internal class DeleteCharacteristicStampByIdCommandHandler : BaseCommandHandler, IRequestHandler<DeleteCharacteristicStampByIdCommand>
 {
     /// <summary>
     /// Constructor.
@@ -21,7 +21,7 @@ internal class DeleteCharacteristicStampByIdCommandHandler : BaseCommandHandler,
     }
 
     /// <inheritdoc />
-    public async Task<Unit> Handle(DeleteCharacteristicStampByIdCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteCharacteristicStampByIdCommand request, CancellationToken cancellationToken)
     {
         var characteristicStamp =
             await DbContext.CharacteristicStamps
@@ -36,7 +36,5 @@ internal class DeleteCharacteristicStampByIdCommandHandler : BaseCommandHandler,
 
         DbContext.CharacteristicStamps.Remove(characteristicStamp);
         await DbContext.SaveChangesAsync(cancellationToken);
-
-        return Unit.Value;
     }
 }

@@ -11,7 +11,7 @@ namespace FoodBackend.UseCases.CourseMeal.AddCourseMealToDay;
 /// <summary>
 /// Add course meal to course meal day command handler.
 /// </summary>
-internal class AddCourseMealToDayCommandHandler : BaseCommandHandler, IRequestHandler<AddCourseMealToDayCommand, Unit>
+internal class AddCourseMealToDayCommandHandler : BaseCommandHandler, IRequestHandler<AddCourseMealToDayCommand>
 {
     private ILoggedUserAccessor loggedUserAccessor;
     
@@ -27,7 +27,7 @@ internal class AddCourseMealToDayCommandHandler : BaseCommandHandler, IRequestHa
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public async Task<Unit> Handle(AddCourseMealToDayCommand request, CancellationToken cancellationToken)
+    public async Task Handle(AddCourseMealToDayCommand request, CancellationToken cancellationToken)
     {
         var courseMealDay = await DbContext.CourseMealDays
             .Include(courseMealDay => courseMealDay.CourseMeals)
@@ -44,7 +44,5 @@ internal class AddCourseMealToDayCommandHandler : BaseCommandHandler, IRequestHa
         }
         courseMealDay.CourseMeals.Add(courseMeal);
         await DbContext.SaveChangesAsync(cancellationToken);
-        
-        return Unit.Value;
     }
 }

@@ -6,7 +6,7 @@ namespace FoodBackend.UseCases.FoodCharacteristic.EditFoodCharacteristicType;
 /// <summary>
 /// Edit food characteristic type command.
 /// </summary>
-public record EditFoodCharacteristicTypeCommand : IRequest<Unit>
+public record EditFoodCharacteristicTypeCommand : IRequest
 {
     /// <summary>
     /// Id.

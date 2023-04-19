@@ -11,7 +11,7 @@ namespace GymBackend.UseCases.Users.ActivateCharacteristicById;
 /// <summary>
 /// Handler for <see cref="ChangeActivateStatusCharacteristicByIdCommand"/>.
 /// </summary>
-internal class ChangeActivateStatusCharacteristicByIdCommandHandler : BaseCommandHandler, IRequestHandler<ChangeActivateStatusCharacteristicByIdCommand, Unit>
+internal class ChangeActivateStatusCharacteristicByIdCommandHandler : BaseCommandHandler, IRequestHandler<ChangeActivateStatusCharacteristicByIdCommand>
 {
     /// <summary>
     /// Constructor.
@@ -21,7 +21,7 @@ internal class ChangeActivateStatusCharacteristicByIdCommandHandler : BaseComman
     }
 
     /// <inheritdoc />
-    public async Task<Unit> Handle(ChangeActivateStatusCharacteristicByIdCommand request, CancellationToken cancellationToken)
+    public async Task Handle(ChangeActivateStatusCharacteristicByIdCommand request, CancellationToken cancellationToken)
     {
         var characteristic =
             await DbContext.UserCharacteristics
@@ -39,7 +39,5 @@ internal class ChangeActivateStatusCharacteristicByIdCommandHandler : BaseComman
         };
         DbContext.UserCharacteristics.Update(characteristic);
         await DbContext.SaveChangesAsync(cancellationToken);
-
-        return Unit.Value;
     }
 }

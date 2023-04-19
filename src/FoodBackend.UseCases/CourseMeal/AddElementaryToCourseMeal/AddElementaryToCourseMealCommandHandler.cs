@@ -12,7 +12,7 @@ namespace FoodBackend.UseCases.CourseMeal.AddElementaryToCourseMeal;
 /// <summary>
 /// Add elementary to course meal handler.
 /// </summary>
-internal class AddElementaryToCourseMealCommandHandler : BaseCommandHandler, IRequestHandler<AddElementaryToCourseMealCommand, Unit>
+internal class AddElementaryToCourseMealCommandHandler : BaseCommandHandler, IRequestHandler<AddElementaryToCourseMealCommand>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
@@ -26,7 +26,7 @@ internal class AddElementaryToCourseMealCommandHandler : BaseCommandHandler, IRe
     }
 
     /// <inheritdoc/>
-    public async Task<Unit> Handle(AddElementaryToCourseMealCommand request, CancellationToken cancellationToken)
+    public async Task Handle(AddElementaryToCourseMealCommand request, CancellationToken cancellationToken)
     {
         var courseMeal = await DbContext.CourseMeals
             .Include(courseMeal => courseMeal.ConsumedFoodElementaries)
@@ -45,7 +45,5 @@ internal class AddElementaryToCourseMealCommandHandler : BaseCommandHandler, IRe
         await DbContext.ConsumedElementaryWeights.AddAsync(consumedElementaryWeight, cancellationToken);
         courseMeal.ConsumedElementaryWeights.Add(consumedElementaryWeight);
         await DbContext.SaveChangesAsync(cancellationToken);
-
-        return Unit.Value;
     }
 }

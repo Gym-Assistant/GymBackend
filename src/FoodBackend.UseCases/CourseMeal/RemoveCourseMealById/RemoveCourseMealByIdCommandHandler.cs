@@ -10,7 +10,7 @@ namespace FoodBackend.UseCases.CourseMeal.RemoveCourseMealById;
 /// <summary>
 /// Remove food characteristic type by id command handler.
 /// </summary>
-internal class RemoveCourseMealByIdCommandHandler : BaseCommandHandler, IRequestHandler<RemoveCourseMealByIdCommand, Unit>
+internal class RemoveCourseMealByIdCommandHandler : BaseCommandHandler, IRequestHandler<RemoveCourseMealByIdCommand>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
@@ -24,7 +24,7 @@ internal class RemoveCourseMealByIdCommandHandler : BaseCommandHandler, IRequest
     }
 
     /// <inheritdoc />
-    public async Task<Unit> Handle(RemoveCourseMealByIdCommand request, CancellationToken cancellationToken)
+    public async Task Handle(RemoveCourseMealByIdCommand request, CancellationToken cancellationToken)
     {
         var courseMeal = await DbContext.CourseMeals
             .GetAsync(courseMeal => courseMeal.Id == request.CourseMealId,
@@ -36,7 +36,5 @@ internal class RemoveCourseMealByIdCommandHandler : BaseCommandHandler, IRequest
 
         DbContext.CourseMeals.Remove(courseMeal);
         await DbContext.SaveChangesAsync(cancellationToken);
-        
-        return Unit.Value;
     }
 }

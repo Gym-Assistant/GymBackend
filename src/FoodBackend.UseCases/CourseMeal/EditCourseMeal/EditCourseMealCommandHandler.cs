@@ -10,7 +10,7 @@ namespace FoodBackend.UseCases.CourseMeal.EditCourseMeal;
 /// <summary>
 /// Edit food characteristic type handler.
 /// </summary>
-internal class EditCourseMealCommandHandler : BaseCommandHandler, IRequestHandler<EditCourseMealCommand, Unit>
+internal class EditCourseMealCommandHandler : BaseCommandHandler, IRequestHandler<EditCourseMealCommand>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
@@ -24,7 +24,7 @@ internal class EditCourseMealCommandHandler : BaseCommandHandler, IRequestHandle
     }
     
     /// <inheritdoc />
-    public async Task<Unit> Handle(EditCourseMealCommand request, CancellationToken cancellationToken)
+    public async Task Handle(EditCourseMealCommand request, CancellationToken cancellationToken)
     {
         var courseMeal = await DbContext.CourseMeals
             .GetAsync(courseMeal => courseMeal.Id == request.CourseMealId, cancellationToken);
@@ -39,7 +39,5 @@ internal class EditCourseMealCommandHandler : BaseCommandHandler, IRequestHandle
         }
 
         await DbContext.SaveChangesAsync(cancellationToken);
-        
-        return Unit.Value;
     }
 }

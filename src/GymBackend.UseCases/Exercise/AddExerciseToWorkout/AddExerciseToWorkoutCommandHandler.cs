@@ -25,7 +25,7 @@ public class AddExerciseToWorkoutCommandHandler : BaseCommandHandler, IRequestHa
     }
 
     /// <inheritdoc />
-    public async Task<Unit> Handle(AddExerciseToWorkoutCommand request, CancellationToken cancellationToken)
+    public async Task Handle(AddExerciseToWorkoutCommand request, CancellationToken cancellationToken)
     {
         var workout = await DbContext.Workouts
             .Include(workout => workout.Exercises)
@@ -41,7 +41,5 @@ public class AddExerciseToWorkoutCommandHandler : BaseCommandHandler, IRequestHa
 
         workout.Exercises.Add(exercise);
         await DbContext.SaveChangesAsync(cancellationToken);
-
-        return Unit.Value;
     }
 }

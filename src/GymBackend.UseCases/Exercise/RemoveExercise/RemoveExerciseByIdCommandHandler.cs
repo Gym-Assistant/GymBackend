@@ -23,7 +23,7 @@ public class RemoveExerciseByIdCommandHandler : BaseCommandHandler, IRequestHand
     }
 
     /// <inheritdoc />
-    public async Task<Unit> Handle(RemoveExerciseByIdCommand request, CancellationToken cancellationToken)
+    public async Task Handle(RemoveExerciseByIdCommand request, CancellationToken cancellationToken)
     {
         var exercise = await DbContext.Exercises.GetAsync(exercise => exercise.Id == request.ExerciseId, cancellationToken);
         if (exercise.CreatedById != loggedUserAccessor.GetCurrentUserId())
@@ -33,6 +33,5 @@ public class RemoveExerciseByIdCommandHandler : BaseCommandHandler, IRequestHand
 
         DbContext.Exercises.Remove(exercise);
         await DbContext.SaveChangesAsync(cancellationToken);
-        return Unit.Value;
     }
 }
