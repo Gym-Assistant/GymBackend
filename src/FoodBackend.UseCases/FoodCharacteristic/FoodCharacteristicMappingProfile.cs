@@ -21,7 +21,8 @@ public class FoodCharacteristicMappingProfile : Profile
         CreateMap<Domain.Foodstuffs.FoodCharacteristic, LightFoodCharacteristicDto>()
             .ForMember(dest=> dest.FoodId, opt=>opt.MapFrom(src=>src.FoodElementaryId));
         CreateMap<Domain.Foodstuffs.FoodCharacteristic, DetailFoodCharacteristicDto>()
-            .ForMember(dest=>dest.CharacteristicName, opt=>opt.MapFrom(src=>src.CharacteristicType.Name));
+            .ForMember(dest=>dest.CharacteristicName, opt=>opt.MapFrom(src=>src.CharacteristicType.Name))
+            .ForMember(dest=>dest.FoodCharacteristicId, opt=>opt.MapFrom(src=>src.Id));
         CreateMap<CreateFoodCharacteristicCommand, Domain.Foodstuffs.FoodCharacteristic>();
     }
 }

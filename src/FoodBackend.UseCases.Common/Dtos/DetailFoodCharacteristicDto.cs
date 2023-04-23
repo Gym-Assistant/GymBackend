@@ -6,6 +6,11 @@
 public record DetailFoodCharacteristicDto
 {
     /// <summary>
+    /// Food characteristic id.
+    /// </summary>
+    public Guid FoodCharacteristicId { get; init; }
+
+    /// <summary>
     /// Food characteristic name.
     /// </summary>
     public string CharacteristicName { get; init; }
