@@ -2,6 +2,8 @@
 using FoodBackend.UseCases.CourseMeal.AddCourseMealToDay;
 using FoodBackend.UseCases.CourseMeal.AddElementaryToCourseMeal;
 using FoodBackend.UseCases.CourseMeal.AddRecipeToCourseMeal;
+using FoodBackend.UseCases.CourseMeal.ChangeElementaryWeightInCourseMeal;
+using FoodBackend.UseCases.CourseMeal.ChangeRecipeWeightInCourseMeal;
 using FoodBackend.UseCases.CourseMeal.CreateCourseMeal;
 using FoodBackend.UseCases.CourseMeal.CreateCourseMealDay;
 using FoodBackend.UseCases.CourseMeal.EditCourseMeal;
@@ -129,6 +131,32 @@ public class CourseMealController : ControllerBase
     [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
     public async Task RemoveFoodRecipeFromCourseMeal(Guid courseMealId, Guid foodRecipeId, CancellationToken cancellationToken)
         => await mediator.Send(new RemoveRecipeFromCourseMealCommand(foodRecipeId, courseMealId), cancellationToken);
+
+    /// <summary>
+    /// Change food elementary weight in course meal.
+    /// </summary>
+    /// <param name="courseMealId">Course meal id.</param>
+    /// <param name="foodElementaryId">Food elementary id.</param>
+    /// <param name="command">Command.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPut("{courseMealId}/consumedelementaries/{foodElementaryId}")]
+    [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
+    public async Task ChangeElementaryWeightInCourseMeal(Guid courseMealId, Guid foodElementaryId,
+        ChangeElementaryWeightInCourseMealCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command with { CourseMealId = courseMealId, FoodElementaryId = foodElementaryId},cancellationToken);
+
+    /// <summary>
+    /// Change food recipe weight in course meal.
+    /// </summary>
+    /// <param name="courseMealId">Course meal id.</param>
+    /// <param name="foodRecipeId">Food recipe id.</param>
+    /// <param name="command">Command.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPut("{courseMealId}/consumedrecipes/{foodRecipeId}")]
+    [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
+    public async Task ChangeRecipeWeightInCourseMeal(Guid courseMealId, Guid foodRecipeId,
+        ChangeRecipeWeightInCourseMealCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command with { CourseMealId = courseMealId, FoodRecipeId = foodRecipeId},cancellationToken);
 
     /// <summary>
     /// Create new course meal day.

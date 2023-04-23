@@ -1,5 +1,7 @@
 ﻿using FoodBackend.UseCases.Common.Dtos;
+using FoodBackend.UseCases.CourseMeal.ChangeElementaryWeightInCourseMeal;
 using FoodBackend.UseCases.FoodRecipe.AddIngredientToRecipe;
+using FoodBackend.UseCases.FoodRecipe.ChangeElementaryWeightInFoodRecipe;
 using FoodBackend.UseCases.FoodRecipe.CreateFoodRecipe;
 using FoodBackend.UseCases.FoodRecipe.DeleteFoodRecipeById;
 using FoodBackend.UseCases.FoodRecipe.EditFoodRecipe;
@@ -107,4 +109,18 @@ public class FoodRecipeController
     [Authorize]
     public async Task RemoveIngredientFromFoodRecipe(Guid foodRecipeId, Guid foodElementaryId, CancellationToken cancellationToken)
         => await mediator.Send(new RemoveIngredientFromRecipeCommand(foodRecipeId, foodElementaryId), cancellationToken);
+
+    /// <summary>
+    /// Change food elementary weight in food recipe.
+    /// </summary>
+    /// <param name="foodRecipeId">Food recipe id.</param>
+    /// <param name="foodElementaryId">Food elementary id.</param>
+    /// <param name="command">Command.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPut("{foodRecipeId}/ingredients/{foodElementaryId}")]
+    [ApiExplorerSettings(GroupName = "ChangeFoodRecipe")]
+    [Authorize]
+    public async Task ChangeElementaryWeightInFoodRecipe(Guid foodRecipeId, Guid foodElementaryId,
+        ChangeElementaryWeightInRecipeCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command with { FoodRecipeId = foodRecipeId, FoodElementaryId = foodElementaryId},cancellationToken);
 }
