@@ -9,6 +9,8 @@ using FoodBackend.UseCases.CourseMeal.GetAllCourseMeal;
 using FoodBackend.UseCases.CourseMeal.GetCourseMealById;
 using FoodBackend.UseCases.CourseMeal.RemoveCourseMealById;
 using FoodBackend.UseCases.CourseMeal.RemoveCourseMealDayById;
+using FoodBackend.UseCases.CourseMeal.RemoveElementaryFromCourseMeal;
+using FoodBackend.UseCases.CourseMeal.RemoveRecipeFromCourseMeal;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -105,6 +107,28 @@ public class CourseMealController : ControllerBase
     [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
     public async Task AddFoodRecipeToCourseMeal(Guid courseMealId, AddRecipeToCourseMealCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { CourseMealId = courseMealId }, cancellationToken);
+
+    /// <summary>
+    /// Remove food elementary from course meal.
+    /// </summary>
+    /// <param name="courseMealId">Course meal id.</param>
+    /// <param name="foodElementaryId">Food elementary id.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpDelete("{courseMealId}/consumedelementaries/{foodElementaryId}")]
+    [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
+    public async Task RemoveFoodElementaryFromCourseMeal(Guid courseMealId, Guid foodElementaryId, CancellationToken cancellationToken)
+        => await mediator.Send(new RemoveElementaryFromCourseMealCommand(foodElementaryId, courseMealId), cancellationToken);
+
+    /// <summary>
+    /// Remove food recipe from course meal.
+    /// </summary>
+    /// <param name="courseMealId">Course meal id.</param>
+    /// <param name="foodRecipeId">Food recipe id.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpDelete("{courseMealId}/consumedrecipes/{foodRecipeId}")]
+    [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
+    public async Task RemoveFoodRecipeFromCourseMeal(Guid courseMealId, Guid foodRecipeId, CancellationToken cancellationToken)
+        => await mediator.Send(new RemoveRecipeFromCourseMealCommand(foodRecipeId, courseMealId), cancellationToken);
 
     /// <summary>
     /// Create new course meal day.
