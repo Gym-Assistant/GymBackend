@@ -10,5 +10,10 @@ public record CreateCourseMealCommand : IRequest<Guid>
     /// <summary>
     /// Meal type id.
     /// </summary>
-    public Guid MealTypeId { get; set; }
+    public Guid MealTypeId { get; init; }
+    
+    /// <summary>
+    /// Course meal day id.
+    /// </summary>
+    public Guid CourseMealDayId { get; init; }
 }

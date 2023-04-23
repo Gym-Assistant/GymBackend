@@ -210,6 +210,11 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
             .WithMany(p=>p.IngredientWeights)
             .HasForeignKey(p=>p.FoodRecipeId);
 
+        modelBuilder.Entity<CourseMealDay>()
+            .HasMany(p=>p.CourseMeals)
+            .WithOne(p=>p.CourseMealDay)
+            .HasForeignKey(p=>p.CourseMealDayId);
+
         SetupEnum(modelBuilder);
     }
 

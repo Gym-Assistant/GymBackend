@@ -5,6 +5,7 @@ using FoodBackend.UseCases.FoodRecipe.DeleteFoodRecipeById;
 using FoodBackend.UseCases.FoodRecipe.EditFoodRecipe;
 using FoodBackend.UseCases.FoodRecipe.GetAllFoodRecipe;
 using FoodBackend.UseCases.FoodRecipe.GetFoodRecipeById;
+using FoodBackend.UseCases.FoodRecipe.RemoveIngredientFromRecipe;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -94,4 +95,16 @@ public class FoodRecipeController
     [Authorize]
     public async Task AddIngredientToFoodRecipe(Guid foodRecipeId, AddIngredientToRecipeCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { FoodRecipeId = foodRecipeId }, cancellationToken);
+
+    /// <summary>
+    /// Remove food elementary from recipe.
+    /// </summary>
+    /// <param name="foodRecipeId">Food recipe id.</param>
+    /// <param name="foodElementaryId">Food elementary id.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpDelete("{foodRecipeId}/ingredients/{foodElementaryId}")]
+    [ApiExplorerSettings(GroupName = "ChangeFoodRecipe")]
+    [Authorize]
+    public async Task RemoveIngredientFromFoodRecipe(Guid foodRecipeId, Guid foodElementaryId, CancellationToken cancellationToken)
+        => await mediator.Send(new RemoveIngredientFromRecipeCommand(foodRecipeId, foodElementaryId), cancellationToken);
 }

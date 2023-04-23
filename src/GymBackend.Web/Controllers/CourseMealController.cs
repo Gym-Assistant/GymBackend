@@ -8,6 +8,7 @@ using FoodBackend.UseCases.CourseMeal.EditCourseMeal;
 using FoodBackend.UseCases.CourseMeal.GetAllCourseMeal;
 using FoodBackend.UseCases.CourseMeal.GetCourseMealById;
 using FoodBackend.UseCases.CourseMeal.RemoveCourseMealById;
+using FoodBackend.UseCases.CourseMeal.RemoveCourseMealDayById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -108,7 +109,6 @@ public class CourseMealController : ControllerBase
     /// <summary>
     /// Create new course meal day.
     /// </summary>
-    /// <param name="command">Command.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPost("coursemealday")]
     [ApiExplorerSettings(GroupName = "CourseMealDay")]
@@ -125,4 +125,14 @@ public class CourseMealController : ControllerBase
     [ApiExplorerSettings(GroupName = "CourseMealDay")]
     public async Task AddCourseMealToDay(Guid courseMealDayId, AddCourseMealToDayCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { CourseMealDayId = courseMealDayId }, cancellationToken);
+
+    /// <summary>
+    /// Delete course meal day.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <param name="courseMealDayId">Course meal day id.</param>
+    [HttpDelete("coursemealday/{courseMealDayId}")]
+    [ApiExplorerSettings(GroupName = "CourseMealDay")]
+    public async Task RemoveCourseMealDay(Guid courseMealDayId, CancellationToken cancellationToken)
+        => await mediator.Send(new RemoveCourseMealDayByIdCommand(courseMealDayId), cancellationToken);
 }
