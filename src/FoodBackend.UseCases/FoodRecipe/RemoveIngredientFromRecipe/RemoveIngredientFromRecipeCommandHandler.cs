@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FoodBackend.Domain.Foodstuffs;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
@@ -7,26 +6,26 @@ using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Saritasa.Tools.EFCore;
 
-namespace FoodBackend.UseCases.FoodRecipe.AddIngredientToRecipe;
+namespace FoodBackend.UseCases.FoodRecipe.RemoveIngredientFromRecipe;
 
 /// <summary>
-/// Add ingredient to recipe command handler.
+/// Remove ingredient from recipe command handler.
 /// </summary>
-internal class AddIngredientToRecipeCommandHandler : BaseCommandHandler, IRequestHandler<AddIngredientToRecipeCommand>
+internal class RemoveIngredientFromRecipeCommandHandler : BaseCommandHandler, IRequestHandler<RemoveIngredientFromRecipeCommand>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public AddIngredientToRecipeCommandHandler(IAppDbContext dbContext, IMapper mapper,
+    public RemoveIngredientFromRecipeCommandHandler(IMapper mapper, IAppDbContext dbContext,
         ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
     {
         this.loggedUserAccessor = loggedUserAccessor;
     }
-    
-    /// <inheritdoc />
-    public async Task Handle(AddIngredientToRecipeCommand request, CancellationToken cancellationToken)
+
+    /// <inheritdoc/>
+    public async Task Handle(RemoveIngredientFromRecipeCommand request, CancellationToken cancellationToken)
     {
         var foodRecipe = await DbContext.FoodRecipes
             .Include(foodRecipe => foodRecipe.Ingredients)
@@ -39,10 +38,12 @@ internal class AddIngredientToRecipeCommandHandler : BaseCommandHandler, IReques
         
         var foodElementary = await DbContext.FoodElementaries
             .GetAsync(foodElementary => foodElementary.Id == request.FoodElementaryId, cancellationToken);
-        foodRecipe.Ingredients.Add(foodElementary);
-        var elementaryWeight = Mapper.Map<FoodElementaryWeight>(request);
-        await DbContext.FoodElementaryWeights.AddAsync(elementaryWeight, cancellationToken);
-        foodRecipe.IngredientWeights.Add(elementaryWeight);
+        foodRecipe.Ingredients.Remove(foodElementary);
+        var elementaryWeight = await DbContext.FoodElementaryWeights
+            .GetAsync(foodElementaryWeight => foodElementaryWeight.FoodElementaryId == request.FoodElementaryId &&
+                                              foodElementaryWeight.FoodRecipeId == request.FoodRecipeId, cancellationToken);
+        DbContext.FoodElementaryWeights.Remove(elementaryWeight);
+        foodRecipe.IngredientWeights.Remove(elementaryWeight);
         await DbContext.SaveChangesAsync(cancellationToken);
     }
 }

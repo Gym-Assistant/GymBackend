@@ -2,6 +2,8 @@
 using FoodBackend.UseCases.CourseMeal.AddCourseMealToDay;
 using FoodBackend.UseCases.CourseMeal.AddElementaryToCourseMeal;
 using FoodBackend.UseCases.CourseMeal.AddRecipeToCourseMeal;
+using FoodBackend.UseCases.CourseMeal.ChangeElementaryWeightInCourseMeal;
+using FoodBackend.UseCases.CourseMeal.ChangeRecipeWeightInCourseMeal;
 using FoodBackend.UseCases.CourseMeal.CreateCourseMeal;
 using FoodBackend.UseCases.CourseMeal.CreateCourseMealDay;
 using FoodBackend.UseCases.CourseMeal.EditCourseMeal;
@@ -10,6 +12,9 @@ using FoodBackend.UseCases.CourseMeal.GetAllCourseMealDay;
 using FoodBackend.UseCases.CourseMeal.GetCourseMealById;
 using FoodBackend.UseCases.CourseMeal.GetCourseMealDayById;
 using FoodBackend.UseCases.CourseMeal.RemoveCourseMealById;
+using FoodBackend.UseCases.CourseMeal.RemoveCourseMealDayById;
+using FoodBackend.UseCases.CourseMeal.RemoveElementaryFromCourseMeal;
+using FoodBackend.UseCases.CourseMeal.RemoveRecipeFromCourseMeal;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -106,6 +111,54 @@ public class CourseMealController : ControllerBase
         => await mediator.Send(command with { CourseMealId = courseMealId }, cancellationToken);
 
     /// <summary>
+    /// Remove food elementary from course meal.
+    /// </summary>
+    /// <param name="courseMealId">Course meal id.</param>
+    /// <param name="foodElementaryId">Food elementary id.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpDelete("{courseMealId}/consumedelementaries/{foodElementaryId}")]
+    [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
+    public async Task RemoveFoodElementaryFromCourseMeal(Guid courseMealId, Guid foodElementaryId, CancellationToken cancellationToken)
+        => await mediator.Send(new RemoveElementaryFromCourseMealCommand(foodElementaryId, courseMealId), cancellationToken);
+
+    /// <summary>
+    /// Remove food recipe from course meal.
+    /// </summary>
+    /// <param name="courseMealId">Course meal id.</param>
+    /// <param name="foodRecipeId">Food recipe id.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpDelete("{courseMealId}/consumedrecipes/{foodRecipeId}")]
+    [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
+    public async Task RemoveFoodRecipeFromCourseMeal(Guid courseMealId, Guid foodRecipeId, CancellationToken cancellationToken)
+        => await mediator.Send(new RemoveRecipeFromCourseMealCommand(foodRecipeId, courseMealId), cancellationToken);
+
+    /// <summary>
+    /// Change food elementary weight in course meal.
+    /// </summary>
+    /// <param name="courseMealId">Course meal id.</param>
+    /// <param name="foodElementaryId">Food elementary id.</param>
+    /// <param name="command">Command.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPut("{courseMealId}/consumedelementaries/{foodElementaryId}")]
+    [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
+    public async Task ChangeElementaryWeightInCourseMeal(Guid courseMealId, Guid foodElementaryId,
+        ChangeElementaryWeightInCourseMealCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command with { CourseMealId = courseMealId, FoodElementaryId = foodElementaryId},cancellationToken);
+
+    /// <summary>
+    /// Change food recipe weight in course meal.
+    /// </summary>
+    /// <param name="courseMealId">Course meal id.</param>
+    /// <param name="foodRecipeId">Food recipe id.</param>
+    /// <param name="command">Command.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPut("{courseMealId}/consumedrecipes/{foodRecipeId}")]
+    [ApiExplorerSettings(GroupName = "ChangeCourseMeal")]
+    public async Task ChangeRecipeWeightInCourseMeal(Guid courseMealId, Guid foodRecipeId,
+        ChangeRecipeWeightInCourseMealCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command with { CourseMealId = courseMealId, FoodRecipeId = foodRecipeId},cancellationToken);
+
+    /// <summary>
     /// Create new course meal day.
     /// </summary>
     /// <param name="cancellationToken">Cancellation token.</param>
@@ -124,6 +177,16 @@ public class CourseMealController : ControllerBase
     [ApiExplorerSettings(GroupName = "CourseMealDay")]
     public async Task AddCourseMealToDay(Guid courseMealDayId, AddCourseMealToDayCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { CourseMealDayId = courseMealDayId }, cancellationToken);
+
+    /// <summary>
+    /// Delete course meal day.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <param name="courseMealDayId">Course meal day id.</param>
+    [HttpDelete("coursemealday/{courseMealDayId}")]
+    [ApiExplorerSettings(GroupName = "CourseMealDay")]
+    public async Task RemoveCourseMealDay(Guid courseMealDayId, CancellationToken cancellationToken)
+        => await mediator.Send(new RemoveCourseMealDayByIdCommand(courseMealDayId), cancellationToken);
 
     /// <summary>
     /// Get all course meal days.
