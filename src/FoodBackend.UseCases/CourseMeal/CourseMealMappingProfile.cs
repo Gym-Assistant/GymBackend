@@ -22,5 +22,11 @@ public class CourseMealMappingProfile : Profile
         CreateMap<AddElementaryToCourseMealCommand, ConsumedElementaryWeight>();
         CreateMap<AddRecipeToCourseMealCommand, ConsumedRecipeWeight>();
         CreateMap<Domain.MealStuffs.CourseMealDay, LightCourseMealDayDto>();
+        CreateMap<Domain.MealStuffs.CourseMeal, DetailCourseMealDto>();
+        CreateMap<ConsumedRecipeWeight, ConsumedRecipeWeightDto>();
+        CreateMap<ConsumedElementaryWeight, ConsumedElementaryWeightDto>();
+        CreateMap<ConsumedRecipeWeight, ConsumedRecipeWeightDto>();
+        CreateMap<Domain.Foodstuffs.FoodElementary, LightFoodElementaryDto>();
+        CreateMap<Domain.Foodstuffs.FoodRecipe, LightFoodRecipeDto>();
     }
 }
