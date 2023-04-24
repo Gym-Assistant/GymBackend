@@ -14,17 +14,22 @@ namespace FoodBackend.UseCases.CourseMeal.GetCourseMealById;
 internal class GetCourseMealByIdQueryHandler : 
     BaseQueryHandler, IRequestHandler<GetCourseMealByIdQuery, LightCourseMealDto>
 {
+    private readonly ILoggedUserAccessor loggedUserAccessor;
+
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetCourseMealByIdQueryHandler(IAppDbContext dbContext, IMapper mapper) : base(mapper, dbContext)
+    public GetCourseMealByIdQueryHandler(IAppDbContext dbContext, IMapper mapper,
+        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
     {
+        this.loggedUserAccessor = loggedUserAccessor;
     }
     
     /// <inheritdoc />
     public async Task<LightCourseMealDto> Handle(GetCourseMealByIdQuery request, CancellationToken cancellationToken)
     {
         var courseMeal = await DbContext.CourseMeals
+            .Where(meal => meal.UserId == loggedUserAccessor.GetCurrentUserId())
             .ProjectTo<LightCourseMealDto>(Mapper.ConfigurationProvider)
             .GetAsync(courseMeal => courseMeal.Id == request.CourseMealId,
                 cancellationToken);

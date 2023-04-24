@@ -15,11 +15,15 @@ namespace FoodBackend.UseCases.CourseMeal.GetAllCourseMeal;
 internal class GetAllCourseMealQueryHandler : 
     BaseQueryHandler, IRequestHandler<GetAllCourseMealQuery, PagedListMetadataDto<LightCourseMealDto>>
 {
+    private readonly ILoggedUserAccessor loggedUserAccessor;
+
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetAllCourseMealQueryHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
+    public GetAllCourseMealQueryHandler(IMapper mapper, IAppDbContext dbContext,
+        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
     {
+        this.loggedUserAccessor = loggedUserAccessor;
     }
 
     /// <inheritdoc />
@@ -27,6 +31,7 @@ internal class GetAllCourseMealQueryHandler :
         CancellationToken cancellationToken)
     {
         var courseMealsQuery = DbContext.CourseMeals
+            .Where(meal => meal.UserId == loggedUserAccessor.GetCurrentUserId())
             .ProjectTo<LightCourseMealDto>(Mapper.ConfigurationProvider);
         var pagedCourseMealsQuery = await
             EFPagedListFactory.FromSourceAsync(courseMealsQuery, request.Page, request.PageSize, 
