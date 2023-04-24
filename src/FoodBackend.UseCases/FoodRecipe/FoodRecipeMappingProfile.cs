@@ -20,5 +20,7 @@ public class FoodRecipeMappingProfile : Profile
         CreateMap<CreateFoodRecipeCommand, Domain.Foodstuffs.FoodRecipe>();
         CreateMap<Domain.Foodstuffs.FoodRecipe, LightFoodRecipeDto>();
         CreateMap<AddIngredientToRecipeCommand, FoodElementaryWeight>();
+        CreateMap<FoodElementaryWeight, FoodElementaryWeightDto>();
+        CreateMap<Domain.Foodstuffs.FoodRecipe, DetailFoodRecipeDto>();
     }
 }

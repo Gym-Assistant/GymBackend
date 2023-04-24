@@ -4,7 +4,9 @@ using FoodBackend.UseCases.FoodRecipe.CreateFoodRecipe;
 using FoodBackend.UseCases.FoodRecipe.DeleteFoodRecipeById;
 using FoodBackend.UseCases.FoodRecipe.EditFoodRecipe;
 using FoodBackend.UseCases.FoodRecipe.GetAllFoodRecipe;
+using FoodBackend.UseCases.FoodRecipe.GetAllFoodRecipeDetail;
 using FoodBackend.UseCases.FoodRecipe.GetFoodRecipeById;
+using FoodBackend.UseCases.FoodRecipe.GetFoodRecipeByIdDetail;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +33,7 @@ public class FoodRecipeController
     }
 
     /// <summary>
-    /// Get all food recipes.
+    /// Get all food recipes with minimum information.
     /// </summary>
     /// <param name="query">Query.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
@@ -42,7 +44,7 @@ public class FoodRecipeController
         => await mediator.Send(query, cancellationToken);
 
     /// <summary>
-    /// Get food recipe by id.
+    /// Get food recipe by id with minimum information.
     /// </summary>
     /// <param name="foodRecipeId">Food recipe id.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
@@ -94,4 +96,25 @@ public class FoodRecipeController
     [Authorize]
     public async Task AddIngredientToFoodRecipe(Guid foodRecipeId, AddIngredientToRecipeCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { FoodRecipeId = foodRecipeId }, cancellationToken);
+
+    /// <summary>
+    /// Get all food recipes with detail information.
+    /// </summary>
+    /// <param name="query">Query.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Paged list.</returns>
+    [HttpGet("/detail")]
+    public async Task<PagedListMetadataDto<DetailFoodRecipeDto>> GetAllFoodRecipesDetail([FromQuery] GetAllFoodRecipeDetailQuery query,
+        CancellationToken cancellationToken)
+        => await mediator.Send(query, cancellationToken);
+
+    /// <summary>
+    /// Get food recipe by id with detail information.
+    /// </summary>
+    /// <param name="foodRecipeId">Food recipe id.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Food recipe by entered id.</returns>
+    [HttpGet("{foodRecipeId}/detail")]
+    public async Task<DetailFoodRecipeDto> GetFoodRecipeByIdDetail(Guid foodRecipeId, CancellationToken cancellationToken)
+        => await mediator.Send(new GetFoodRecipeByIdDetailQuery(foodRecipeId), cancellationToken);
 }
