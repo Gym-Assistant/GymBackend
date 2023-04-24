@@ -27,9 +27,11 @@ internal class CreateCourseMealCommandHandler : BaseCommandHandler, IRequestHand
     {
         var courseMeal = Mapper.Map<Domain.MealStuffs.CourseMeal>(request);
         var mealType = await DbContext.MealTypes
-            .GetAsync(mealType => mealType.Id == request.MealTypeId,
-                cancellationToken);
+            .GetAsync(mealType => mealType.Id == request.MealTypeId, cancellationToken);
+        var courseMealDay = await DbContext.CourseMealDays
+            .GetAsync(courseMealDay => courseMealDay.Id == request.CourseMealDayId, cancellationToken);
         courseMeal.MealType = mealType;
+        courseMeal.CourseMealDay = courseMealDay;
         courseMeal.UserId = loggedUserAccessor.GetCurrentUserId();
         courseMeal.CreatedAt = TimeOnly.FromDateTime(DateTime.UtcNow);
         await DbContext.CourseMeals.AddAsync(courseMeal, cancellationToken);

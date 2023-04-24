@@ -59,4 +59,14 @@ public record CourseMeal
     /// Meal type.
     /// </summary>
     public MealType MealType { get; set; }
+
+    /// <summary>
+    /// Course meal day id.
+    /// </summary>
+    public Guid CourseMealDayId { get; set; }
+    
+    /// <summary>
+    /// Course meal day id.
+    /// </summary>
+    public CourseMealDay CourseMealDay { get; set; }
 }
