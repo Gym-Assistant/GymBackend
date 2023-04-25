@@ -8,4 +8,4 @@ namespace FoodBackend.UseCases.FoodElementary.GetAllFoodElementariesDetail;
 /// <summary>
 /// Get all food elementaries with detail info query.
 /// </summary>
-public record GetAllFoodElementariesDetailQuery : PageQueryFilter, IRequest<PagedListMetadataDto<DetailFoodElementaryDto>>;
+public record GetAllFoodElementariesDetailQuery(Guid? UserId) : PageQueryFilter, IRequest<PagedListMetadataDto<DetailFoodElementaryDto>>;

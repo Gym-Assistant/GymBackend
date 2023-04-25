@@ -16,6 +16,11 @@ public record DetailFoodElementaryDto
     public string Name { get; init; }
     
     /// <summary>
+    /// Id of creator.
+    /// </summary>
+    public Guid? UserId { get; set; }
+    
+    /// <summary>
     /// Food elementary characteristics.
     /// </summary>
     public ICollection<DetailFoodCharacteristicDto> Characteristics { get; init; }

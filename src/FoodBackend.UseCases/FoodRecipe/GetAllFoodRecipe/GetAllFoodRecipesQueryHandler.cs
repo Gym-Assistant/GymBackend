@@ -26,6 +26,10 @@ internal class GetAllFoodRecipesQueryHandler : BaseQueryHandler, IRequestHandler
     {
         var foodsQuery = DbContext.FoodRecipes
             .ProjectTo<LightFoodRecipeDto>(Mapper.ConfigurationProvider);
+        if (request.UserId != null)
+        {
+            foodsQuery = foodsQuery.Where(foodElementary => foodElementary.UserId == request.UserId);
+        }
         var pagedFoodsQuery = await
             EFPagedListFactory.FromSourceAsync(foodsQuery, request.Page, request.PageSize, cancellationToken);
 
