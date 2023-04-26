@@ -101,7 +101,7 @@ public class FoodElementaryController
     /// <param name="foodElementaryId">Food elementary id.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Food elementary by entered id.</returns>
-    [HttpGet("detail/{foodElementaryId}")]
+    [HttpGet("{foodElementaryId}/detail")]
     public async Task<DetailFoodElementaryDto> GetFoodElementaryDetailById(Guid foodElementaryId, CancellationToken cancellationToken)
         => await mediator.Send(new GetFoodElementaryDetailByIdQuery(foodElementaryId), cancellationToken);
 }

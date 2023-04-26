@@ -13,5 +13,10 @@ public record LightFoodElementaryDto
     /// <summary>
     /// Food elementary name.
     /// </summary>
-    public string Name { get; init; } 
+    public string Name { get; init; }
+    
+    /// <summary>
+    /// Id of creator.
+    /// </summary>
+    public Guid? UserId { get; set; }
 }

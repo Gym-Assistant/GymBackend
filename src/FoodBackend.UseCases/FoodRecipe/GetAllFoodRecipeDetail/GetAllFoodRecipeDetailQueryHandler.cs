@@ -7,26 +7,27 @@ using MediatR;
 using Saritasa.Tools.Common.Pagination;
 using Saritasa.Tools.EFCore.Pagination;
 
-namespace FoodBackend.UseCases.FoodElementary.GetAllFoodElementaries;
+namespace FoodBackend.UseCases.FoodRecipe.GetAllFoodRecipeDetail;
 
 /// <summary>
-/// Get all food elementaries query handler.
+/// Get all food recipes with detail information query handler.
 /// </summary>
-internal class GetAllFoodElementariesQueryHandler : BaseQueryHandler,
-    IRequestHandler<GetAllFoodElementariesQuery, PagedListMetadataDto<LightFoodElementaryDto>>
+internal class GetAllFoodRecipeDetailQueryHandler : BaseQueryHandler, IRequestHandler<GetAllFoodRecipeDetailQuery, PagedListMetadataDto<DetailFoodRecipeDto>>
 {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetAllFoodElementariesQueryHandler(IAppDbContext dbContext, IMapper mapper) : base(mapper, dbContext)
+    public GetAllFoodRecipeDetailQueryHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
     {
     }
 
-    /// <inheritdoc />
-    public async Task<PagedListMetadataDto<LightFoodElementaryDto>> Handle(GetAllFoodElementariesQuery request, CancellationToken cancellationToken)
+    /// <summary>
+    /// <inheritdoc/>>
+    /// </summary>
+    public async Task<PagedListMetadataDto<DetailFoodRecipeDto>> Handle(GetAllFoodRecipeDetailQuery request, CancellationToken cancellationToken)
     {
-        var foodsQuery = DbContext.FoodElementaries
-            .ProjectTo<LightFoodElementaryDto>(Mapper.ConfigurationProvider);
+        var foodsQuery = DbContext.FoodRecipes
+            .ProjectTo<DetailFoodRecipeDto>(Mapper.ConfigurationProvider);
         if (request.UserId != null)
         {
             foodsQuery = foodsQuery.Where(foodElementary => foodElementary.UserId == request.UserId);

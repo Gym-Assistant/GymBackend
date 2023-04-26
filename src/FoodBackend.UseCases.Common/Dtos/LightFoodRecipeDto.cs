@@ -13,5 +13,10 @@ public record LightFoodRecipeDto
     /// <summary>
     /// Food recipe name.
     /// </summary>
-    public string Name { get; init; } 
+    public string Name { get; init; }
+    
+    /// <summary>
+    /// Id of creator.
+    /// </summary>
+    public Guid? UserId { get; set; }
 }
