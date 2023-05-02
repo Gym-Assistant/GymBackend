@@ -106,7 +106,7 @@ public class FoodRecipeController
     /// <param name="query">Query.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Paged list.</returns>
-    [HttpGet("/detail")]
+    [HttpGet("detail")]
     public async Task<PagedListMetadataDto<DetailFoodRecipeDto>> GetAllFoodRecipesDetail([FromQuery] GetAllFoodRecipeDetailQuery query,
         CancellationToken cancellationToken)
         => await mediator.Send(query, cancellationToken);
@@ -120,7 +120,7 @@ public class FoodRecipeController
     [HttpGet("{foodRecipeId}/detail")]
     public async Task<DetailFoodRecipeDto> GetFoodRecipeByIdDetail(Guid foodRecipeId, CancellationToken cancellationToken)
         => await mediator.Send(new GetFoodRecipeByIdDetailQuery(foodRecipeId), cancellationToken);
-    
+
     /// <summary>
     /// Remove food elementary from recipe.
     /// </summary>
