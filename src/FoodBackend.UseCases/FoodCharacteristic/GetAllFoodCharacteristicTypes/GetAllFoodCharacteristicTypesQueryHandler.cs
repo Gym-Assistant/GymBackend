@@ -13,7 +13,7 @@ namespace FoodBackend.UseCases.FoodCharacteristic.GetAllFoodCharacteristicTypes;
 /// Get all food characteristic types query handler.
 /// </summary>
 internal class GetAllFoodCharacteristicTypesQueryHandler : BaseQueryHandler,
-    IRequestHandler<GetAllFoodCharacteristicTypesQuery, PagedListMetadataDto<LightFoodCharacteristicTypeDto>>
+    IRequestHandler<GetAllFoodCharacteristicTypesQuery, PagedListMetadataDto<FoodCharacteristicTypeDto>>
 {
     /// <summary>
     /// Constructor.
@@ -23,11 +23,15 @@ internal class GetAllFoodCharacteristicTypesQueryHandler : BaseQueryHandler,
     }
 
     /// <inheritdoc />
-    public async Task<PagedListMetadataDto<LightFoodCharacteristicTypeDto>> Handle(GetAllFoodCharacteristicTypesQuery request,
+    public async Task<PagedListMetadataDto<FoodCharacteristicTypeDto>> Handle(GetAllFoodCharacteristicTypesQuery request,
         CancellationToken cancellationToken)
     {
         var foodCharacteristicTypesQuery = DbContext.FoodCharacteristicTypes
-            .ProjectTo<LightFoodCharacteristicTypeDto>(Mapper.ConfigurationProvider);
+            .ProjectTo<FoodCharacteristicTypeDto>(Mapper.ConfigurationProvider);
+        if (request.UserId != null)
+        {
+            foodCharacteristicTypesQuery = foodCharacteristicTypesQuery.Where(foodCharacteristic => foodCharacteristic.UserId == request.UserId);
+        }
         var pagedFoodCharacteristicTypesQuery = await
             EFPagedListFactory.FromSourceAsync(foodCharacteristicTypesQuery, request.Page, request.PageSize, 
                 cancellationToken);

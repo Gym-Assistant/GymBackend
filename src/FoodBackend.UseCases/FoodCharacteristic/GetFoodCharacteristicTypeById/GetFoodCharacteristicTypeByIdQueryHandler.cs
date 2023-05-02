@@ -12,7 +12,7 @@ namespace FoodBackend.UseCases.FoodCharacteristic.GetFoodCharacteristicTypeById;
 /// Get food characteristic type query handler.
 /// </summary>
 internal class GetFoodCharacteristicTypeByIdQueryHandler : BaseQueryHandler, 
-    IRequestHandler<GetFoodCharacteristicTypeByIdQuery, LightFoodCharacteristicTypeDto>
+    IRequestHandler<GetFoodCharacteristicTypeByIdQuery, FoodCharacteristicTypeDto>
 {
     /// <summary>
     /// Constructor.
@@ -22,10 +22,10 @@ internal class GetFoodCharacteristicTypeByIdQueryHandler : BaseQueryHandler,
     }
     
     /// <inheritdoc />
-    public async Task<LightFoodCharacteristicTypeDto> Handle(GetFoodCharacteristicTypeByIdQuery request, CancellationToken cancellationToken)
+    public async Task<FoodCharacteristicTypeDto> Handle(GetFoodCharacteristicTypeByIdQuery request, CancellationToken cancellationToken)
     {
         var foodCharacteristicType = await DbContext.FoodCharacteristicTypes
-            .ProjectTo<LightFoodCharacteristicTypeDto>(Mapper.ConfigurationProvider)
+            .ProjectTo<FoodCharacteristicTypeDto>(Mapper.ConfigurationProvider)
             .GetAsync(foodCharacteristicType => foodCharacteristicType.Id == request.FoodCharacteristicTypeId,
                 cancellationToken);
 

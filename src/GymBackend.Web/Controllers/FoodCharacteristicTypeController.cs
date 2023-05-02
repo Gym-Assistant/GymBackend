@@ -36,7 +36,7 @@ public class FoodCharacteristicTypeController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Paged list.</returns>
     [HttpGet]
-    public async Task<PagedListMetadataDto<LightFoodCharacteristicTypeDto>> GetAllFoodCharacteristicType(
+    public async Task<PagedListMetadataDto<FoodCharacteristicTypeDto>> GetAllFoodCharacteristicType(
         [FromQuery] GetAllFoodCharacteristicTypesQuery query, CancellationToken cancellationToken)
         => await mediator.Send(query, cancellationToken);
 
@@ -47,7 +47,7 @@ public class FoodCharacteristicTypeController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Food characteristic type by entered id.</returns>
     [HttpGet("{foodCharacteristicTypeId}")]
-    public async Task<LightFoodCharacteristicTypeDto> GetFoodCharacteristicTypeById(
+    public async Task<FoodCharacteristicTypeDto> GetFoodCharacteristicTypeById(
         Guid foodCharacteristicTypeId, CancellationToken cancellationToken)
         => await mediator.Send(new GetFoodCharacteristicTypeByIdQuery(foodCharacteristicTypeId), cancellationToken);
 

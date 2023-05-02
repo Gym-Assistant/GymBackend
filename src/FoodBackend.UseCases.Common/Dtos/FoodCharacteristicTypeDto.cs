@@ -3,11 +3,17 @@
 /// <summary>
 /// Food characteristic type DTO with minimum information.
 /// </summary>
-public record LightFoodCharacteristicTypeDto
+public record FoodCharacteristicTypeDto
 {
     /// <inheritdoc />
     public Guid Id { get; init; }
 
     /// <inheritdoc />
     public string Name { get; init; }
+
+    /// <inheritdoc />
+    public Guid? UserId { get; set; }
+    
+    /// <inheritdoc />
+    public bool IsDefault { get; set; }
 }

@@ -17,7 +17,7 @@ public class FoodCharacteristicMappingProfile : Profile
     public FoodCharacteristicMappingProfile()
     {
         CreateMap<CreateFoodCharacteristicTypeCommand, FoodCharacteristicType>();
-        CreateMap<FoodCharacteristicType, LightFoodCharacteristicTypeDto>();
+        CreateMap<FoodCharacteristicType, FoodCharacteristicTypeDto>();
         CreateMap<Domain.Foodstuffs.FoodCharacteristic, LightFoodCharacteristicDto>()
             .ForMember(dest=> dest.FoodId, opt=>opt.MapFrom(src=>src.FoodElementaryId));
         CreateMap<Domain.Foodstuffs.FoodCharacteristic, DetailFoodCharacteristicDto>()
