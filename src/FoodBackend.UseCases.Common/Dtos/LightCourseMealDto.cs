@@ -23,5 +23,5 @@ public class LightCourseMealDto
     /// <summary>
     /// Date when meal was created.
     /// </summary>
-    public DateTime CreationTime { get; init; }
+    public TimeOnly CreationTime { get; init; }
 }

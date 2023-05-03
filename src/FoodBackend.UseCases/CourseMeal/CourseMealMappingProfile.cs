@@ -18,7 +18,8 @@ public class CourseMealMappingProfile : Profile
     public CourseMealMappingProfile()
     {
         CreateMap<CreateCourseMealCommand, Domain.MealStuffs.CourseMeal>();
-        CreateMap<Domain.MealStuffs.CourseMeal, LightCourseMealDto>();
+        CreateMap<Domain.MealStuffs.CourseMeal, LightCourseMealDto>()
+            .ForMember(dest => dest.CreationTime, opt => opt.MapFrom(src=> src.CreatedAt));
         CreateMap<AddElementaryToCourseMealCommand, ConsumedElementaryWeight>();
         CreateMap<AddRecipeToCourseMealCommand, ConsumedRecipeWeight>();
         CreateMap<Domain.MealStuffs.CourseMealDay, LightCourseMealDayDto>();
