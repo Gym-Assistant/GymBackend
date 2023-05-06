@@ -9,6 +9,11 @@ public record DetailFoodCharacteristicDto
     /// Food characteristic id.
     /// </summary>
     public Guid FoodCharacteristicId { get; init; }
+    
+    /// <summary>
+    /// Food characteristic type id.
+    /// </summary>
+    public Guid CharacteristicTypeId { get; init; }
 
     /// <summary>
     /// Food characteristic name.
