@@ -227,6 +227,19 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
             .HasForeignKey(p => p.MealTypeId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<MealType>().HasData(
+                new MealType { Id = CourseMealDefaults.BreakfastId, IsDefault = true, Name = "Завтрак", UserId = null, User = null},
+                new MealType { Id = CourseMealDefaults.LunchId, IsDefault = true, Name = "Обед", UserId = null, User = null},
+                new MealType { Id = CourseMealDefaults.DinnerId, IsDefault = true, Name = "Ужин", UserId = null, User = null}
+            );
+
+        modelBuilder.Entity<FoodCharacteristicType>().HasData(
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.ProteinId, IsDefault = true, Name = "Белки", UserId = null, CreatedBy = null},
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.FatId, IsDefault = true, Name = "Жиры", UserId = null, CreatedBy = null},
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CarbohydrateId, IsDefault = true, Name = "Углеводы", UserId = null, CreatedBy = null},
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CaloriesId, IsDefault = true, Name = "Калории", UserId = null, CreatedBy = null}
+        );
+
         SetupEnum(modelBuilder);
     }
 
