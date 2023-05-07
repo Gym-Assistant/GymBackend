@@ -205,6 +205,12 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
             .WithMany(p=>p.Characteristics)
             .HasForeignKey(p=>p.FoodElementaryId);
 
+        modelBuilder.Entity<FoodCharacteristic>()
+            .HasOne(p => p.CharacteristicType)
+            .WithMany()
+            .HasForeignKey(p => p.CharacteristicTypeId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.Entity<FoodElementaryWeight>()
             .HasOne(p=>p.FoodRecipe)
             .WithMany(p=>p.IngredientWeights)
@@ -214,6 +220,25 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
             .HasMany(p=>p.CourseMeals)
             .WithOne(p=>p.CourseMealDay)
             .HasForeignKey(p=>p.CourseMealDayId);
+
+        modelBuilder.Entity<CourseMeal>()
+            .HasOne(p => p.MealType)
+            .WithMany()
+            .HasForeignKey(p => p.MealTypeId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<MealType>().HasData(
+                new MealType { Id = CourseMealDefaults.BreakfastId, IsDefault = true, Name = "Завтрак", UserId = null, User = null},
+                new MealType { Id = CourseMealDefaults.LunchId, IsDefault = true, Name = "Обед", UserId = null, User = null},
+                new MealType { Id = CourseMealDefaults.DinnerId, IsDefault = true, Name = "Ужин", UserId = null, User = null}
+            );
+
+        modelBuilder.Entity<FoodCharacteristicType>().HasData(
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.ProteinId, IsDefault = true, Name = "Белки", UserId = null, CreatedBy = null},
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.FatId, IsDefault = true, Name = "Жиры", UserId = null, CreatedBy = null},
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CarbohydrateId, IsDefault = true, Name = "Углеводы", UserId = null, CreatedBy = null},
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CaloriesId, IsDefault = true, Name = "Калории", UserId = null, CreatedBy = null}
+        );
 
         SetupEnum(modelBuilder);
     }

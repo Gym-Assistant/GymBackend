@@ -4,6 +4,7 @@ using GymBackend.Domain.Workouts;
 using GymBackend.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GymBackend.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230507054117_AddRestrictMealType")]
+    partial class AddRestrictMealType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,32 +183,6 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("FoodCharacteristicTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("0141a646-e0ce-4f7a-9433-97112f05db0f"),
-                            IsDefault = true,
-                            Name = "Белки"
-                        },
-                        new
-                        {
-                            Id = new Guid("d126d15b-853a-4b7e-b122-af811a160609"),
-                            IsDefault = true,
-                            Name = "Жиры"
-                        },
-                        new
-                        {
-                            Id = new Guid("e3c6d689-4f63-44ff-8844-5bd11e4ed5af"),
-                            IsDefault = true,
-                            Name = "Углеводы"
-                        },
-                        new
-                        {
-                            Id = new Guid("cdcc58c7-5c5f-454a-9728-0643afccf491"),
-                            IsDefault = true,
-                            Name = "Калории"
-                        });
                 });
 
             modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodElementary", b =>
@@ -347,26 +324,6 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("MealTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("7d0b4a4f-aa3f-464c-94b5-6f0a16e4e340"),
-                            IsDefault = true,
-                            Name = "Завтрак"
-                        },
-                        new
-                        {
-                            Id = new Guid("78f0b796-31f9-4b37-ad80-8ceed73978b2"),
-                            IsDefault = true,
-                            Name = "Обед"
-                        },
-                        new
-                        {
-                            Id = new Guid("82ed6910-2828-4631-bd09-bfb3a29e27b3"),
-                            IsDefault = true,
-                            Name = "Ужин"
-                        });
                 });
 
             modelBuilder.Entity("FoodElementaryFoodRecipe", b =>

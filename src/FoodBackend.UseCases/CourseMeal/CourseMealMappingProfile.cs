@@ -19,11 +19,12 @@ public class CourseMealMappingProfile : Profile
     {
         CreateMap<CreateCourseMealCommand, Domain.MealStuffs.CourseMeal>();
         CreateMap<Domain.MealStuffs.CourseMeal, LightCourseMealDto>()
-            .ForMember(dest => dest.CreationTime, opt => opt.MapFrom(src=> src.CreatedAt));
+            .ForMember(dest => dest.MealTypeName, opt => opt.MapFrom(src=> src.MealType.Name));
         CreateMap<AddElementaryToCourseMealCommand, ConsumedElementaryWeight>();
         CreateMap<AddRecipeToCourseMealCommand, ConsumedRecipeWeight>();
         CreateMap<Domain.MealStuffs.CourseMealDay, LightCourseMealDayDto>();
-        CreateMap<Domain.MealStuffs.CourseMeal, DetailCourseMealDto>();
+        CreateMap<Domain.MealStuffs.CourseMeal, DetailCourseMealDto>()
+            .ForMember(dest => dest.MealTypeName, opt => opt.MapFrom(src=> src.MealType.Name));
         CreateMap<ConsumedRecipeWeight, ConsumedRecipeWeightDto>();
         CreateMap<ConsumedElementaryWeight, ConsumedElementaryWeightDto>();
         CreateMap<ConsumedRecipeWeight, ConsumedRecipeWeightDto>();
