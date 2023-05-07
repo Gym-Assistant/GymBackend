@@ -205,6 +205,12 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
             .WithMany(p=>p.Characteristics)
             .HasForeignKey(p=>p.FoodElementaryId);
 
+        modelBuilder.Entity<FoodCharacteristic>()
+            .HasOne(p => p.CharacteristicType)
+            .WithMany()
+            .HasForeignKey(p => p.CharacteristicTypeId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.Entity<FoodElementaryWeight>()
             .HasOne(p=>p.FoodRecipe)
             .WithMany(p=>p.IngredientWeights)
@@ -214,6 +220,12 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
             .HasMany(p=>p.CourseMeals)
             .WithOne(p=>p.CourseMealDay)
             .HasForeignKey(p=>p.CourseMealDayId);
+
+        modelBuilder.Entity<CourseMeal>()
+            .HasOne(p => p.MealType)
+            .WithMany()
+            .HasForeignKey(p => p.MealTypeId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         SetupEnum(modelBuilder);
     }
