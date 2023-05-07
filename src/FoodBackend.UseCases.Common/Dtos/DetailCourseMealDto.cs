@@ -8,22 +8,22 @@ public record DetailCourseMealDto
     /// <summary>
     /// Course meal id.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
     
     /// <summary>
     /// Id of user who created course meal.
     /// </summary>
-    public Guid UserId { get; set; }
+    public Guid UserId { get; init; }
 
     /// <summary>
     /// Consumed food elementaries.
     /// </summary>
-    public ICollection<LightFoodElementaryDto> ConsumedFoodElementaries { get; set; }
+    public ICollection<LightFoodElementaryDto> ConsumedFoodElementaries { get; init; }
     
     /// <summary>
     /// Consumed food elementaries weight.
     /// </summary>
-    public ICollection<ConsumedElementaryWeightDto> ConsumedElementaryWeights { get; set; }
+    public ICollection<ConsumedElementaryWeightDto> ConsumedElementaryWeights { get; init; }
     
     /// <summary>
     /// Consumed food recipes.
@@ -44,6 +44,11 @@ public record DetailCourseMealDto
     /// Meal type id.
     /// </summary>
     public Guid MealTypeId { get; set; }
+    
+    /// <summary>
+    /// Meal type name.
+    /// </summary>
+    public string MealTypeName { get; set; }
 
     /// <summary>
     /// Course meal day id.

@@ -21,7 +21,12 @@ public class LightCourseMealDto
     public Guid MealTypeId { get; init; }
     
     /// <summary>
+    /// Meal type name.
+    /// </summary>
+    public string MealTypeName { get; set; }
+    
+    /// <summary>
     /// Date when meal was created.
     /// </summary>
-    public TimeOnly CreationTime { get; init; }
+    public TimeOnly CreatedAt { get; init; }
 }
