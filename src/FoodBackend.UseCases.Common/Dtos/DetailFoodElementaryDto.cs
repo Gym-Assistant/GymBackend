@@ -18,7 +18,7 @@ public record DetailFoodElementaryDto
     /// <summary>
     /// Id of creator.
     /// </summary>
-    public Guid? UserId { get; set; }
+    public Guid? UserId { get; init; }
     
     /// <summary>
     /// Food elementary characteristics.

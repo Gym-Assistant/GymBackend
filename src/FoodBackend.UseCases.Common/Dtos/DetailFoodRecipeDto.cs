@@ -8,25 +8,25 @@ public record DetailFoodRecipeDto
     /// <summary>
     /// Food recipe id.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
     /// <summary>
     /// Food recipe name.
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; init; }
     
     /// <summary>
     /// Id of creator.
     /// </summary>
-    public Guid? UserId { get; set; }
+    public Guid? UserId { get; init; }
 
     /// <summary>
     /// Ingredients collection.
     /// </summary>
-    public ICollection<DetailFoodElementaryDto> Ingredients { get; set; }
+    public ICollection<DetailFoodElementaryDto> Ingredients { get; init; }
     
     /// <summary>
     /// Ingredient weights collection.
     /// </summary>
-    public ICollection<FoodElementaryWeightDto> IngredientWeights { get; set; }
+    public ICollection<FoodElementaryWeightDto> IngredientWeights { get; init; }
 }

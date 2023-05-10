@@ -18,5 +18,5 @@ public record LightFoodRecipeDto
     /// <summary>
     /// Id of creator.
     /// </summary>
-    public Guid? UserId { get; set; }
+    public Guid? UserId { get; init; }
 }
