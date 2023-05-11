@@ -40,8 +40,7 @@ internal class CreateFoodElementaryCommandHandler : BaseCommandHandler,
                 CharacteristicTypeId = proteinCharacteristicType.Id,
                 FoodElementary = food,
                 FoodElementaryId = food.Id,
-                //TODO: Fix type in migration
-                IsDefault = 1,
+                IsDefault = true,
                 Value = request.ProteinValue.Value
             };
             await DbContext.FoodCharacteristics.AddAsync(proteinCharacteristic, cancellationToken);
