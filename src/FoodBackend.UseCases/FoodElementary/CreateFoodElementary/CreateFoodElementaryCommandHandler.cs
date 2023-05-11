@@ -31,13 +31,11 @@ internal class CreateFoodElementaryCommandHandler : BaseCommandHandler,
         var food = Mapper.Map<Domain.Foodstuffs.FoodElementary>(request);
         food.UserId = loggedUserAccessor.GetCurrentUserId();
         await DbContext.FoodElementaries.AddAsync(food, cancellationToken);
-        if (request.ProteinValue != null)
-        {
-            defaultCharacteristic.AddDefaultCharacteristic(FoodCharacteristicDefaults.ProteinId, food,
-                request.ProteinValue.Value, cancellationToken);
-        }
+        await defaultCharacteristic.AddDefaultCharacteristic(FoodCharacteristicDefaults.ProteinId, food, request.ProteinValue, cancellationToken);
+        await defaultCharacteristic.AddDefaultCharacteristic(FoodCharacteristicDefaults.FatId, food, request.FatValue, cancellationToken);
+        await defaultCharacteristic.AddDefaultCharacteristic(FoodCharacteristicDefaults.CarbohydrateId, food, request.CarbohydrateValue, cancellationToken);
+        await defaultCharacteristic.AddDefaultCharacteristic(FoodCharacteristicDefaults.CaloriesId, food, request.CaloriesValue, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
-
         return food.Id;
     }
 }

@@ -26,7 +26,7 @@ public class AddDefaultFoodCharacteristic : IAddDefaultFoodCharacteristic
     /// <param name="foodElementary">Food elementary entity.</param>
     /// <param name="characteristicValue">Default food characteristic value.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    public async void AddDefaultCharacteristic(Guid defaultCharacteristicId, Domain.Foodstuffs.FoodElementary foodElementary,
+    public async Task AddDefaultCharacteristic(Guid defaultCharacteristicId, Domain.Foodstuffs.FoodElementary foodElementary,
         double characteristicValue, CancellationToken cancellationToken)
     {
         var characteristicType = await dbContext.FoodCharacteristicTypes

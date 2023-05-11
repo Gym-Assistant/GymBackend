@@ -17,20 +17,20 @@ public record CreateFoodElementaryCommand : IRequest<Guid>
     /// <summary>
     /// Food elementary protein characteristic value.
     /// </summary>
-    public double? ProteinValue { get; init; }
+    public double ProteinValue { get; init; }
     
     /// <summary>
     /// Food elementary fat characteristic value.
     /// </summary>
-    public double? FatValue { get; init; }
+    public double FatValue { get; init; }
     
     /// <summary>
     /// Food elementary carbohydrate characteristic value.
     /// </summary>
-    public double? CarbohydrateValue { get; init; }
+    public double CarbohydrateValue { get; init; }
     
     /// <summary>
     /// Food elementary calories characteristic value.
     /// </summary>
-    public double? CaloriesValue { get; init; }
+    public double CaloriesValue { get; init; }
 }
