@@ -15,8 +15,6 @@ internal static class MediatRModule
     /// <param name="services">Services.</param>
     public static void Register(IServiceCollection services)
     {
-        /*services.AddMediatR(typeof(LoginUserCommand));
-        services.AddMediatR(typeof(CreateFoodElementaryCommand));*/
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(LoginUserCommand).Assembly));
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateFoodElementaryCommand).Assembly));
     }
