@@ -1,3 +1,4 @@
+using FoodBackend.UseCases.CourseMeal.CreateCourseMealDay;
 using FoodBackend.UseCases.FoodElementary.CreateFoodElementary;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
@@ -24,5 +25,6 @@ internal static class SystemModule
         services.AddScoped<IAppDbContext, AppDbContext>();
         services.AddScoped<ILoggedUserAccessor, LoggedUserAccessor>();
         services.AddScoped<IAddDefaultFoodCharacteristic, AddDefaultFoodCharacteristic>();
+        services.AddScoped<IAddDefaultCourseMeal, AddDefaultCourseMeal>();
     }
 }

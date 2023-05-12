@@ -11,28 +11,35 @@ namespace FoodBackend.UseCases.CourseMeal.CreateCourseMealDay;
 /// </summary>
 internal class CreateCourseMealDayCommandHandler : BaseCommandHandler, IRequestHandler<CreateCourseMealDayCommand, Guid>
 {
-    private ILoggedUserAccessor loggedUserAccessor;
+    private readonly ILoggedUserAccessor loggedUserAccessor;
+    private readonly IAddDefaultCourseMeal defaultCourseMeal;
 
     /// <summary>
-    /// Counstructor.
+    /// Constructor.
     /// </summary>
     public CreateCourseMealDayCommandHandler(IMapper mapper, IAppDbContext dbContext,
-        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
+        ILoggedUserAccessor loggedUserAccessor, IAddDefaultCourseMeal defaultCourseMeal) : base(mapper, dbContext)
     {
         this.loggedUserAccessor = loggedUserAccessor;
+        this.defaultCourseMeal = defaultCourseMeal;
     }
 
     /// <inheritdoc/>
     public async Task<Guid> Handle(CreateCourseMealDayCommand request, CancellationToken cancellationToken)
     {
-        var courseMealDay = new CourseMealDay()
+        var courseMealDay = new CourseMealDay
         {
             CourseMealDate = DateOnly.FromDateTime(DateTime.UtcNow),
             UserId = loggedUserAccessor.GetCurrentUserId()
         };
+        await defaultCourseMeal.AddDefaultCourseMealToDay(CourseMealDefaults.BreakfastId,
+            loggedUserAccessor.GetCurrentUserId(), courseMealDay, cancellationToken);
+        await defaultCourseMeal.AddDefaultCourseMealToDay(CourseMealDefaults.LunchId,
+            loggedUserAccessor.GetCurrentUserId(), courseMealDay, cancellationToken);
+        await defaultCourseMeal.AddDefaultCourseMealToDay(CourseMealDefaults.DinnerId,
+            loggedUserAccessor.GetCurrentUserId(), courseMealDay, cancellationToken);
         await DbContext.CourseMealDays.AddAsync(courseMealDay, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
-
         return courseMealDay.Id;
     }
 }
