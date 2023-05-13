@@ -28,30 +28,30 @@ public record DetailCourseMealDto
     /// <summary>
     /// Consumed food recipes.
     /// </summary>
-    public ICollection<LightFoodRecipeDto> ConsumedFoodRecipes { get; set; }
+    public ICollection<LightFoodRecipeDto> ConsumedFoodRecipes { get; init; }
     
     /// <summary>
     /// Consumed food recipes weight.
     /// </summary>
-    public ICollection<ConsumedRecipeWeightDto> ConsumedRecipeWeights { get; set; }
+    public ICollection<ConsumedRecipeWeightDto> ConsumedRecipeWeights { get; init; }
 
     /// <summary>
     /// Time when meal was created.
     /// </summary>
-    public TimeOnly CreatedAt { get; set; }
+    public TimeOnly CreatedAt { get; init; }
     
     /// <summary>
     /// Meal type id.
     /// </summary>
-    public Guid MealTypeId { get; set; }
+    public Guid MealTypeId { get; init; }
     
     /// <summary>
     /// Meal type name.
     /// </summary>
-    public string MealTypeName { get; set; }
+    public string MealTypeName { get; init; }
 
     /// <summary>
     /// Course meal day id.
     /// </summary>
-    public Guid CourseMealDayId { get; set; }
+    public Guid CourseMealDayId { get; init; }
 }

@@ -23,7 +23,7 @@ public class LightCourseMealDto
     /// <summary>
     /// Meal type name.
     /// </summary>
-    public string MealTypeName { get; set; }
+    public string MealTypeName { get; init; }
     
     /// <summary>
     /// Date when meal was created.

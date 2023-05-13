@@ -52,5 +52,5 @@ public record FoodCharacteristic
     /// <summary>
     /// Is food characteristic default statement.
     /// </summary>
-    public double IsDefault { get; set; }
+    public bool IsDefault { get; set; }
 }

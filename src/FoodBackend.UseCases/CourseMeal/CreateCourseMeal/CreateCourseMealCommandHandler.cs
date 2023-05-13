@@ -34,6 +34,7 @@ internal class CreateCourseMealCommandHandler : BaseCommandHandler, IRequestHand
         courseMeal.CourseMealDay = courseMealDay;
         courseMeal.UserId = loggedUserAccessor.GetCurrentUserId();
         courseMeal.CreatedAt = TimeOnly.FromDateTime(DateTime.UtcNow);
+        courseMealDay.CourseMeals.Add(courseMeal);
         await DbContext.CourseMeals.AddAsync(courseMeal, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
 

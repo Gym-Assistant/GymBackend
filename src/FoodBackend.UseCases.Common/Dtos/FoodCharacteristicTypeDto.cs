@@ -12,8 +12,8 @@ public record FoodCharacteristicTypeDto
     public string Name { get; init; }
 
     /// <inheritdoc />
-    public Guid? UserId { get; set; }
+    public Guid? UserId { get; init; }
     
     /// <inheritdoc />
-    public bool IsDefault { get; set; }
+    public bool IsDefault { get; init; }
 }

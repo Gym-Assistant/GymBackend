@@ -8,20 +8,20 @@ public record ConsumedRecipeWeightDto
     /// <summary>
     /// Id.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
     /// <summary>
-    /// Food elementary.
+    /// Food recipe.
     /// </summary>
-    public LightFoodRecipeDto FoodRecipe { get; set; }
+    public LightFoodRecipeDto FoodRecipe { get; init; }
 
     /// <summary>
     /// Course meal.
     /// </summary>
-    public LightCourseMealDto CourseMeal { get; set; }
+    public LightCourseMealDto CourseMeal { get; init; }
 
     /// <summary>
     /// Weight value.
     /// </summary>
-    public double Weight { get; set; }
+    public double Weight { get; init; }
 }
