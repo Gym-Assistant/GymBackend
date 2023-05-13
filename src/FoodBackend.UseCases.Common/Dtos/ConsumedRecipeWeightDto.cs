@@ -11,7 +11,7 @@ public record ConsumedRecipeWeightDto
     public Guid Id { get; init; }
 
     /// <summary>
-    /// Food elementary.
+    /// Food recipe.
     /// </summary>
     public LightFoodRecipeDto FoodRecipe { get; init; }
 
