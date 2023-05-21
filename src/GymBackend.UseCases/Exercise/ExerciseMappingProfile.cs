@@ -15,7 +15,7 @@ public class ExerciseMappingProfile : Profile
     public ExerciseMappingProfile()
     {
         // Command -> Entity.
-        CreateMap<EditExerciseCommand, Domain.Workouts.Exercise>();
-        CreateMap<Domain.Workouts.Exercise, LightExerciseDto>();
+        CreateMap<CreateOrUpdateExercisesCommand, Domain.Workouts.Exercise>();
+        CreateMap<Domain.Workouts.Exercise, LightExerciseDto>().ReverseMap();
     }
 }

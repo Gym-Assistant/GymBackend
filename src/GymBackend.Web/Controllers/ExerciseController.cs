@@ -59,19 +59,9 @@ public class ExerciseController : ControllerBase
     /// <param name="command">Command.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns></returns>
-    [HttpPost]
-    public async Task<Guid> CreateExercise(CreateExerciseCommand command, CancellationToken cancellationToken)
+    [HttpPut]
+    public async Task CreateOrUpdateExercises(CreateOrUpdateExercisesCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
-
-    /// <summary>
-    /// Edit exerciseId by id.
-    /// </summary>
-    /// <param name="exerciseId">Exercise Id.</param>
-    /// <param name="command">Command.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    [HttpPut("{exerciseId}")]
-    public async Task EditExercise(Guid exerciseId, EditExerciseCommand command, CancellationToken cancellationToken)
-        => await mediator.Send(command with { Id = exerciseId }, cancellationToken);
 
     /// <summary>
     /// Remove exercise by id.
