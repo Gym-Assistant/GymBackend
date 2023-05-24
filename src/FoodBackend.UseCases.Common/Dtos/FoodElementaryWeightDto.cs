@@ -6,22 +6,17 @@
 public record FoodElementaryWeightDto
 {
     /// <summary>
-    /// Id.
+    /// Id of weight relation.
     /// </summary>
-    public Guid Id { get; init; }
-    
+    public Guid WeightId { get; init; }
+
     /// <summary>
-    /// Food recipe id.
+    /// Food elementary with characteristics.
     /// </summary>
-    public Guid FoodRecipeId { get; init; }
-    
-    /// <summary>
-    /// Food elementary id.
-    /// </summary>
-    public Guid FoodElementaryId { get; init; }
+    public DetailFoodElementaryDto FoodElementary { get; init; }
     
     /// <summary>
     /// Food elementary weight value.
     /// </summary>
-    public double Weight { get; init; }
+    public double ElementaryWeight { get; init; }
 }

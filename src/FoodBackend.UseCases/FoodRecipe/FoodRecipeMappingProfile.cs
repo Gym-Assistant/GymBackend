@@ -20,7 +20,11 @@ public class FoodRecipeMappingProfile : Profile
         CreateMap<CreateFoodRecipeCommand, Domain.Foodstuffs.FoodRecipe>();
         CreateMap<Domain.Foodstuffs.FoodRecipe, LightFoodRecipeDto>();
         CreateMap<AddIngredientToRecipeCommand, FoodElementaryWeight>();
-        CreateMap<FoodElementaryWeight, FoodElementaryWeightDto>();
-        CreateMap<Domain.Foodstuffs.FoodRecipe, DetailFoodRecipeDto>();
+        CreateMap<FoodElementaryWeight, FoodElementaryWeightDto>()
+            .ForMember(dest => dest.FoodElementary, opt => opt.MapFrom(src => src.FoodElementary))
+            .ForMember(dest => dest.WeightId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.ElementaryWeight, opt => opt.MapFrom(src => src.Weight));
+        CreateMap<Domain.Foodstuffs.FoodRecipe, DetailFoodRecipeDto>()
+            .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.IngredientWeights));
     }
 }

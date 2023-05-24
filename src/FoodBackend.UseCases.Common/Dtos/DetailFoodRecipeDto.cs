@@ -23,10 +23,5 @@ public record DetailFoodRecipeDto
     /// <summary>
     /// Ingredients collection.
     /// </summary>
-    public ICollection<DetailFoodElementaryDto> Ingredients { get; init; }
-    
-    /// <summary>
-    /// Ingredient weights collection.
-    /// </summary>
-    public ICollection<FoodElementaryWeightDto> IngredientWeights { get; init; }
+    public ICollection<FoodElementaryWeightDto> Ingredients { get; init; }
 }
