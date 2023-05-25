@@ -73,6 +73,9 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
     /// <inheritdoc/>
     public DbSet<FoodCharacteristicType> FoodCharacteristicTypes { get; private set; }
 
+    /// <inheritdoc />
+    public DbSet<RecipeCharacteristicSumValue> RecipeCharacteristicSumValues { get; private set; }
+
     #endregion
 
     #region Meals
@@ -186,6 +189,16 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
             .HasMany(p => p.Ingredients)
             .WithMany(p => p.FoodRecipes)
             .UsingEntity(p => p.ToTable(nameof(FoodRecipeFoodElementary)));
+
+        modelBuilder.Entity<RecipeCharacteristicSumValue>()
+            .HasOne(p => p.FoodRecipe)
+            .WithMany(p => p.CharacteristicValuesSum)
+            .HasForeignKey(p => p.FoodRecipeId);
+
+        modelBuilder.Entity<RecipeCharacteristicSumValue>()
+            .HasOne(p => p.CharacteristicType)
+            .WithMany()
+            .HasForeignKey(p => p.CharacteristicTypeId);
 
         modelBuilder.Entity<CourseMeal>()
             .HasMany(p => p.ConsumedFoodRecipes)

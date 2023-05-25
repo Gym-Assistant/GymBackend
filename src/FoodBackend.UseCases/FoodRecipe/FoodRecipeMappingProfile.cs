@@ -24,7 +24,10 @@ public class FoodRecipeMappingProfile : Profile
             .ForMember(dest => dest.FoodElementary, opt => opt.MapFrom(src => src.FoodElementary))
             .ForMember(dest => dest.WeightId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.ElementaryWeight, opt => opt.MapFrom(src => src.Weight));
+        CreateMap<RecipeCharacteristicSumValue, RecipeCharacteristicSumDto>()
+            .ForMember(dest=>dest.CharacteristicName, opt=>opt.MapFrom(src=>src.CharacteristicType.Name));
         CreateMap<Domain.Foodstuffs.FoodRecipe, DetailFoodRecipeDto>()
-            .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.IngredientWeights));
+            .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.IngredientWeights))
+            .ForMember(dest => dest.CharacteristicsSum, opt => opt.MapFrom(src => src.CharacteristicValuesSum));
     }
 }

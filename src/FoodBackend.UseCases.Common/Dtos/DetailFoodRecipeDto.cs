@@ -24,4 +24,9 @@ public record DetailFoodRecipeDto
     /// Ingredients collection.
     /// </summary>
     public ICollection<FoodElementaryWeightDto> Ingredients { get; init; }
+    
+    /// <summary>
+    /// Food recipe characteristics sum.
+    /// </summary>
+    public ICollection<RecipeCharacteristicSumDto> CharacteristicsSum { get; init; }
 }

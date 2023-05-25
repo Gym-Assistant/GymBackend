@@ -107,6 +107,11 @@ public interface IAppDbContext : IDisposable
     DbSet<MealType> MealTypes { get; }
 
     /// <summary>
+    /// Food recipe characteristic values.
+    /// </summary>
+    DbSet<RecipeCharacteristicSumValue> RecipeCharacteristicSumValues { get; }
+
+    /// <summary>
     /// Save pending changes.
     /// </summary>
     /// <param name="cancellationToken">Token to cancel the request.</param>

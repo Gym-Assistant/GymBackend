@@ -31,6 +31,7 @@ internal class AddIngredientToRecipeCommandHandler : BaseCommandHandler, IReques
         var foodRecipe = await DbContext.FoodRecipes
             .Include(foodRecipe => foodRecipe.Ingredients)
             .Include(foodRecipe => foodRecipe.IngredientWeights)
+            .Include(foodRecipe => foodRecipe.CharacteristicValuesSum)
             .GetAsync(foodRecipe => foodRecipe.Id == request.FoodRecipeId, cancellationToken);
         if (foodRecipe.UserId != loggedUserAccessor.GetCurrentUserId())
         {

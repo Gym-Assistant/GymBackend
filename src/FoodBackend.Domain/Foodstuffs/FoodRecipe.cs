@@ -44,7 +44,12 @@ public record FoodRecipe
     /// Ingredient weights collection.
     /// </summary>
     public ICollection<FoodElementaryWeight> IngredientWeights { get; set; }
-    
+
+    /// <summary>
+    /// Food recipe characteristics summary value.
+    /// </summary>
+    public ICollection<RecipeCharacteristicSumValue> CharacteristicValuesSum { get; set; }
+
     /// <summary>
     /// Related course meals.
     /// </summary>
