@@ -6,7 +6,7 @@
 public interface IAddFoodRecipeCharacteristic
 {
     /// <summary>
-    /// Add characteristic to food elementary by given id.
+    /// Add characteristic sum to food recipe method.
     /// </summary>
     Task AddRecipeCharacteristic(Guid characteristicId, FoodBackend.Domain.Foodstuffs.FoodRecipe foodRecipe,
         double characteristicValue, CancellationToken cancellationToken);
