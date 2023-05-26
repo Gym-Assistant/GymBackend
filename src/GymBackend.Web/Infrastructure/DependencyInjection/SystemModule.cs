@@ -1,5 +1,6 @@
 using FoodBackend.UseCases.CourseMeal.CreateCourseMealDay;
 using FoodBackend.UseCases.FoodElementary.CreateFoodElementary;
+using FoodBackend.UseCases.FoodRecipe.AddIngredientToRecipe;
 using FoodBackend.UseCases.FoodRecipe.CreateFoodRecipe;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
@@ -28,5 +29,6 @@ internal static class SystemModule
         services.AddScoped<IAddDefaultFoodCharacteristic, AddDefaultFoodCharacteristic>();
         services.AddScoped<IAddDefaultCourseMeal, AddDefaultCourseMeal>();
         services.AddScoped<IAddFoodRecipeCharacteristic, AddFoodRecipeCharacteristic>();
+        services.AddScoped<IChangeRecipeCharacteristicSum, ChangeRecipeCharacteristicSum>();
     }
 }

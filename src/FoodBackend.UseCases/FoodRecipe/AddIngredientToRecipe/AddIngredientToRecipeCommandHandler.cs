@@ -15,19 +15,22 @@ namespace FoodBackend.UseCases.FoodRecipe.AddIngredientToRecipe;
 internal class AddIngredientToRecipeCommandHandler : BaseCommandHandler, IRequestHandler<AddIngredientToRecipeCommand>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
+    private readonly IChangeRecipeCharacteristicSum changeRecipeCharacteristicSum;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     public AddIngredientToRecipeCommandHandler(IAppDbContext dbContext, IMapper mapper,
-        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
+        ILoggedUserAccessor loggedUserAccessor, IChangeRecipeCharacteristicSum changeRecipeCharacteristicSum) : base(mapper, dbContext)
     {
         this.loggedUserAccessor = loggedUserAccessor;
+        this.changeRecipeCharacteristicSum = changeRecipeCharacteristicSum;
     }
     
     /// <inheritdoc />
     public async Task Handle(AddIngredientToRecipeCommand request, CancellationToken cancellationToken)
     {
+        const bool increaseCharacteristicSumStatement = true;
         var foodRecipe = await DbContext.FoodRecipes
             .Include(foodRecipe => foodRecipe.Ingredients)
             .Include(foodRecipe => foodRecipe.IngredientWeights)
@@ -37,13 +40,15 @@ internal class AddIngredientToRecipeCommandHandler : BaseCommandHandler, IReques
         {
             throw new ForbiddenException("You can't edit food recipe that you didn't create.");
         }
-        
         var foodElementary = await DbContext.FoodElementaries
+            .Include(elementary => elementary.Characteristics)
             .GetAsync(foodElementary => foodElementary.Id == request.FoodElementaryId, cancellationToken);
         foodRecipe.Ingredients.Add(foodElementary);
         var elementaryWeight = Mapper.Map<FoodElementaryWeight>(request);
         await DbContext.FoodElementaryWeights.AddAsync(elementaryWeight, cancellationToken);
         foodRecipe.IngredientWeights.Add(elementaryWeight);
+        await changeRecipeCharacteristicSum.ChangeRecipeCharacteristic(foodRecipe, foodElementary, elementaryWeight.Weight,
+            increaseCharacteristicSumStatement, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
     }
 }
