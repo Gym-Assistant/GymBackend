@@ -31,9 +31,4 @@ public record WorkoutDto
     /// Created At.
     /// </summary>
     public DateTime CreatedAt { get; init; }
-
-    /// <summary>
-    /// Workout status.
-    /// </summary>
-    public WorkoutStatus WorkoutStatus { get; init; }
 }

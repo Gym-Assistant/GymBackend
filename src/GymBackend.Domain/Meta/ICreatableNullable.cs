@@ -1,4 +1,6 @@
-﻿namespace Gym.Domain.Meta;
+﻿using GymBackend.Domain.Users;
+
+namespace Gym.Domain.Meta;
 
 /// <summary>
 /// Meta information about entity creation. Anonymous users can create this entity.
@@ -8,10 +10,15 @@ public interface ICreatableNullable
     /// <summary>
     /// Who created the entity user identifier.
     /// </summary>
-    Guid? CreatedById { get; }
+    Guid? CreatedById { get; set; }
+
+    /// <summary>
+    /// Created by.
+    /// </summary>
+    User CreatedBy { get; set; }
 
     /// <summary>
     /// When entity has been created.
     /// </summary>
-    DateTimeOffset CreatedAt { get; }
+    DateTimeOffset CreatedAt { get; set; }
 }

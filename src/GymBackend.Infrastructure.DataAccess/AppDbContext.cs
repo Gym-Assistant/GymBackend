@@ -36,7 +36,7 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
     public DbSet<TrainSession> TrainSessions { get; private set; }
 
     /// <inheritdoc />
-    public DbSet<Sets> Sets { get; private set; }
+    public DbSet<Set> Sets { get; private set; }
 
     #endregion
 
@@ -93,7 +93,6 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
     /// </summary>
     public static void RegisterTypes()
     {
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<WorkoutStatus>();
     }
 
     private AppDbContext()
@@ -129,23 +128,10 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
         modelBuilder.Entity<CharacteristicStamp>()
             .HasIndex(p => p.UserCharacteristicId);
 
-        modelBuilder.Entity<Workout>()
-            .HasOne(p => p.CreatedBy)
-            .WithMany()
-            .HasForeignKey(p => p.CreatedById);
+        #region Workout
 
         modelBuilder.Entity<Workout>()
             .HasIndex(p => p.CreatedById);
-
-        modelBuilder.Entity<Workout>()
-            .HasMany(p => p.Exercises)
-            .WithMany(p => p.Workouts)
-            .UsingEntity(p => p.ToTable(nameof(WorkoutExercises)));
-
-        modelBuilder.Entity<TrainSession>()
-            .HasOne(p => p.CreatedBy)
-            .WithMany()
-            .HasForeignKey(p => p.CreatedById);
 
         modelBuilder.Entity<TrainSession>()
             .HasIndex(p => p.ExerciseId);
@@ -158,29 +144,18 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
             .WithMany(p => p.TrainSessions)
             .HasForeignKey(p => p.WorkoutId);
 
-        modelBuilder.Entity<Sets>()
-            .HasOne(p => p.CreatedBy)
-            .WithMany()
-            .HasForeignKey(p => p.CreatedById);
-
-        modelBuilder.Entity<Sets>()
+        modelBuilder.Entity<Set>()
             .HasOne(p => p.TrainSession)
             .WithMany(p => p.Sets)
             .HasForeignKey(p => p.TrainSessionId);
 
-        modelBuilder.Entity<WorkoutTemplate>()
-            .HasMany(p => p.Exercises)
-            .WithOne();
+        #endregion
 
-        modelBuilder.Entity<WorkoutTemplate>()
-            .HasIndex(p => p.CreatedById);
+        #region Food
 
-        modelBuilder.Entity<WorkoutPackage>()
-            .HasMany(p => p.WorkoutTemplates)
-            .WithOne();
 
-        modelBuilder.Entity<WorkoutPackage>()
-            .HasIndex(p => p.CreatedById);
+
+        #endregion
 
         modelBuilder.Entity<FoodRecipe>()
             .HasMany(p => p.Ingredients)
@@ -234,10 +209,10 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
             );
 
         modelBuilder.Entity<FoodCharacteristicType>().HasData(
-            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.ProteinId, IsDefault = true, Name = "Белки", UserId = null, CreatedBy = null},
-            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.FatId, IsDefault = true, Name = "Жиры", UserId = null, CreatedBy = null},
-            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CarbohydrateId, IsDefault = true, Name = "Углеводы", UserId = null, CreatedBy = null},
-            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CaloriesId, IsDefault = true, Name = "Калории", UserId = null, CreatedBy = null}
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.ProteinId, IsDefault = true, Name = "Белки", UserId = null, CreatedBy = null },
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.FatId, IsDefault = true, Name = "Жиры", UserId = null, CreatedBy = null },
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CarbohydrateId, IsDefault = true, Name = "Углеводы", UserId = null, CreatedBy = null },
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CaloriesId, IsDefault = true, Name = "Калории", UserId = null, CreatedBy = null }
         );
 
         SetupEnum(modelBuilder);
@@ -245,6 +220,5 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
 
     private void SetupEnum(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasPostgresEnum<WorkoutStatus>();
     }
 }

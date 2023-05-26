@@ -1,4 +1,6 @@
-﻿namespace GymBackend.Domain.Meta;
+﻿using GymBackend.Domain.Users;
+
+namespace GymBackend.Domain.Meta;
 
 /// <summary>
 /// Meta information about entity creation.
@@ -9,6 +11,11 @@ public interface ICreatable
     /// Who created the entity user identifier.
     /// </summary>
     Guid CreatedById { get; set; }
+
+    /// <summary>
+    /// Created by.
+    /// </summary>
+    User CreatedBy { get; set; }
 
     /// <summary>
     /// When entity has been created.
