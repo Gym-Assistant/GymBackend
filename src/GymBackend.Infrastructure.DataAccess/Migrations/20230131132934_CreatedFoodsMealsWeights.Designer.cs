@@ -22,8 +22,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "workout_status", new[] { "planned", "in_progress", "is_over" });
+            
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("ExerciseWorkout", b =>
@@ -539,9 +538,6 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.Property<Guid>("CreatedById")
                         .HasColumnType("uuid");
-
-                    b.Property<WorkoutStatus>("WorkoutStatus")
-                        .HasColumnType("workout_status");
 
                     b.HasKey("Id");
 

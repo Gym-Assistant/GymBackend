@@ -1,16 +1,18 @@
 ﻿using AutoMapper;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.BaseHandlers;
+using GymBackend.UseCases.Common.Dtos.Workout;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Saritasa.Tools.EFCore;
 
 namespace GymBackend.UseCases.Exercise.EditExercise;
 
 /// <summary>
-/// Handler for <see cref="EditExerciseCommand"/>.
+/// Handler for <see cref="CreateOrUpdateExercisesCommand"/>.
 /// </summary>
-public class EditExerciseCommandHandler : BaseCommandHandler, IRequestHandler<EditExerciseCommand>
+public class EditExerciseCommandHandler : BaseCommandHandler, IRequestHandler<CreateOrUpdateExercisesCommand>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
@@ -23,24 +25,36 @@ public class EditExerciseCommandHandler : BaseCommandHandler, IRequestHandler<Ed
     }
 
     /// <inheritdoc />
-    public async Task Handle(EditExerciseCommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateOrUpdateExercisesCommand request, CancellationToken cancellationToken)
     {
-        var exercise = await DbContext.Exercises.GetAsync(exercise => exercise.Id == request.Id, cancellationToken);
-        if (exercise.CreatedById != loggedUserAccessor.GetCurrentUserId())
+        var userId = loggedUserAccessor.GetCurrentUserId();
+        foreach (var exercise in request.Exercises)
         {
-            throw new ForbiddenException("You can't edit exercise that you didn't create.");
-        }
-
-        if (request.Name != null)
-        {
-            exercise.Name = request.Name;
-        }
-
-        if (request.Description != null)
-        {
-            exercise.Description = request.Description;
+            await HandleExerciseAsync(exercise, userId, CancellationToken.None);
         }
 
         await DbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    private async Task HandleExerciseAsync(LightExerciseDto lightExerciseDto, Guid userId, CancellationToken cancellationToken)
+    {
+        var exercise = await DbContext.Exercises.FirstOrDefaultAsync(exercise => exercise.Id == lightExerciseDto.Id, cancellationToken);
+
+        if (exercise == null)
+        {
+            var exerciseToCreate = Mapper.Map<Domain.Workouts.Exercise>(lightExerciseDto);
+            exerciseToCreate.CreatedById = userId;
+            DbContext.Exercises.Add(exerciseToCreate);
+            return;
+        }
+        if (lightExerciseDto.Name != null)
+        {
+            exercise.Name = lightExerciseDto.Name;
+        }
+
+        if (lightExerciseDto.Description != null)
+        {
+            exercise.Description = lightExerciseDto.Description;
+        }
     }
 }

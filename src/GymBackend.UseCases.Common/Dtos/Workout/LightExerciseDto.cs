@@ -28,5 +28,10 @@ public record LightExerciseDto
     /// <summary>
     /// Created At.
     /// </summary>
-    public DateTime CreatedAt { get; init; }
+    public DateTimeOffset CreatedAt { get; init; }
+
+    /// <summary>
+    /// Updated At.
+    /// </summary>
+    public DateTimeOffset UpdatedAt { get; init; }
 }

@@ -54,7 +54,7 @@ public interface IAppDbContext : IDisposable
     /// <summary>
     /// Sets.
     /// </summary>
-    DbSet<Sets> Sets { get; }
+    DbSet<Set> Sets { get; }
 
     /// <summary>
     /// Food elementaries.

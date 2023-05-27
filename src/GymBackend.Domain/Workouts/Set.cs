@@ -6,9 +6,9 @@ using GymBackend.Domain.Users;
 namespace GymBackend.Domain.Workouts;
 
 /// <summary>
-/// Workout.
+/// Sets.
 /// </summary>
-public record Workout : ICreatable, IUpdatable
+public record Set : ICreatable, IUpdatable
 {
     /// <summary>
     /// Id.
@@ -17,24 +17,34 @@ public record Workout : ICreatable, IUpdatable
     public Guid Id { get; private set; }
 
     /// <summary>
-    /// Train session in this workout.
+    /// Train session Id.
     /// </summary>
-    public ICollection<TrainSession> TrainSessions { get; private set; } = new List<TrainSession>();
+    public Guid TrainSessionId { get; private set; }
 
     /// <summary>
-    /// Started at.
+    /// Train session.
     /// </summary>
-    public DateTime? StartedAt { get; private set; }
+    public TrainSession TrainSession { get; private set; }
 
     /// <summary>
-    /// Ended at.
+    /// Number of repetitions.
     /// </summary>
-    public DateTime? EndedAt { get; private set; }
+    public int Reps { get; private set; }
 
     /// <summary>
-    /// Workout type.
+    /// The weight of the projectile.
     /// </summary>
-    public WorkoutType WorkoutType { get; private set; }
+    public double Weight { get; private set; }
+
+    /// <summary>
+    /// Indicates that set is done.
+    /// </summary>
+    public bool IsDone { get; private set; }
+
+    /// <summary>
+    /// Number.
+    /// </summary>
+    public int Number { get; internal set; }
 
     /// <inheritdoc/>
     public Guid CreatedById { get; set; }

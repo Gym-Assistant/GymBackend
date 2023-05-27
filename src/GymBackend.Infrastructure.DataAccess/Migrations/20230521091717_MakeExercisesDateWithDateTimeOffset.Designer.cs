@@ -13,18 +13,48 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GymBackend.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220814164507_AddWorkoutStatus")]
-    partial class AddWorkoutStatus
+    [Migration("20230521091717_MakeExercisesDateWithDateTimeOffset")]
+    partial class MakeExercisesDateWithDateTimeOffset
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "workout_status", new[] { "planned", "in_progress", "is_over" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("CourseMealFoodElementary", b =>
+                {
+                    b.Property<Guid>("ConsumedFoodElementariesId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CourseMealsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ConsumedFoodElementariesId", "CourseMealsId");
+
+                    b.HasIndex("CourseMealsId");
+
+                    b.ToTable("CourseMealFoodElementary", (string)null);
+                });
+
+            modelBuilder.Entity("CourseMealFoodRecipe", b =>
+                {
+                    b.Property<Guid>("ConsumedFoodRecipesId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CourseMealsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ConsumedFoodRecipesId", "CourseMealsId");
+
+                    b.HasIndex("CourseMealsId");
+
+                    b.ToTable("CourseMealFoodRecipe", (string)null);
+                });
 
             modelBuilder.Entity("ExerciseWorkout", b =>
                 {
@@ -39,6 +69,321 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
                     b.HasIndex("WorkoutsId");
 
                     b.ToTable("WorkoutExercises", (string)null);
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.ConsumedElementaryWeight", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CourseMealId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FoodElementaryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseMealId");
+
+                    b.HasIndex("FoodElementaryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ConsumedElementaryWeights");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.ConsumedRecipeWeight", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CourseMealId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FoodRecipeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseMealId");
+
+                    b.HasIndex("FoodRecipeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ConsumedRecipeWeights");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodCharacteristic", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CharacteristicTypeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FoodElementaryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacteristicTypeId");
+
+                    b.HasIndex("FoodElementaryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FoodCharacteristics");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodCharacteristicType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FoodCharacteristicTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0141a646-e0ce-4f7a-9433-97112f05db0f"),
+                            IsDefault = true,
+                            Name = "Белки"
+                        },
+                        new
+                        {
+                            Id = new Guid("d126d15b-853a-4b7e-b122-af811a160609"),
+                            IsDefault = true,
+                            Name = "Жиры"
+                        },
+                        new
+                        {
+                            Id = new Guid("e3c6d689-4f63-44ff-8844-5bd11e4ed5af"),
+                            IsDefault = true,
+                            Name = "Углеводы"
+                        },
+                        new
+                        {
+                            Id = new Guid("cdcc58c7-5c5f-454a-9728-0643afccf491"),
+                            IsDefault = true,
+                            Name = "Калории"
+                        });
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodElementary", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FoodElementaries");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodElementaryWeight", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FoodElementaryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FoodRecipeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodElementaryId");
+
+                    b.HasIndex("FoodRecipeId");
+
+                    b.ToTable("FoodElementaryWeights");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodRecipe", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FoodRecipes");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.MealStuffs.CourseMeal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CourseMealDayId")
+                        .HasColumnType("uuid");
+
+                    b.Property<TimeOnly>("CreatedAt")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<Guid>("MealTypeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseMealDayId");
+
+                    b.HasIndex("MealTypeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CourseMeals");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.MealStuffs.CourseMealDay", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateOnly>("CourseMealDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CourseMealDays");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.MealStuffs.MealType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MealTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("7d0b4a4f-aa3f-464c-94b5-6f0a16e4e340"),
+                            IsDefault = true,
+                            Name = "Завтрак"
+                        },
+                        new
+                        {
+                            Id = new Guid("78f0b796-31f9-4b37-ad80-8ceed73978b2"),
+                            IsDefault = true,
+                            Name = "Обед"
+                        },
+                        new
+                        {
+                            Id = new Guid("82ed6910-2828-4631-bd09-bfb3a29e27b3"),
+                            IsDefault = true,
+                            Name = "Ужин"
+                        });
+                });
+
+            modelBuilder.Entity("FoodElementaryFoodRecipe", b =>
+                {
+                    b.Property<Guid>("FoodRecipesId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IngredientsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("FoodRecipesId", "IngredientsId");
+
+                    b.HasIndex("IngredientsId");
+
+                    b.ToTable("FoodRecipeFoodElementary", (string)null);
                 });
 
             modelBuilder.Entity("GymBackend.Domain.Users.AppIdentityRole", b =>
@@ -200,7 +545,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("CreatedById")
@@ -211,6 +556,9 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("WorkoutTemplateId")
                         .HasColumnType("uuid");
@@ -294,9 +642,6 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.Property<Guid>("CreatedById")
                         .HasColumnType("uuid");
-
-                    b.Property<WorkoutStatus>("WorkoutStatus")
-                        .HasColumnType("workout_status");
 
                     b.HasKey("Id");
 
@@ -463,6 +808,36 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CourseMealFoodElementary", b =>
+                {
+                    b.HasOne("FoodBackend.Domain.Foodstuffs.FoodElementary", null)
+                        .WithMany()
+                        .HasForeignKey("ConsumedFoodElementariesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FoodBackend.Domain.MealStuffs.CourseMeal", null)
+                        .WithMany()
+                        .HasForeignKey("CourseMealsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CourseMealFoodRecipe", b =>
+                {
+                    b.HasOne("FoodBackend.Domain.Foodstuffs.FoodRecipe", null)
+                        .WithMany()
+                        .HasForeignKey("ConsumedFoodRecipesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FoodBackend.Domain.MealStuffs.CourseMeal", null)
+                        .WithMany()
+                        .HasForeignKey("CourseMealsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ExerciseWorkout", b =>
                 {
                     b.HasOne("GymBackend.Domain.Workouts.Exercise", null)
@@ -474,6 +849,193 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
                     b.HasOne("GymBackend.Domain.Workouts.Workout", null)
                         .WithMany()
                         .HasForeignKey("WorkoutsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.ConsumedElementaryWeight", b =>
+                {
+                    b.HasOne("FoodBackend.Domain.MealStuffs.CourseMeal", "CourseMeal")
+                        .WithMany("ConsumedElementaryWeights")
+                        .HasForeignKey("CourseMealId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FoodBackend.Domain.Foodstuffs.FoodElementary", "FoodElementary")
+                        .WithMany()
+                        .HasForeignKey("FoodElementaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GymBackend.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourseMeal");
+
+                    b.Navigation("FoodElementary");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.ConsumedRecipeWeight", b =>
+                {
+                    b.HasOne("FoodBackend.Domain.MealStuffs.CourseMeal", "CourseMeal")
+                        .WithMany("ConsumedRecipeWeights")
+                        .HasForeignKey("CourseMealId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FoodBackend.Domain.Foodstuffs.FoodRecipe", "FoodRecipe")
+                        .WithMany()
+                        .HasForeignKey("FoodRecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GymBackend.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourseMeal");
+
+                    b.Navigation("FoodRecipe");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodCharacteristic", b =>
+                {
+                    b.HasOne("FoodBackend.Domain.Foodstuffs.FoodCharacteristicType", "CharacteristicType")
+                        .WithMany()
+                        .HasForeignKey("CharacteristicTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FoodBackend.Domain.Foodstuffs.FoodElementary", "FoodElementary")
+                        .WithMany("Characteristics")
+                        .HasForeignKey("FoodElementaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GymBackend.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("CharacteristicType");
+
+                    b.Navigation("FoodElementary");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodCharacteristicType", b =>
+                {
+                    b.HasOne("GymBackend.Domain.Users.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodElementary", b =>
+                {
+                    b.HasOne("GymBackend.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodElementaryWeight", b =>
+                {
+                    b.HasOne("FoodBackend.Domain.Foodstuffs.FoodElementary", "FoodElementary")
+                        .WithMany()
+                        .HasForeignKey("FoodElementaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FoodBackend.Domain.Foodstuffs.FoodRecipe", "FoodRecipe")
+                        .WithMany("IngredientWeights")
+                        .HasForeignKey("FoodRecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FoodElementary");
+
+                    b.Navigation("FoodRecipe");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodRecipe", b =>
+                {
+                    b.HasOne("GymBackend.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.MealStuffs.CourseMeal", b =>
+                {
+                    b.HasOne("FoodBackend.Domain.MealStuffs.CourseMealDay", "CourseMealDay")
+                        .WithMany("CourseMeals")
+                        .HasForeignKey("CourseMealDayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FoodBackend.Domain.MealStuffs.MealType", "MealType")
+                        .WithMany()
+                        .HasForeignKey("MealTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GymBackend.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourseMealDay");
+
+                    b.Navigation("MealType");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.MealStuffs.CourseMealDay", b =>
+                {
+                    b.HasOne("GymBackend.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.MealStuffs.MealType", b =>
+                {
+                    b.HasOne("GymBackend.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FoodElementaryFoodRecipe", b =>
+                {
+                    b.HasOne("FoodBackend.Domain.Foodstuffs.FoodRecipe", null)
+                        .WithMany()
+                        .HasForeignKey("FoodRecipesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FoodBackend.Domain.Foodstuffs.FoodElementary", null)
+                        .WithMany()
+                        .HasForeignKey("IngredientsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -647,6 +1209,28 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodElementary", b =>
+                {
+                    b.Navigation("Characteristics");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodRecipe", b =>
+                {
+                    b.Navigation("IngredientWeights");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.MealStuffs.CourseMeal", b =>
+                {
+                    b.Navigation("ConsumedElementaryWeights");
+
+                    b.Navigation("ConsumedRecipeWeights");
+                });
+
+            modelBuilder.Entity("FoodBackend.Domain.MealStuffs.CourseMealDay", b =>
+                {
+                    b.Navigation("CourseMeals");
                 });
 
             modelBuilder.Entity("GymBackend.Domain.Users.User", b =>
