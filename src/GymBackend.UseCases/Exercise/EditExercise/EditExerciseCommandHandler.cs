@@ -47,14 +47,18 @@ public class EditExerciseCommandHandler : BaseCommandHandler, IRequestHandler<Cr
             DbContext.Exercises.Add(exerciseToCreate);
             return;
         }
-        if (lightExerciseDto.Name != null)
-        {
-            exercise.Name = lightExerciseDto.Name;
-        }
 
-        if (lightExerciseDto.Description != null)
+        if (exercise.UpdatedAt < lightExerciseDto.UpdatedAt)
         {
-            exercise.Description = lightExerciseDto.Description;
+            if (lightExerciseDto.Name != null)
+            {
+                exercise.Name = lightExerciseDto.Name;
+            }
+
+            if (lightExerciseDto.Description != null)
+            {
+                exercise.Description = lightExerciseDto.Description;
+            }
         }
     }
 }
