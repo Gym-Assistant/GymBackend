@@ -12,14 +12,14 @@ namespace GymBackend.UseCases.Exercise.EditExercise;
 /// <summary>
 /// Handler for <see cref="CreateOrUpdateExercisesCommand"/>.
 /// </summary>
-public class EditExerciseCommandHandler : BaseCommandHandler, IRequestHandler<CreateOrUpdateExercisesCommand>
+public class CreateOrUpdateExercisesCommandHandler : BaseCommandHandler, IRequestHandler<CreateOrUpdateExercisesCommand>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public EditExerciseCommandHandler(IMapper mapper, IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
+    public CreateOrUpdateExercisesCommandHandler(IMapper mapper, IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
     {
         this.loggedUserAccessor = loggedUserAccessor;
     }
