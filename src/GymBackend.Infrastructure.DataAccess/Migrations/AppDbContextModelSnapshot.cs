@@ -95,7 +95,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ConsumedElementaryWeights");
+                    b.ToTable("ConsumedElementaryWeights", (string)null);
                 });
 
             modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.ConsumedRecipeWeight", b =>
@@ -124,7 +124,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ConsumedRecipeWeights");
+                    b.ToTable("ConsumedRecipeWeights", (string)null);
                 });
 
             modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodCharacteristic", b =>
@@ -156,7 +156,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FoodCharacteristics");
+                    b.ToTable("FoodCharacteristics", (string)null);
                 });
 
             modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodCharacteristicType", b =>
@@ -179,7 +179,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FoodCharacteristicTypes");
+                    b.ToTable("FoodCharacteristicTypes", (string)null);
 
                     b.HasData(
                         new
@@ -228,7 +228,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FoodElementaries");
+                    b.ToTable("FoodElementaries", (string)null);
                 });
 
             modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodElementaryWeight", b =>
@@ -252,7 +252,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("FoodRecipeId");
 
-                    b.ToTable("FoodElementaryWeights");
+                    b.ToTable("FoodElementaryWeights", (string)null);
                 });
 
             modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodRecipe", b =>
@@ -275,31 +275,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FoodRecipes");
-                });
-
-            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.RecipeCharacteristicSumValue", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CharacteristicTypeId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("FoodRecipeId")
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CharacteristicTypeId");
-
-                    b.HasIndex("FoodRecipeId");
-
-                    b.ToTable("RecipeCharacteristicSumValues");
+                    b.ToTable("FoodRecipes", (string)null);
                 });
 
             modelBuilder.Entity("FoodBackend.Domain.MealStuffs.CourseMeal", b =>
@@ -328,7 +304,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CourseMeals");
+                    b.ToTable("CourseMeals", (string)null);
                 });
 
             modelBuilder.Entity("FoodBackend.Domain.MealStuffs.CourseMealDay", b =>
@@ -347,7 +323,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CourseMealDays");
+                    b.ToTable("CourseMealDays", (string)null);
                 });
 
             modelBuilder.Entity("FoodBackend.Domain.MealStuffs.MealType", b =>
@@ -370,7 +346,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("MealTypes");
+                    b.ToTable("MealTypes", (string)null);
 
                     b.HasData(
                         new
@@ -454,7 +430,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserCharacteristicId");
 
-                    b.ToTable("CharacteristicStamps");
+                    b.ToTable("CharacteristicStamps", (string)null);
                 });
 
             modelBuilder.Entity("GymBackend.Domain.Users.User", b =>
@@ -558,7 +534,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserCharacteristics");
+                    b.ToTable("UserCharacteristics", (string)null);
                 });
 
             modelBuilder.Entity("GymBackend.Domain.Workouts.Exercise", b =>
@@ -588,7 +564,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("WorkoutTemplateId");
 
-                    b.ToTable("Exercises");
+                    b.ToTable("Exercises", (string)null);
                 });
 
             modelBuilder.Entity("GymBackend.Domain.Workouts.Sets", b =>
@@ -618,7 +594,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("TrainSessionId");
 
-                    b.ToTable("Sets");
+                    b.ToTable("Sets", (string)null);
                 });
 
             modelBuilder.Entity("GymBackend.Domain.Workouts.TrainSession", b =>
@@ -647,7 +623,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("TrainSessions");
+                    b.ToTable("TrainSessions", (string)null);
                 });
 
             modelBuilder.Entity("GymBackend.Domain.Workouts.Workout", b =>
@@ -669,7 +645,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Workouts");
+                    b.ToTable("Workouts", (string)null);
                 });
 
             modelBuilder.Entity("GymBackend.Domain.Workouts.WorkoutPackage", b =>
@@ -694,7 +670,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("WorkoutPackages");
+                    b.ToTable("WorkoutPackages", (string)null);
                 });
 
             modelBuilder.Entity("GymBackend.Domain.Workouts.WorkoutTemplate", b =>
@@ -724,7 +700,7 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("WorkoutPackageId");
 
-                    b.ToTable("WorkoutTemplates");
+                    b.ToTable("WorkoutTemplates", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -1000,25 +976,6 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.RecipeCharacteristicSumValue", b =>
-                {
-                    b.HasOne("FoodBackend.Domain.Foodstuffs.FoodCharacteristicType", "CharacteristicType")
-                        .WithMany()
-                        .HasForeignKey("CharacteristicTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FoodBackend.Domain.Foodstuffs.FoodRecipe", "FoodRecipe")
-                        .WithMany("CharacteristicValuesSum")
-                        .HasForeignKey("FoodRecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CharacteristicType");
-
-                    b.Navigation("FoodRecipe");
-                });
-
             modelBuilder.Entity("FoodBackend.Domain.MealStuffs.CourseMeal", b =>
                 {
                     b.HasOne("FoodBackend.Domain.MealStuffs.CourseMealDay", "CourseMealDay")
@@ -1259,8 +1216,6 @@ namespace GymBackend.Infrastructure.DataAccess.Migrations
 
             modelBuilder.Entity("FoodBackend.Domain.Foodstuffs.FoodRecipe", b =>
                 {
-                    b.Navigation("CharacteristicValuesSum");
-
                     b.Navigation("IngredientWeights");
                 });
 

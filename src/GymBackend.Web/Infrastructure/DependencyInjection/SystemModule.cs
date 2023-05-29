@@ -28,7 +28,5 @@ internal static class SystemModule
         services.AddScoped<ILoggedUserAccessor, LoggedUserAccessor>();
         services.AddScoped<IAddDefaultFoodCharacteristic, AddDefaultFoodCharacteristic>();
         services.AddScoped<IAddDefaultCourseMeal, AddDefaultCourseMeal>();
-        services.AddScoped<IAddFoodRecipeCharacteristic, AddFoodRecipeCharacteristic>();
-        services.AddScoped<IChangeRecipeCharacteristicSum, ChangeRecipeCharacteristicSum>();
     }
 }

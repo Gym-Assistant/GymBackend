@@ -15,16 +15,14 @@ namespace FoodBackend.UseCases.FoodRecipe.AddIngredientToRecipe;
 internal class AddIngredientToRecipeCommandHandler : BaseCommandHandler, IRequestHandler<AddIngredientToRecipeCommand>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
-    private readonly IChangeRecipeCharacteristicSum changeRecipeCharacteristicSum;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     public AddIngredientToRecipeCommandHandler(IAppDbContext dbContext, IMapper mapper,
-        ILoggedUserAccessor loggedUserAccessor, IChangeRecipeCharacteristicSum changeRecipeCharacteristicSum) : base(mapper, dbContext)
+        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
     {
         this.loggedUserAccessor = loggedUserAccessor;
-        this.changeRecipeCharacteristicSum = changeRecipeCharacteristicSum;
     }
     
     /// <inheritdoc />
@@ -47,8 +45,6 @@ internal class AddIngredientToRecipeCommandHandler : BaseCommandHandler, IReques
         var elementaryWeight = Mapper.Map<FoodElementaryWeight>(request);
         await DbContext.FoodElementaryWeights.AddAsync(elementaryWeight, cancellationToken);
         foodRecipe.IngredientWeights.Add(elementaryWeight);
-        await changeRecipeCharacteristicSum.ChangeRecipeCharacteristic(foodRecipe, foodElementary, elementaryWeight.Weight,
-            increaseCharacteristicSumStatement, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
     }
 }

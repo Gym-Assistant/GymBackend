@@ -12,16 +12,14 @@ namespace FoodBackend.UseCases.FoodRecipe.CreateFoodRecipe;
 internal class CreateFoodRecipeCommandHandler : BaseCommandHandler, IRequestHandler<CreateFoodRecipeCommand, Guid>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
-    private readonly IAddFoodRecipeCharacteristic recipeCharacteristic;
     
     /// <summary>
     /// Constructor.
     /// </summary>
     public CreateFoodRecipeCommandHandler(IAppDbContext dbContext, IMapper mapper,
-        ILoggedUserAccessor loggedUserAccessor, IAddFoodRecipeCharacteristic recipeCharacteristic) : base(mapper, dbContext)
+        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
     {
         this.loggedUserAccessor = loggedUserAccessor;
-        this.recipeCharacteristic = recipeCharacteristic;
     }
     
     /// <inheritdoc />>
@@ -29,10 +27,6 @@ internal class CreateFoodRecipeCommandHandler : BaseCommandHandler, IRequestHand
     {
         var food = Mapper.Map<Domain.Foodstuffs.FoodRecipe>(request);
         food.UserId = loggedUserAccessor.GetCurrentUserId();
-        await recipeCharacteristic.AddRecipeCharacteristic(FoodCharacteristicDefaults.ProteinId, food, default(double), cancellationToken);
-        await recipeCharacteristic.AddRecipeCharacteristic(FoodCharacteristicDefaults.FatId, food, default(double), cancellationToken);
-        await recipeCharacteristic.AddRecipeCharacteristic(FoodCharacteristicDefaults.CarbohydrateId, food, default(double), cancellationToken);
-        await recipeCharacteristic.AddRecipeCharacteristic(FoodCharacteristicDefaults.CaloriesId, food, default(double), cancellationToken);
         await DbContext.FoodRecipes.AddAsync(food, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
 

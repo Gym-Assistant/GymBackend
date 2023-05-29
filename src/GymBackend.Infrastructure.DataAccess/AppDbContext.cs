@@ -73,9 +73,6 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
     /// <inheritdoc/>
     public DbSet<FoodCharacteristicType> FoodCharacteristicTypes { get; private set; }
 
-    /// <inheritdoc />
-    public DbSet<RecipeCharacteristicSumValue> RecipeCharacteristicSumValues { get; private set; }
-
     #endregion
 
     #region Meals
