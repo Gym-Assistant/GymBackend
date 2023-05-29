@@ -8,5 +8,5 @@ public interface IUpdatable
     /// <summary>
     /// When entity has been updated last time.
     /// </summary>
-    public DateTimeOffset? UpdatedAt { get; set; }
+    public DateTimeOffset UpdatedAt { get; set; }
 }
