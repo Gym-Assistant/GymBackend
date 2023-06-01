@@ -40,7 +40,7 @@ public class ExerciseController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Paged list.</returns>
     [HttpGet]
-    public async Task<PagedListMetadataDto<LightExerciseDto>> GetAllExercises([FromQuery] GetAllExercisesQuery query, CancellationToken cancellationToken)
+    public async Task<IEnumerable<LightExerciseDto>> GetAllExercises([FromQuery] GetAllExercisesQuery query, CancellationToken cancellationToken)
         => await mediator.Send(query, cancellationToken);
 
     /// <summary>

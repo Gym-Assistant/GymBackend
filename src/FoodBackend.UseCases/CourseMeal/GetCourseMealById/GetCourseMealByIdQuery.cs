@@ -4,6 +4,7 @@ using MediatR;
 namespace FoodBackend.UseCases.CourseMeal.GetCourseMealById;
 
 /// <summary>
-/// Get food characteristic type by id query.
+/// Get course meal by id detail query.
 /// </summary>
-public record GetCourseMealByIdQuery(Guid CourseMealId) : IRequest<LightCourseMealDto>;
+/// <param name="CourseMealId">Course meal id.</param>
+public record GetCourseMealByIdQuery(Guid CourseMealId) : IRequest<DetailCourseMealDto>;

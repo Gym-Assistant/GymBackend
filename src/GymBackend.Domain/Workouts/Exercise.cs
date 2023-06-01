@@ -46,11 +46,6 @@ public record Exercise : ICreatable, IUpdatable
     /// </summary>
     public DateTimeOffset CreatedAt { get; set; }
 
-    /// <summary>
-    /// Related workouts.
-    /// </summary>
-    public ICollection<Workout> Workouts { get; set; }
-
     /// <inheritdoc />
-    public DateTimeOffset? UpdatedAt { get; set; }
+    public DateTimeOffset UpdatedAt { get; set; }
 }

@@ -56,5 +56,5 @@ public record Set : ICreatable, IUpdatable
     public DateTimeOffset CreatedAt { get; set; }
 
     /// <inheritdoc/>
-    public DateTimeOffset? UpdatedAt { get; set; }
+    public DateTimeOffset UpdatedAt { get; set; }
 }

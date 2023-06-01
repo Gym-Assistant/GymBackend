@@ -1,13 +1,9 @@
-﻿using FoodBackend.UseCases.Common.Dtos;
-using FoodBackend.UseCases.FoodCharacteristic.CreateFoodCharacteristic;
+﻿using FoodBackend.UseCases.FoodCharacteristic.CreateFoodCharacteristic;
 using FoodBackend.UseCases.FoodCharacteristic.EditFoodCharacteristic;
-using FoodBackend.UseCases.FoodCharacteristic.GetAllFoodCharacteristic;
-using FoodBackend.UseCases.FoodCharacteristic.GetFoodCharacteristicById;
 using FoodBackend.UseCases.FoodCharacteristic.RemoveFoodCharacteristicById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Saritasa.Tools.Common.Pagination;
 
 namespace GymBackend.Web.Controllers;
 
@@ -28,28 +24,6 @@ public class FoodCharacteristicController : ControllerBase
     {
         this.mediator = mediator;
     }
-
-    /// <summary>
-    /// Get all food characteristics.
-    /// </summary>
-    /// <param name="query">Query.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Paged list.</returns>
-    [HttpGet]
-    public async Task<PagedListMetadataDto<LightFoodCharacteristicDto>> GetAllFoodCharacteristic(
-        [FromQuery] GetAllFoodCharacteristicsQuery query, CancellationToken cancellationToken)
-        => await mediator.Send(query, cancellationToken);
-
-    /// <summary>
-    /// Get food characteristic by id.
-    /// </summary>
-    /// <param name="foodCharacteristicId">Food characteristic id.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Food characteristic by entered id.</returns>
-    [HttpGet("{foodCharacteristicId}")]
-    public async Task<LightFoodCharacteristicDto> GetFoodCharacteristicById(
-        Guid foodCharacteristicId, CancellationToken cancellationToken)
-        => await mediator.Send(new GetFoodCharacteristicByIdQuery(foodCharacteristicId), cancellationToken);
 
     /// <summary>
     /// Create new food characteristic.

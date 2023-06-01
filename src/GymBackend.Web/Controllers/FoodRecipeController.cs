@@ -1,14 +1,11 @@
 ﻿using FoodBackend.UseCases.Common.Dtos;
-using FoodBackend.UseCases.CourseMeal.ChangeElementaryWeightInCourseMeal;
 using FoodBackend.UseCases.FoodRecipe.AddIngredientToRecipe;
 using FoodBackend.UseCases.FoodRecipe.ChangeElementaryWeightInFoodRecipe;
 using FoodBackend.UseCases.FoodRecipe.CreateFoodRecipe;
 using FoodBackend.UseCases.FoodRecipe.DeleteFoodRecipeById;
 using FoodBackend.UseCases.FoodRecipe.EditFoodRecipe;
 using FoodBackend.UseCases.FoodRecipe.GetAllFoodRecipe;
-using FoodBackend.UseCases.FoodRecipe.GetAllFoodRecipeDetail;
 using FoodBackend.UseCases.FoodRecipe.GetFoodRecipeById;
-using FoodBackend.UseCases.FoodRecipe.GetFoodRecipeByIdDetail;
 using FoodBackend.UseCases.FoodRecipe.RemoveIngredientFromRecipe;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -36,24 +33,24 @@ public class FoodRecipeController
     }
 
     /// <summary>
-    /// Get all food recipes with minimum information.
+    /// Get all food recipes with detail information.
     /// </summary>
     /// <param name="query">Query.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Paged list.</returns>
     [HttpGet]
-    public async Task<PagedListMetadataDto<LightFoodRecipeDto>> GetAllFoodRecipes([FromQuery] GetAllFoodRecipesQuery query,
+    public async Task<PagedListMetadataDto<DetailFoodRecipeDto>> GetAllFoodRecipes([FromQuery] GetAllFoodRecipeQuery query,
         CancellationToken cancellationToken)
         => await mediator.Send(query, cancellationToken);
 
     /// <summary>
-    /// Get food recipe by id with minimum information.
+    /// Get food recipe by id with detail information.
     /// </summary>
     /// <param name="foodRecipeId">Food recipe id.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Food recipe by entered id.</returns>
     [HttpGet("{foodRecipeId}")]
-    public async Task<LightFoodRecipeDto> GetFoodRecipeById(Guid foodRecipeId, CancellationToken cancellationToken)
+    public async Task<DetailFoodRecipeDto> GetFoodRecipeById(Guid foodRecipeId, CancellationToken cancellationToken)
         => await mediator.Send(new GetFoodRecipeByIdQuery(foodRecipeId), cancellationToken);
 
     /// <summary>
@@ -99,27 +96,6 @@ public class FoodRecipeController
     [Authorize]
     public async Task AddIngredientToFoodRecipe(Guid foodRecipeId, AddIngredientToRecipeCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { FoodRecipeId = foodRecipeId }, cancellationToken);
-
-    /// <summary>
-    /// Get all food recipes with detail information.
-    /// </summary>
-    /// <param name="query">Query.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Paged list.</returns>
-    [HttpGet("detail")]
-    public async Task<PagedListMetadataDto<DetailFoodRecipeDto>> GetAllFoodRecipesDetail([FromQuery] GetAllFoodRecipeDetailQuery query,
-        CancellationToken cancellationToken)
-        => await mediator.Send(query, cancellationToken);
-
-    /// <summary>
-    /// Get food recipe by id with detail information.
-    /// </summary>
-    /// <param name="foodRecipeId">Food recipe id.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Food recipe by entered id.</returns>
-    [HttpGet("{foodRecipeId}/detail")]
-    public async Task<DetailFoodRecipeDto> GetFoodRecipeByIdDetail(Guid foodRecipeId, CancellationToken cancellationToken)
-        => await mediator.Send(new GetFoodRecipeByIdDetailQuery(foodRecipeId), cancellationToken);
 
     /// <summary>
     /// Remove food elementary from recipe.

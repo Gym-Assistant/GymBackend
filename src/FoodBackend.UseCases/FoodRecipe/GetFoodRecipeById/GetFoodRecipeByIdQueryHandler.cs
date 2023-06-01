@@ -9,24 +9,24 @@ using Saritasa.Tools.EFCore;
 namespace FoodBackend.UseCases.FoodRecipe.GetFoodRecipeById;
 
 /// <summary>
-/// Get food recipe by id query handler.
+/// Get food recipe by id with detail information query handler.
 /// </summary>
-internal class GetFoodRecipeByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetFoodRecipeByIdQuery, LightFoodRecipeDto>
+internal class GetFoodRecipeByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetFoodRecipeByIdQuery, DetailFoodRecipeDto>
 {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetFoodRecipeByIdQueryHandler(IAppDbContext dbContext, IMapper mapper) : base(mapper, dbContext)
+    public GetFoodRecipeByIdQueryHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
     {
     }
 
-    /// <inheritdoc />
-    public async Task<LightFoodRecipeDto> Handle(GetFoodRecipeByIdQuery request, CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    public async Task<DetailFoodRecipeDto> Handle(GetFoodRecipeByIdQuery request, CancellationToken cancellationToken)
     {
-        var food = await DbContext.FoodRecipes
-            .ProjectTo<LightFoodRecipeDto>(Mapper.ConfigurationProvider)
-            .GetAsync(food => food.Id == request.FoodRecipeId, cancellationToken);
+        var foodRecipe = await DbContext.FoodRecipes
+            .ProjectTo<DetailFoodRecipeDto>(Mapper.ConfigurationProvider)
+            .GetAsync(foodRecipe => foodRecipe.Id == request.FoodRecipeId, cancellationToken);
 
-        return food;
+        return foodRecipe;
     }
 }

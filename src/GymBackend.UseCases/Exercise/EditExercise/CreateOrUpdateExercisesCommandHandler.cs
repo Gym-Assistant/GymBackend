@@ -12,14 +12,14 @@ namespace GymBackend.UseCases.Exercise.EditExercise;
 /// <summary>
 /// Handler for <see cref="CreateOrUpdateExercisesCommand"/>.
 /// </summary>
-public class EditExerciseCommandHandler : BaseCommandHandler, IRequestHandler<CreateOrUpdateExercisesCommand>
+public class CreateOrUpdateExercisesCommandHandler : BaseCommandHandler, IRequestHandler<CreateOrUpdateExercisesCommand>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public EditExerciseCommandHandler(IMapper mapper, IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
+    public CreateOrUpdateExercisesCommandHandler(IMapper mapper, IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
     {
         this.loggedUserAccessor = loggedUserAccessor;
     }
@@ -47,14 +47,18 @@ public class EditExerciseCommandHandler : BaseCommandHandler, IRequestHandler<Cr
             DbContext.Exercises.Add(exerciseToCreate);
             return;
         }
-        if (lightExerciseDto.Name != null)
-        {
-            exercise.Name = lightExerciseDto.Name;
-        }
 
-        if (lightExerciseDto.Description != null)
+        if (exercise.UpdatedAt < lightExerciseDto.UpdatedAt)
         {
-            exercise.Description = lightExerciseDto.Description;
+            if (lightExerciseDto.Name != null)
+            {
+                exercise.Name = lightExerciseDto.Name;
+            }
+
+            if (lightExerciseDto.Description != null)
+            {
+                exercise.Description = lightExerciseDto.Description;
+            }
         }
     }
 }

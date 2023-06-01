@@ -33,6 +33,10 @@ internal class GetAllCourseMealDayQueryHandler : BaseQueryHandler, IRequestHandl
         var courseMealDaysQuery = DbContext.CourseMealDays
             .Where(mealDay => mealDay.UserId == loggedUserAccessor.GetCurrentUserId())
             .ProjectTo<LightCourseMealDayDto>(Mapper.ConfigurationProvider);
+        if (request.CourseMealDayDate != null)
+        {
+            courseMealDaysQuery = courseMealDaysQuery.Where(courseMealDay => courseMealDay.CourseMealDate == request.CourseMealDayDate);
+        }
         var pagedCourseMealDaysQuery = await
             EFPagedListFactory.FromSourceAsync(courseMealDaysQuery, request.Page, request.PageSize, 
                 cancellationToken);

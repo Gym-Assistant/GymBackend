@@ -16,4 +16,9 @@ public record CreateCourseMealCommand : IRequest<Guid>
     /// Course meal day id.
     /// </summary>
     public Guid CourseMealDayId { get; init; }
+    
+    /// <summary>
+    /// Course meal time.
+    /// </summary>
+    public TimeOnly? CourseMealTime { get; init; }
 }

@@ -40,7 +40,7 @@ public class AddDefaultCourseMeal : IAddDefaultCourseMeal
             MealType = mealType,
             MealTypeId = mealType.Id,
             UserId = userId,
-            CreatedAt = TimeOnly.FromDateTime(DateTime.UtcNow)
+            CreationTime = TimeOnly.FromDateTime(DateTime.UtcNow)
         };
         await dbContext.CourseMeals.AddAsync(courseMeal, cancellationToken);
     }

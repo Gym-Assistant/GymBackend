@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FoodBackend.Domain.Foodstuffs;
 using FoodBackend.UseCases.Common.Dtos;
 using FoodBackend.UseCases.FoodElementary.CreateFoodElementary;
 

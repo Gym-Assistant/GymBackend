@@ -9,4 +9,4 @@ namespace GymBackend.UseCases.Exercise.GetAllExercises;
 /// Get all exercises for specific user.
 /// </summary>
 /// <param name="UserId">User id.</param>
-public record GetAllExercisesQuery(Guid UserId) : PageQueryFilter, IRequest<PagedListMetadataDto<LightExerciseDto>>;
+public record GetAllExercisesQuery(Guid UserId) : PageQueryFilter, IRequest<IEnumerable<LightExerciseDto>>;

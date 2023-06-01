@@ -7,24 +7,24 @@ using MediatR;
 using Saritasa.Tools.Common.Pagination;
 using Saritasa.Tools.EFCore.Pagination;
 
-namespace FoodBackend.UseCases.FoodRecipe.GetAllFoodRecipeDetail;
+namespace FoodBackend.UseCases.FoodRecipe.GetAllFoodRecipe;
 
 /// <summary>
 /// Get all food recipes with detail information query handler.
 /// </summary>
-internal class GetAllFoodRecipeDetailQueryHandler : BaseQueryHandler, IRequestHandler<GetAllFoodRecipeDetailQuery, PagedListMetadataDto<DetailFoodRecipeDto>>
+internal class GetAllFoodRecipeQueryHandler : BaseQueryHandler, IRequestHandler<GetAllFoodRecipeQuery, PagedListMetadataDto<DetailFoodRecipeDto>>
 {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetAllFoodRecipeDetailQueryHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
+    public GetAllFoodRecipeQueryHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
     {
     }
 
     /// <summary>
     /// <inheritdoc/>>
     /// </summary>
-    public async Task<PagedListMetadataDto<DetailFoodRecipeDto>> Handle(GetAllFoodRecipeDetailQuery request, CancellationToken cancellationToken)
+    public async Task<PagedListMetadataDto<DetailFoodRecipeDto>> Handle(GetAllFoodRecipeQuery request, CancellationToken cancellationToken)
     {
         var foodsQuery = DbContext.FoodRecipes
             .ProjectTo<DetailFoodRecipeDto>(Mapper.ConfigurationProvider);

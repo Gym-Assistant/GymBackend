@@ -29,9 +29,16 @@ internal class CreateCourseMealDayCommandHandler : BaseCommandHandler, IRequestH
     {
         var courseMealDay = new CourseMealDay
         {
-            CourseMealDate = DateOnly.FromDateTime(DateTime.UtcNow),
             UserId = loggedUserAccessor.GetCurrentUserId()
         };
+        if (request.CourseMealDate != null)
+        {
+            courseMealDay.CourseMealDate = request.CourseMealDate.Value;
+        }
+        else
+        {
+            courseMealDay.CourseMealDate = DateOnly.FromDateTime(DateTime.UtcNow);
+        }
         await defaultCourseMeal.AddDefaultCourseMealToDay(CourseMealDefaults.BreakfastId,
             loggedUserAccessor.GetCurrentUserId(), courseMealDay, cancellationToken);
         await defaultCourseMeal.AddDefaultCourseMealToDay(CourseMealDefaults.LunchId,

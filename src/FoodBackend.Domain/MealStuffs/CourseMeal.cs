@@ -48,7 +48,7 @@ public record CourseMeal
     /// <summary>
     /// Time when meal was created.
     /// </summary>
-    public TimeOnly CreatedAt { get; set; }
+    public TimeOnly CreationTime { get; set; }
     
     /// <summary>
     /// Meal type id.

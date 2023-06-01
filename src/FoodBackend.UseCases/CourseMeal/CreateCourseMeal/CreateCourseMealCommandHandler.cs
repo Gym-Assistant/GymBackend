@@ -2,6 +2,7 @@
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.BaseHandlers;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.EFCore;
 
 namespace FoodBackend.UseCases.CourseMeal.CreateCourseMeal;
@@ -29,11 +30,19 @@ internal class CreateCourseMealCommandHandler : BaseCommandHandler, IRequestHand
         var mealType = await DbContext.MealTypes
             .GetAsync(mealType => mealType.Id == request.MealTypeId, cancellationToken);
         var courseMealDay = await DbContext.CourseMealDays
+            .Include(courseMeal => courseMeal.CourseMeals)
             .GetAsync(courseMealDay => courseMealDay.Id == request.CourseMealDayId, cancellationToken);
         courseMeal.MealType = mealType;
         courseMeal.CourseMealDay = courseMealDay;
         courseMeal.UserId = loggedUserAccessor.GetCurrentUserId();
-        courseMeal.CreatedAt = TimeOnly.FromDateTime(DateTime.UtcNow);
+        if (request.CourseMealTime != null)
+        {
+            courseMeal.CreationTime = request.CourseMealTime.Value;
+        }
+        else
+        {
+            courseMeal.CreationTime = TimeOnly.FromDateTime(DateTime.UtcNow);
+        }
         courseMealDay.CourseMeals.Add(courseMeal);
         await DbContext.CourseMeals.AddAsync(courseMeal, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
