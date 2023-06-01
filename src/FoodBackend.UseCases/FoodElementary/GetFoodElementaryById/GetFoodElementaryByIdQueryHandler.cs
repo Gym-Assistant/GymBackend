@@ -9,22 +9,23 @@ using Saritasa.Tools.EFCore;
 namespace FoodBackend.UseCases.FoodElementary.GetFoodElementaryById;
 
 /// <summary>
-/// Get food elementary by id query handler.
+/// Get food elementary detail with information by id query handler.
 /// </summary>
-internal class GetFoodElementaryByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetFoodElementaryByIdQuery, LightFoodElementaryDto>
+internal class GetFoodElementaryByIdQueryHandler : BaseQueryHandler,
+    IRequestHandler<GetFoodElementaryByIdQuery, DetailFoodElementaryDto>
 {
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetFoodElementaryByIdQueryHandler(IAppDbContext dbContext, IMapper mapper) : base(mapper, dbContext)
+    public GetFoodElementaryByIdQueryHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
     {
     }
-    
-    /// <inheritdoc />
-    public async Task<LightFoodElementaryDto> Handle(GetFoodElementaryByIdQuery request, CancellationToken cancellationToken)
+
+    /// <inheritdoc/>
+    public async Task<DetailFoodElementaryDto> Handle(GetFoodElementaryByIdQuery request, CancellationToken cancellationToken)
     {
         var food = await DbContext.FoodElementaries
-            .ProjectTo<LightFoodElementaryDto>(Mapper.ConfigurationProvider)
+            .ProjectTo<DetailFoodElementaryDto>(Mapper.ConfigurationProvider)
             .GetAsync(food => food.Id == request.FoodElementaryId, cancellationToken);
 
         return food;

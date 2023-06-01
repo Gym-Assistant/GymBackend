@@ -1,20 +1,13 @@
 ﻿using FoodBackend.UseCases.Common.Dtos;
-using FoodBackend.UseCases.CourseMeal.AddCourseMealToDay;
 using FoodBackend.UseCases.CourseMeal.AddElementaryToCourseMeal;
 using FoodBackend.UseCases.CourseMeal.AddRecipeToCourseMeal;
 using FoodBackend.UseCases.CourseMeal.ChangeElementaryWeightInCourseMeal;
 using FoodBackend.UseCases.CourseMeal.ChangeRecipeWeightInCourseMeal;
 using FoodBackend.UseCases.CourseMeal.CreateCourseMeal;
-using FoodBackend.UseCases.CourseMeal.CreateCourseMealDay;
 using FoodBackend.UseCases.CourseMeal.EditCourseMeal;
 using FoodBackend.UseCases.CourseMeal.GetAllCourseMeal;
-using FoodBackend.UseCases.CourseMeal.GetAllCourseMealDay;
-using FoodBackend.UseCases.CourseMeal.GetAllCourseMealDetail;
 using FoodBackend.UseCases.CourseMeal.GetCourseMealById;
-using FoodBackend.UseCases.CourseMeal.GetCourseMealByIdDetail;
-using FoodBackend.UseCases.CourseMeal.GetCourseMealDayById;
 using FoodBackend.UseCases.CourseMeal.RemoveCourseMealById;
-using FoodBackend.UseCases.CourseMeal.RemoveCourseMealDayById;
 using FoodBackend.UseCases.CourseMeal.RemoveElementaryFromCourseMeal;
 using FoodBackend.UseCases.CourseMeal.RemoveRecipeFromCourseMeal;
 using MediatR;
@@ -44,22 +37,22 @@ public class CourseMealController : ControllerBase
     }
 
     /// <summary>
-    /// Get all course meals.
+    /// Get all course meals with detail information.
     /// </summary>
     /// <param name="query">Query.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Paged list.</returns>
     [HttpGet]
-    public async Task<PagedListMetadataDto<LightCourseMealDto>> GetAllCourseMeals([FromQuery] GetAllCourseMealQuery query, CancellationToken cancellationToken)
+    public async Task<PagedListMetadataDto<DetailCourseMealDto>> GetAllCourseMeals([FromQuery] GetAllCourseMealQuery query, CancellationToken cancellationToken)
         => await mediator.Send(query, cancellationToken);
 
     /// <summary>
-    /// Get course meal by id.
+    /// Get course meal day by id with detail information.
     /// </summary>
-    /// <param name="courseMealId">Course meal id.</param>
+    /// <param name="courseMealId">Course meal day id.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpGet("{courseMealId}")]
-    public async Task<LightCourseMealDto> GetCourseMealById(Guid courseMealId, CancellationToken cancellationToken)
+    public async Task<DetailCourseMealDto> GetCourseMealById(Guid courseMealId, CancellationToken cancellationToken)
         => await mediator.Send(new GetCourseMealByIdQuery(courseMealId), cancellationToken);
 
     /// <summary>
@@ -159,74 +152,4 @@ public class CourseMealController : ControllerBase
     public async Task ChangeRecipeWeightInCourseMeal(Guid courseMealId, Guid foodRecipeId,
         ChangeRecipeWeightInCourseMealCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { CourseMealId = courseMealId, FoodRecipeId = foodRecipeId},cancellationToken);
-
-    /// <summary>
-    /// Create new course meal day.
-    /// </summary>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    [HttpPost("coursemealday")]
-    [ApiExplorerSettings(GroupName = "CourseMealDay")]
-    public async Task<Guid> CreateCourseMealDay(CancellationToken cancellationToken)
-        => await mediator.Send(new CreateCourseMealDayCommand(), cancellationToken);
-
-    /// <summary>
-    /// Add course meal to day.
-    /// </summary>
-    /// <param name="command">Command.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <param name="courseMealDayId">Course meal day id.</param>
-    [HttpPut("coursemealday/{courseMealDayId}")]
-    [ApiExplorerSettings(GroupName = "CourseMealDay")]
-    public async Task AddCourseMealToDay(Guid courseMealDayId, AddCourseMealToDayCommand command, CancellationToken cancellationToken)
-        => await mediator.Send(command with { CourseMealDayId = courseMealDayId }, cancellationToken);
-
-    /// <summary>
-    /// Delete course meal day.
-    /// </summary>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <param name="courseMealDayId">Course meal day id.</param>
-    [HttpDelete("coursemealday/{courseMealDayId}")]
-    [ApiExplorerSettings(GroupName = "CourseMealDay")]
-    public async Task RemoveCourseMealDay(Guid courseMealDayId, CancellationToken cancellationToken)
-        => await mediator.Send(new RemoveCourseMealDayByIdCommand(courseMealDayId), cancellationToken);
-
-    /// <summary>
-    /// Get all course meal days.
-    /// </summary>
-    /// <param name="query">Query.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Paged list.</returns>
-    [HttpGet("coursemealday")]
-    [ApiExplorerSettings(GroupName = "CourseMealDay")]
-    public async Task<PagedListMetadataDto<LightCourseMealDayDto>> GetAllCourseMealDays([FromQuery] GetAllCourseMealDayQuery query, CancellationToken cancellationToken)
-        => await mediator.Send(query, cancellationToken);
-
-    /// <summary>
-    /// Get course meal day by id.
-    /// </summary>
-    /// <param name="courseMealDayId">Course meal day id.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    [HttpGet("coursemealday/{courseMealDayId}")]
-    [ApiExplorerSettings(GroupName = "CourseMealDay")]
-    public async Task<LightCourseMealDayDto> GetCourseMealDayById(Guid courseMealDayId, CancellationToken cancellationToken)
-        => await mediator.Send(new GetCourseMealDayByIdQuery(courseMealDayId), cancellationToken);
-
-    /// <summary>
-    /// Get all course meals with detail information.
-    /// </summary>
-    /// <param name="query">Query.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Paged list.</returns>
-    [HttpGet("detail")]
-    public async Task<PagedListMetadataDto<DetailCourseMealDto>> GetAllCourseMealsDetail([FromQuery] GetAllCourseMealDetailQuery query, CancellationToken cancellationToken)
-        => await mediator.Send(query, cancellationToken);
-
-    /// <summary>
-    /// Get course meal day by id with detail information.
-    /// </summary>
-    /// <param name="courseMealId">Course meal day id.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    [HttpGet("{courseMealId}/detail")]
-    public async Task<DetailCourseMealDto> GetCourseMealByIdDetail(Guid courseMealId, CancellationToken cancellationToken)
-        => await mediator.Send(new GetCourseMealByIdDetailQuery(courseMealId), cancellationToken);
 }

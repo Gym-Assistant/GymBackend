@@ -6,6 +6,6 @@ using Saritasa.Tools.Common.Pagination;
 namespace FoodBackend.UseCases.FoodElementary.GetAllFoodElementaries;
 
 /// <summary>
-/// Get all food elementaries query.
+/// Get all food elementaries with detail info query.
 /// </summary>
-public record GetAllFoodElementariesQuery(Guid? UserId) : PageQueryFilter, IRequest<PagedListMetadataDto<LightFoodElementaryDto>>;
+public record GetAllFoodElementariesQuery(Guid? UserId) : PageQueryFilter, IRequest<PagedListMetadataDto<DetailFoodElementaryDto>>;

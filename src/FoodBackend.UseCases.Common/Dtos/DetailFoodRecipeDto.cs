@@ -16,17 +16,12 @@ public record DetailFoodRecipeDto
     public string Name { get; init; }
     
     /// <summary>
-    /// Id of creator.
+    /// Id of user who created recipe.
     /// </summary>
     public Guid? UserId { get; init; }
 
     /// <summary>
     /// Ingredients collection.
     /// </summary>
-    public ICollection<DetailFoodElementaryDto> Ingredients { get; init; }
-    
-    /// <summary>
-    /// Ingredient weights collection.
-    /// </summary>
-    public ICollection<FoodElementaryWeightDto> IngredientWeights { get; init; }
+    public ICollection<FoodElementaryInRecipeDto> Ingredients { get; init; }
 }
