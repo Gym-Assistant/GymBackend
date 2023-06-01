@@ -24,10 +24,13 @@ public class CourseMealMappingProfile : Profile
         CreateMap<AddRecipeToCourseMealCommand, ConsumedRecipeWeight>();
         CreateMap<Domain.MealStuffs.CourseMealDay, LightCourseMealDayDto>();
         CreateMap<Domain.MealStuffs.CourseMeal, DetailCourseMealDto>()
-            .ForMember(dest => dest.MealTypeName, opt => opt.MapFrom(src=> src.MealType.Name));
-        CreateMap<ConsumedRecipeWeight, ConsumedRecipeWeightDto>();
-        CreateMap<ConsumedElementaryWeight, ConsumedElementaryWeightDto>();
-        CreateMap<ConsumedRecipeWeight, ConsumedRecipeWeightDto>();
+            .ForMember(dest => dest.MealTypeName, opt => opt.MapFrom(src=> src.MealType.Name))
+            .ForMember(dest => dest.ConsumedElementaries, opt => opt.MapFrom(src=> src.ConsumedElementaryWeights))
+            .ForMember(dest => dest.ConsumedRecipes, opt => opt.MapFrom(src=> src.ConsumedRecipeWeights));
+        CreateMap<ConsumedRecipeWeight, RecipeInCourseMealDto>()
+            .ForMember(dest => dest.RecipeInMealWeight, opt => opt.MapFrom(src => src.Weight));
+        CreateMap<ConsumedElementaryWeight, FoodElementaryInCourseMealDto>()
+            .ForMember(dest => dest.ElementaryInMealWeight, opt => opt.MapFrom(src => src.Weight));
         CreateMap<Domain.Foodstuffs.FoodElementary, LightFoodElementaryDto>();
         CreateMap<Domain.Foodstuffs.FoodRecipe, LightFoodRecipeDto>();
     }

@@ -14,26 +14,16 @@ public record DetailCourseMealDto
     /// Id of user who created course meal.
     /// </summary>
     public Guid UserId { get; init; }
-
+    
     /// <summary>
     /// Consumed food elementaries.
     /// </summary>
-    public ICollection<LightFoodElementaryDto> ConsumedFoodElementaries { get; init; }
-    
-    /// <summary>
-    /// Consumed food elementaries weight.
-    /// </summary>
-    public ICollection<ConsumedElementaryWeightDto> ConsumedElementaryWeights { get; init; }
+    public ICollection<FoodElementaryInCourseMealDto> ConsumedElementaries { get; init; }
     
     /// <summary>
     /// Consumed food recipes.
     /// </summary>
-    public ICollection<LightFoodRecipeDto> ConsumedFoodRecipes { get; init; }
-    
-    /// <summary>
-    /// Consumed food recipes weight.
-    /// </summary>
-    public ICollection<ConsumedRecipeWeightDto> ConsumedRecipeWeights { get; init; }
+    public ICollection<RecipeInCourseMealDto> ConsumedRecipes { get; init; }
 
     /// <summary>
     /// Time when meal was created.

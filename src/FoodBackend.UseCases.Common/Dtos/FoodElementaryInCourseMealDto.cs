@@ -1,9 +1,9 @@
 ﻿namespace FoodBackend.UseCases.Common.Dtos;
 
 /// <summary>
-/// Consumed food elementary weight DTO.
+/// Consumed food elementary in course meal DTO.
 /// </summary>
-public record ConsumedElementaryWeightDto
+public record FoodElementaryInCourseMealDto
 {
     /// <summary>
     /// Id.
@@ -16,12 +16,7 @@ public record ConsumedElementaryWeightDto
     public LightFoodElementaryDto FoodElementary { get; init; }
     
     /// <summary>
-    /// Course meal.
+    /// Food elementary in course meal weight value.
     /// </summary>
-    public LightCourseMealDto CourseMeal { get; init; }
-    
-    /// <summary>
-    /// Weight value.
-    /// </summary>
-    public double Weight { get; init; }
+    public double ElementaryInMealWeight { get; init; }
 }
