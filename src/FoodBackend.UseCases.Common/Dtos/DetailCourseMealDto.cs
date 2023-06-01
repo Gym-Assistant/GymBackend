@@ -38,7 +38,7 @@ public record DetailCourseMealDto
     /// <summary>
     /// Time when meal was created.
     /// </summary>
-    public TimeOnly CreatedAt { get; init; }
+    public TimeOnly CreationTime { get; init; }
     
     /// <summary>
     /// Meal type id.
