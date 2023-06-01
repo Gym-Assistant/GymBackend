@@ -4,7 +4,7 @@ using MediatR;
 namespace FoodBackend.UseCases.FoodRecipe.GetFoodRecipeById;
 
 /// <summary>
-/// Get food recipe by id query.
+/// Get food recipe by id with detail information query.
 /// </summary>
 /// <param name="FoodRecipeId"></param>
-public record GetFoodRecipeByIdQuery(Guid FoodRecipeId) : IRequest<LightFoodRecipeDto>;
+public record GetFoodRecipeByIdQuery(Guid FoodRecipeId) : IRequest<DetailFoodRecipeDto>;
