@@ -8,4 +8,4 @@ namespace FoodBackend.UseCases.CourseMeal.GetAllCourseMealDay;
 /// <summary>
 /// Get all course meal day query.
 /// </summary>
-public record GetAllCourseMealDayQuery : PageQueryFilter, IRequest<PagedListMetadataDto<LightCourseMealDayDto>>;
+public record GetAllCourseMealDayQuery(DateOnly? CourseMealDayDate) : PageQueryFilter, IRequest<PagedListMetadataDto<LightCourseMealDayDto>>;
