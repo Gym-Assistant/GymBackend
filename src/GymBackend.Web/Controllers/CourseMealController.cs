@@ -163,11 +163,12 @@ public class CourseMealController : ControllerBase
     /// <summary>
     /// Create new course meal day.
     /// </summary>
+    /// <param name="command">Create course meal day command.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPost("coursemealday")]
     [ApiExplorerSettings(GroupName = "CourseMealDay")]
-    public async Task<Guid> CreateCourseMealDay(CancellationToken cancellationToken)
-        => await mediator.Send(new CreateCourseMealDayCommand(), cancellationToken);
+    public async Task<Guid> CreateCourseMealDay(CreateCourseMealDayCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command, cancellationToken);
 
     /// <summary>
     /// Add course meal to day.
