@@ -6,7 +6,6 @@ using Saritasa.Tools.Common.Pagination;
 namespace FoodBackend.UseCases.CourseMeal.GetAllCourseMeal;
 
 /// <summary>
-/// Get all course meal query.
+/// Get all course meal detail query.
 /// </summary>
-public record GetAllCourseMealQuery : 
-    PageQueryFilter, IRequest<PagedListMetadataDto<LightCourseMealDto>>;
+public record GetAllCourseMealQuery : PageQueryFilter, IRequest<PagedListMetadataDto<DetailCourseMealDto>>;

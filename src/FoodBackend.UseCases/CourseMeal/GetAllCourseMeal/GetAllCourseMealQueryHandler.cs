@@ -10,10 +10,9 @@ using Saritasa.Tools.EFCore.Pagination;
 namespace FoodBackend.UseCases.CourseMeal.GetAllCourseMeal;
 
 /// <summary>
-/// Get all food characteristic types query handler.
+/// Get all course meal detail query handler.
 /// </summary>
-internal class GetAllCourseMealQueryHandler : 
-    BaseQueryHandler, IRequestHandler<GetAllCourseMealQuery, PagedListMetadataDto<LightCourseMealDto>>
+internal class GetAllCourseMealQueryHandler : BaseQueryHandler, IRequestHandler<GetAllCourseMealQuery, PagedListMetadataDto<DetailCourseMealDto>>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
 
@@ -26,13 +25,12 @@ internal class GetAllCourseMealQueryHandler :
         this.loggedUserAccessor = loggedUserAccessor;
     }
 
-    /// <inheritdoc />
-    public async Task<PagedListMetadataDto<LightCourseMealDto>> Handle(GetAllCourseMealQuery request,
-        CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    public async Task<PagedListMetadataDto<DetailCourseMealDto>> Handle(GetAllCourseMealQuery request, CancellationToken cancellationToken)
     {
         var courseMealsQuery = DbContext.CourseMeals
             .Where(meal => meal.UserId == loggedUserAccessor.GetCurrentUserId())
-            .ProjectTo<LightCourseMealDto>(Mapper.ConfigurationProvider);
+            .ProjectTo<DetailCourseMealDto>(Mapper.ConfigurationProvider);
         var pagedCourseMealsQuery = await
             EFPagedListFactory.FromSourceAsync(courseMealsQuery, request.Page, request.PageSize, 
                 cancellationToken);
