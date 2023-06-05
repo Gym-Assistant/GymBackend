@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Reflection;
+using AutoMapper;
 using FoodBackend.Domain.MealStuffs;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.BaseHandlers;
@@ -39,12 +40,13 @@ internal class CreateCourseMealDayCommandHandler : BaseCommandHandler, IRequestH
         {
             courseMealDay.CourseMealDate = DateOnly.FromDateTime(DateTime.UtcNow);
         }
-        await defaultCourseMeal.AddDefaultCourseMealToDay(CourseMealDefaults.BreakfastId,
-            loggedUserAccessor.GetCurrentUserId(), courseMealDay, cancellationToken);
-        await defaultCourseMeal.AddDefaultCourseMealToDay(CourseMealDefaults.LunchId,
-            loggedUserAccessor.GetCurrentUserId(), courseMealDay, cancellationToken);
-        await defaultCourseMeal.AddDefaultCourseMealToDay(CourseMealDefaults.DinnerId,
-            loggedUserAccessor.GetCurrentUserId(), courseMealDay, cancellationToken);
+        foreach (var mealType in typeof(CourseMealDefaults)
+                     .GetFields(BindingFlags.Public | BindingFlags.Static))
+        {
+            var defaultMealTypeId = Guid.Parse($"{mealType.GetValue(null)}");
+            await defaultCourseMeal.AddDefaultCourseMealToDay(defaultMealTypeId,
+                loggedUserAccessor.GetCurrentUserId(), courseMealDay, cancellationToken);
+        }
         await DbContext.CourseMealDays.AddAsync(courseMealDay, cancellationToken);
         await DbContext.SaveChangesAsync(cancellationToken);
         return courseMealDay.Id;
