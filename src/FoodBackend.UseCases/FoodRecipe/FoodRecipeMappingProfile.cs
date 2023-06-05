@@ -22,6 +22,8 @@ public class FoodRecipeMappingProfile : Profile
         CreateMap<AddIngredientToRecipeCommand, FoodElementaryWeight>();
         CreateMap<Domain.Foodstuffs.FoodRecipe, DetailFoodRecipeDto>()
             .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.IngredientWeights));
+        CreateMap<Domain.Foodstuffs.FoodRecipe, FoodRecipeDtoWithCharacteristics>()
+            .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.IngredientWeights));
         CreateMap<FoodElementaryWeight, FoodElementaryInRecipeDto>()
             .ForMember(dest => dest.ElementaryWeight, opt => opt.MapFrom(src => src.Weight));
         

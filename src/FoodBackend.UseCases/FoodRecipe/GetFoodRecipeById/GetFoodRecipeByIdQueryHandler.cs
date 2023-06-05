@@ -11,22 +11,25 @@ namespace FoodBackend.UseCases.FoodRecipe.GetFoodRecipeById;
 /// <summary>
 /// Get food recipe by id with detail information query handler.
 /// </summary>
-internal class GetFoodRecipeByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetFoodRecipeByIdQuery, DetailFoodRecipeDto>
+internal class GetFoodRecipeByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetFoodRecipeByIdQuery, FoodRecipeDtoWithCharacteristics>
 {
+    private readonly ICountRecipeCharacteristics countRecipeCharacteristics;
+
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetFoodRecipeByIdQueryHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
+    public GetFoodRecipeByIdQueryHandler(IMapper mapper, IAppDbContext dbContext,
+        ICountRecipeCharacteristics countRecipeCharacteristics) : base(mapper, dbContext)
     {
+        this.countRecipeCharacteristics = countRecipeCharacteristics;
     }
 
     /// <inheritdoc/>
-    public async Task<DetailFoodRecipeDto> Handle(GetFoodRecipeByIdQuery request, CancellationToken cancellationToken)
+    public async Task<FoodRecipeDtoWithCharacteristics> Handle(GetFoodRecipeByIdQuery request, CancellationToken cancellationToken)
     {
         var foodRecipe = await DbContext.FoodRecipes
-            .ProjectTo<DetailFoodRecipeDto>(Mapper.ConfigurationProvider)
+            .ProjectTo<FoodRecipeDtoWithCharacteristics>(Mapper.ConfigurationProvider)
             .GetAsync(foodRecipe => foodRecipe.Id == request.FoodRecipeId, cancellationToken);
-
-        return foodRecipe;
+        return foodRecipe with { CharacteristicsSum = await countRecipeCharacteristics.CountCharacteristics(foodRecipe, cancellationToken) };
     }
 }

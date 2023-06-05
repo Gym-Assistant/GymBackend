@@ -14,11 +14,15 @@ namespace FoodBackend.UseCases.FoodRecipe.GetAllFoodRecipe;
 /// </summary>
 internal class GetAllFoodRecipeQueryHandler : BaseQueryHandler, IRequestHandler<GetAllFoodRecipeQuery, PagedListMetadataDto<DetailFoodRecipeDto>>
 {
+    private readonly ICountRecipeCharacteristics countRecipeCharacteristics;
+
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetAllFoodRecipeQueryHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
+    public GetAllFoodRecipeQueryHandler(IMapper mapper, IAppDbContext dbContext,
+        ICountRecipeCharacteristics countRecipeCharacteristics) : base(mapper, dbContext)
     {
+        this.countRecipeCharacteristics = countRecipeCharacteristics;
     }
 
     /// <summary>
@@ -30,11 +34,10 @@ internal class GetAllFoodRecipeQueryHandler : BaseQueryHandler, IRequestHandler<
             .ProjectTo<DetailFoodRecipeDto>(Mapper.ConfigurationProvider);
         if (request.UserId != null)
         {
-            foodsQuery = foodsQuery.Where(foodElementary => foodElementary.UserId == request.UserId);
+            foodsQuery = foodsQuery.Where(food => food.UserId == request.UserId);
         }
         var pagedFoodsQuery = await
             EFPagedListFactory.FromSourceAsync(foodsQuery, request.Page, request.PageSize, cancellationToken);
-
         return pagedFoodsQuery.ToMetadataObject();
     }
 }

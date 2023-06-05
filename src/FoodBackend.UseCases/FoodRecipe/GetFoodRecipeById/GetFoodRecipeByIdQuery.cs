@@ -7,4 +7,4 @@ namespace FoodBackend.UseCases.FoodRecipe.GetFoodRecipeById;
 /// Get food recipe by id with detail information query.
 /// </summary>
 /// <param name="FoodRecipeId"></param>
-public record GetFoodRecipeByIdQuery(Guid FoodRecipeId) : IRequest<DetailFoodRecipeDto>;
+public record GetFoodRecipeByIdQuery(Guid FoodRecipeId) : IRequest<FoodRecipeDtoWithCharacteristics>;
