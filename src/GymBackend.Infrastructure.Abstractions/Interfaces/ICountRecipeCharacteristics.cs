@@ -13,5 +13,5 @@ public interface ICountRecipeCharacteristics
     /// <param name="foodRecipe">Food recipe DTO.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Food recipe characteristics sum collection.</returns>
-    Task<ICollection<FoodRecipeCharacteristicSumDto>> CountCharacteristics(FoodRecipeDtoWithCharacteristics foodRecipe, CancellationToken cancellationToken);
+    Task<ICollection<FoodRecipeCharacteristicSumDto>> CountCharacteristics(DetailFoodRecipeDto foodRecipe, CancellationToken cancellationToken);
 }

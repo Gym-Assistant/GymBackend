@@ -38,6 +38,12 @@ internal class GetAllFoodRecipeQueryHandler : BaseQueryHandler, IRequestHandler<
         }
         var pagedFoodsQuery = await
             EFPagedListFactory.FromSourceAsync(foodsQuery, request.Page, request.PageSize, cancellationToken);
-        return pagedFoodsQuery.ToMetadataObject();
+        var foodRecipes = pagedFoodsQuery.ToMetadataObject(); 
+        foreach (var foodRecipeDto in foodRecipes.Items)
+        {
+            foodRecipeDto.CharacteristicsSum =
+                await countRecipeCharacteristics.CountCharacteristics(foodRecipeDto, cancellationToken);
+        }
+        return foodRecipes;
     }
 }

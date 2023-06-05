@@ -28,7 +28,7 @@ public class CountRecipeCharacteristics : ICountRecipeCharacteristics
     }
     
     /// <inheritdoc />
-    public async Task<ICollection<FoodRecipeCharacteristicSumDto>> CountCharacteristics(FoodRecipeDtoWithCharacteristics foodRecipe, CancellationToken cancellationToken)
+    public async Task<ICollection<FoodRecipeCharacteristicSumDto>> CountCharacteristics(DetailFoodRecipeDto foodRecipe, CancellationToken cancellationToken)
     {
         const double defaultWeight = 100.0;
         var characteristicsSum = new List<FoodRecipeCharacteristicSumDto>();

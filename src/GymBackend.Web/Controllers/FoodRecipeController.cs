@@ -50,7 +50,7 @@ public class FoodRecipeController
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Food recipe by entered id.</returns>
     [HttpGet("{foodRecipeId}")]
-    public async Task<FoodRecipeDtoWithCharacteristics> GetFoodRecipeById(Guid foodRecipeId, CancellationToken cancellationToken)
+    public async Task<DetailFoodRecipeDto> GetFoodRecipeById(Guid foodRecipeId, CancellationToken cancellationToken)
         => await mediator.Send(new GetFoodRecipeByIdQuery(foodRecipeId), cancellationToken);
 
     /// <summary>

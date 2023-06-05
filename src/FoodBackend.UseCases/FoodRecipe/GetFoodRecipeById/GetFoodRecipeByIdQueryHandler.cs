@@ -11,7 +11,7 @@ namespace FoodBackend.UseCases.FoodRecipe.GetFoodRecipeById;
 /// <summary>
 /// Get food recipe by id with detail information query handler.
 /// </summary>
-internal class GetFoodRecipeByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetFoodRecipeByIdQuery, FoodRecipeDtoWithCharacteristics>
+internal class GetFoodRecipeByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetFoodRecipeByIdQuery, DetailFoodRecipeDto>
 {
     private readonly ICountRecipeCharacteristics countRecipeCharacteristics;
 
@@ -25,10 +25,10 @@ internal class GetFoodRecipeByIdQueryHandler : BaseQueryHandler, IRequestHandler
     }
 
     /// <inheritdoc/>
-    public async Task<FoodRecipeDtoWithCharacteristics> Handle(GetFoodRecipeByIdQuery request, CancellationToken cancellationToken)
+    public async Task<DetailFoodRecipeDto> Handle(GetFoodRecipeByIdQuery request, CancellationToken cancellationToken)
     {
         var foodRecipe = await DbContext.FoodRecipes
-            .ProjectTo<FoodRecipeDtoWithCharacteristics>(Mapper.ConfigurationProvider)
+            .ProjectTo<DetailFoodRecipeDto>(Mapper.ConfigurationProvider)
             .GetAsync(foodRecipe => foodRecipe.Id == request.FoodRecipeId, cancellationToken);
         return foodRecipe with { CharacteristicsSum = await countRecipeCharacteristics.CountCharacteristics(foodRecipe, cancellationToken) };
     }
