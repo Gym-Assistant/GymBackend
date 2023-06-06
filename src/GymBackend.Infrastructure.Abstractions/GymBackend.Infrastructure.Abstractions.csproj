@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FoodBackend.Domain\FoodBackend.Domain.csproj" />
+    <ProjectReference Include="..\FoodBackend.UseCases.Common\FoodBackend.UseCases.Common.csproj" />
     <ProjectReference Include="..\GymBackend.Domain\GymBackend.Domain.csproj" />
   </ItemGroup>
 

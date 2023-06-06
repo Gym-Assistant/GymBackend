@@ -13,11 +13,15 @@ namespace FoodBackend.UseCases.FoodRecipe.GetFoodRecipeById;
 /// </summary>
 internal class GetFoodRecipeByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetFoodRecipeByIdQuery, DetailFoodRecipeDto>
 {
+    private readonly ICountRecipeCharacteristics countRecipeCharacteristics;
+
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetFoodRecipeByIdQueryHandler(IMapper mapper, IAppDbContext dbContext) : base(mapper, dbContext)
+    public GetFoodRecipeByIdQueryHandler(IMapper mapper, IAppDbContext dbContext,
+        ICountRecipeCharacteristics countRecipeCharacteristics) : base(mapper, dbContext)
     {
+        this.countRecipeCharacteristics = countRecipeCharacteristics;
     }
 
     /// <inheritdoc/>
@@ -26,7 +30,6 @@ internal class GetFoodRecipeByIdQueryHandler : BaseQueryHandler, IRequestHandler
         var foodRecipe = await DbContext.FoodRecipes
             .ProjectTo<DetailFoodRecipeDto>(Mapper.ConfigurationProvider)
             .GetAsync(foodRecipe => foodRecipe.Id == request.FoodRecipeId, cancellationToken);
-
-        return foodRecipe;
+        return foodRecipe with { CharacteristicsSum = await countRecipeCharacteristics.CountRecipeCharacteristicSum(foodRecipe, cancellationToken) };
     }
 }

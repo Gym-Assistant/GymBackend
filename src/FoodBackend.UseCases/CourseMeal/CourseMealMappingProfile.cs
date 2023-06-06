@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FoodBackend.Domain.Foodstuffs;
+using FoodBackend.Domain.MealStuffs;
 using FoodBackend.UseCases.Common.Dtos;
 using FoodBackend.UseCases.CourseMeal.AddElementaryToCourseMeal;
 using FoodBackend.UseCases.CourseMeal.AddRecipeToCourseMeal;
@@ -22,7 +23,7 @@ public class CourseMealMappingProfile : Profile
             .ForMember(dest => dest.MealTypeName, opt => opt.MapFrom(src=> src.MealType.Name));
         CreateMap<AddElementaryToCourseMealCommand, ConsumedElementaryWeight>();
         CreateMap<AddRecipeToCourseMealCommand, ConsumedRecipeWeight>();
-        CreateMap<Domain.MealStuffs.CourseMealDay, LightCourseMealDayDto>();
+        CreateMap<CourseMealDay, LightCourseMealDayDto>();
         CreateMap<Domain.MealStuffs.CourseMeal, DetailCourseMealDto>()
             .ForMember(dest => dest.MealTypeName, opt => opt.MapFrom(src=> src.MealType.Name))
             .ForMember(dest => dest.ConsumedElementaries, opt => opt.MapFrom(src=> src.ConsumedElementaryWeights))
@@ -33,5 +34,6 @@ public class CourseMealMappingProfile : Profile
             .ForMember(dest => dest.ElementaryInMealWeight, opt => opt.MapFrom(src => src.Weight));
         CreateMap<Domain.Foodstuffs.FoodElementary, LightFoodElementaryDto>();
         CreateMap<Domain.Foodstuffs.FoodRecipe, LightFoodRecipeDto>();
+        CreateMap<CourseMealDay, DetailCourseMealDayDto>();
     }
 }

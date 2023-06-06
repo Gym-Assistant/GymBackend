@@ -7,4 +7,4 @@ namespace FoodBackend.UseCases.CourseMeal.GetCourseMealDayById;
 /// Get course meal day by id query.
 /// </summary>
 /// <param name="CourseMealDayId">Course meal day id.</param>
-public record GetCourseMealDayByIdQuery(Guid CourseMealDayId) : IRequest<LightCourseMealDayDto>;
+public record GetCourseMealDayByIdQuery(Guid CourseMealDayId) : IRequest<DetailCourseMealDayDto>;

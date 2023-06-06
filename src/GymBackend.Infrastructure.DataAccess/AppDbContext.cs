@@ -153,25 +153,6 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
 
         #region Food
 
-
-
-        #endregion
-
-        modelBuilder.Entity<FoodRecipe>()
-            .HasMany(p => p.Ingredients)
-            .WithMany(p => p.FoodRecipes)
-            .UsingEntity(p => p.ToTable(nameof(FoodRecipeFoodElementary)));
-
-        modelBuilder.Entity<CourseMeal>()
-            .HasMany(p => p.ConsumedFoodRecipes)
-            .WithMany(p => p.CourseMeals)
-            .UsingEntity(p => p.ToTable(nameof(CourseMealFoodRecipe)));
-
-        modelBuilder.Entity<CourseMeal>()
-            .HasMany(p => p.ConsumedFoodElementaries)
-            .WithMany(p => p.CourseMeals)
-            .UsingEntity(p => p.ToTable(nameof(CourseMealFoodElementary)));
-
         modelBuilder.Entity<FoodCharacteristic>()
             .HasIndex(p => p.UserId);
 
@@ -186,10 +167,36 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
             .HasForeignKey(p => p.CharacteristicTypeId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<FoodRecipe>()
+            .HasMany(p => p.Ingredients)
+            .WithMany(p => p.FoodRecipes)
+            .UsingEntity(p => p.ToTable(nameof(FoodRecipeFoodElementary)));
+
         modelBuilder.Entity<FoodElementaryWeight>()
             .HasOne(p=>p.FoodRecipe)
             .WithMany(p=>p.IngredientWeights)
             .HasForeignKey(p=>p.FoodRecipeId);
+
+        modelBuilder.Entity<FoodCharacteristicType>().HasData(
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.ProteinId, IsDefault = true, Name = "Белки", UserId = null, CreatedBy = null },
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.FatId, IsDefault = true, Name = "Жиры", UserId = null, CreatedBy = null },
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CarbohydrateId, IsDefault = true, Name = "Углеводы", UserId = null, CreatedBy = null },
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CaloriesId, IsDefault = true, Name = "Калории", UserId = null, CreatedBy = null }
+        );
+
+        #endregion
+
+        #region Meal
+
+        modelBuilder.Entity<CourseMeal>()
+            .HasMany(p => p.ConsumedFoodRecipes)
+            .WithMany(p => p.CourseMeals)
+            .UsingEntity(p => p.ToTable(nameof(CourseMealFoodRecipe)));
+
+        modelBuilder.Entity<CourseMeal>()
+            .HasMany(p => p.ConsumedFoodElementaries)
+            .WithMany(p => p.CourseMeals)
+            .UsingEntity(p => p.ToTable(nameof(CourseMealFoodElementary)));
 
         modelBuilder.Entity<CourseMealDay>()
             .HasMany(p=>p.CourseMeals)
@@ -203,17 +210,12 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<MealType>().HasData(
-                new MealType { Id = CourseMealDefaults.BreakfastId, IsDefault = true, Name = "Завтрак", UserId = null, User = null},
-                new MealType { Id = CourseMealDefaults.LunchId, IsDefault = true, Name = "Обед", UserId = null, User = null},
-                new MealType { Id = CourseMealDefaults.DinnerId, IsDefault = true, Name = "Ужин", UserId = null, User = null}
-            );
-
-        modelBuilder.Entity<FoodCharacteristicType>().HasData(
-            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.ProteinId, IsDefault = true, Name = "Белки", UserId = null, CreatedBy = null },
-            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.FatId, IsDefault = true, Name = "Жиры", UserId = null, CreatedBy = null },
-            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CarbohydrateId, IsDefault = true, Name = "Углеводы", UserId = null, CreatedBy = null },
-            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CaloriesId, IsDefault = true, Name = "Калории", UserId = null, CreatedBy = null }
+            new MealType { Id = CourseMealDefaults.BreakfastId, IsDefault = true, Name = "Завтрак", UserId = null, User = null},
+            new MealType { Id = CourseMealDefaults.LunchId, IsDefault = true, Name = "Обед", UserId = null, User = null},
+            new MealType { Id = CourseMealDefaults.DinnerId, IsDefault = true, Name = "Ужин", UserId = null, User = null}
         );
+
+        #endregion
 
         SetupEnum(modelBuilder);
     }

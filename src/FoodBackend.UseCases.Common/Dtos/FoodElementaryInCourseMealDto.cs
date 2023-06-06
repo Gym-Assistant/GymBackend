@@ -13,7 +13,7 @@ public record FoodElementaryInCourseMealDto
     /// <summary>
     /// Food elementary.
     /// </summary>
-    public LightFoodElementaryDto FoodElementary { get; init; }
+    public DetailFoodElementaryDto FoodElementary { get; init; }
     
     /// <summary>
     /// Food elementary in course meal weight value.
