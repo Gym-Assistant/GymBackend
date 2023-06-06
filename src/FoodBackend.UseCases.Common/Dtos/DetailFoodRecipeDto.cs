@@ -28,5 +28,5 @@ public record DetailFoodRecipeDto
     /// <summary>
     /// Food recipe characteristics sum information.
     /// </summary>
-    public ICollection<FoodRecipeCharacteristicSumDto> CharacteristicsSum { get; set; }
+    public ICollection<FoodCharacteristicSumDto> CharacteristicsSum { get; set; }
 }

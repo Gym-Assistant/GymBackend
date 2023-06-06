@@ -15,14 +15,16 @@ namespace FoodBackend.UseCases.CourseMeal.GetAllCourseMeal;
 internal class GetAllCourseMealQueryHandler : BaseQueryHandler, IRequestHandler<GetAllCourseMealQuery, PagedListMetadataDto<DetailCourseMealDto>>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
+    private readonly ICountCourseMealCharacteristics courseMealCharacteristics;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetAllCourseMealQueryHandler(IMapper mapper, IAppDbContext dbContext,
-        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
+    public GetAllCourseMealQueryHandler(IMapper mapper, IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor,
+        ICountCourseMealCharacteristics courseMealCharacteristics) : base(mapper, dbContext)
     {
         this.loggedUserAccessor = loggedUserAccessor;
+        this.courseMealCharacteristics = courseMealCharacteristics;
     }
 
     /// <inheritdoc/>
@@ -34,7 +36,12 @@ internal class GetAllCourseMealQueryHandler : BaseQueryHandler, IRequestHandler<
         var pagedCourseMealsQuery = await
             EFPagedListFactory.FromSourceAsync(courseMealsQuery, request.Page, request.PageSize, 
                 cancellationToken);
-
-        return pagedCourseMealsQuery.ToMetadataObject();
+        var courseMeals = pagedCourseMealsQuery.ToMetadataObject(); 
+        foreach (var courseMealDto in courseMeals.Items)
+        {
+            courseMealDto.CharacteristicsSum =
+                await courseMealCharacteristics.CountCourseMealCharacteristicsSum(courseMealDto, cancellationToken);
+        }
+        return courseMeals;
     }
 }

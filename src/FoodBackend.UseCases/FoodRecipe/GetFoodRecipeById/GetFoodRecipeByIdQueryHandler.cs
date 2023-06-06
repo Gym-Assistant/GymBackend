@@ -30,6 +30,6 @@ internal class GetFoodRecipeByIdQueryHandler : BaseQueryHandler, IRequestHandler
         var foodRecipe = await DbContext.FoodRecipes
             .ProjectTo<DetailFoodRecipeDto>(Mapper.ConfigurationProvider)
             .GetAsync(foodRecipe => foodRecipe.Id == request.FoodRecipeId, cancellationToken);
-        return foodRecipe with { CharacteristicsSum = await countRecipeCharacteristics.CountCharacteristics(foodRecipe, cancellationToken) };
+        return foodRecipe with { CharacteristicsSum = await countRecipeCharacteristics.CountRecipeCharacteristicSum(foodRecipe, cancellationToken) };
     }
 }

@@ -42,7 +42,7 @@ internal class GetAllFoodRecipeQueryHandler : BaseQueryHandler, IRequestHandler<
         foreach (var foodRecipeDto in foodRecipes.Items)
         {
             foodRecipeDto.CharacteristicsSum =
-                await countRecipeCharacteristics.CountCharacteristics(foodRecipeDto, cancellationToken);
+                await countRecipeCharacteristics.CountRecipeCharacteristicSum(foodRecipeDto, cancellationToken);
         }
         return foodRecipes;
     }

@@ -1,10 +1,6 @@
-﻿using System.Reflection;
-using AutoMapper;
-using FoodBackend.Domain.Foodstuffs;
+﻿using FoodBackend.Domain.Foodstuffs;
 using FoodBackend.UseCases.Common.Dtos;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Saritasa.Tools.EFCore;
 
 namespace FoodBackend.UseCases.FoodRecipe;
 
@@ -13,51 +9,20 @@ namespace FoodBackend.UseCases.FoodRecipe;
 /// </summary>
 public class CountRecipeCharacteristics : ICountRecipeCharacteristics
 {
-    private readonly ILoggedUserAccessor loggedUserAccessor;
-    private readonly IAppDbContext dbContext;
-    private readonly IMapper mapper;
+    private readonly ICreateCharacteristicsList createCharacteristicsList;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public CountRecipeCharacteristics(ILoggedUserAccessor loggedUserAccessor, IAppDbContext dbContext, IMapper mapper)
+    public CountRecipeCharacteristics(ICreateCharacteristicsList createCharacteristicsList)
     {
-        this.loggedUserAccessor = loggedUserAccessor;
-        this.dbContext = dbContext;
-        this.mapper = mapper;
+        this.createCharacteristicsList = createCharacteristicsList;
     }
     
     /// <inheritdoc />
-    public async Task<ICollection<FoodRecipeCharacteristicSumDto>> CountCharacteristics(DetailFoodRecipeDto foodRecipe, CancellationToken cancellationToken)
+    public async Task<ICollection<FoodCharacteristicSumDto>> CountRecipeCharacteristicSum(DetailFoodRecipeDto foodRecipe, CancellationToken cancellationToken)
     {
-        const double defaultWeight = 100.0;
-        var characteristicsSum = new List<FoodRecipeCharacteristicSumDto>();
-        foreach (var characteristic in typeof(FoodCharacteristicDefaults)
-                     .GetFields(BindingFlags.Public | BindingFlags.Static))
-        {
-            var defaultCharacteristicId = Guid.Parse($"{characteristic.GetValue(null)}");
-            var defaultCharacteristic = await dbContext.FoodCharacteristicTypes
-                .GetAsync(type => type.Id == defaultCharacteristicId, cancellationToken);
-            characteristicsSum.Add(new FoodRecipeCharacteristicSumDto
-            {
-                FoodCharacteristicType = mapper.Map<FoodCharacteristicTypeDto>(defaultCharacteristic),
-                CharacteristicSumValue = default
-            });
-        }
-        if (loggedUserAccessor.IsAuthenticated())
-        {
-            var userCharacteristics = await dbContext.FoodCharacteristicTypes
-                .Where(type => type.UserId == loggedUserAccessor.GetCurrentUserId())
-                .ToListAsync(cancellationToken);
-            foreach (var characteristic in userCharacteristics)
-            {
-                characteristicsSum.Add(new FoodRecipeCharacteristicSumDto
-                {
-                    FoodCharacteristicType = mapper.Map<FoodCharacteristicTypeDto>(characteristic),
-                    CharacteristicSumValue = default
-                });
-            }
-        }
+        var characteristicsSum = await createCharacteristicsList.CreateCharacteristics(cancellationToken);
         foreach (var ingredient in foodRecipe.Ingredients)
         {
             foreach (var characteristic in ingredient.FoodElementary.Characteristics)
@@ -70,7 +35,7 @@ public class CountRecipeCharacteristics : ICountRecipeCharacteristics
                     increasingCharacteristic = increasingCharacteristic with
                     {
                         CharacteristicSumValue = increasingCharacteristic.CharacteristicSumValue +
-                                                 characteristic.Value / defaultWeight * ingredient.ElementaryWeight
+                                                 characteristic.Value / FoodWeightDefaults.DefaultProductValueWeight * ingredient.ElementaryWeight
                     };
                     characteristicsSum.Add(increasingCharacteristic);
                 }

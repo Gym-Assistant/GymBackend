@@ -1,9 +1,9 @@
 ﻿namespace FoodBackend.UseCases.Common.Dtos;
 
 /// <summary>
-/// Food recipe characteristic sum DTO.
+/// Food characteristic sum DTO.
 /// </summary>
-public record FoodRecipeCharacteristicSumDto
+public record FoodCharacteristicSumDto
 {
     /// <summary>
     /// Food characteristic type.
@@ -11,7 +11,7 @@ public record FoodRecipeCharacteristicSumDto
     public FoodCharacteristicTypeDto FoodCharacteristicType { get; init; }
     
     /// <summary>
-    /// Food characteristic sum value in current recipe.
+    /// Food characteristic sum value.
     /// </summary>
     public double CharacteristicSumValue { get; init; }
 }

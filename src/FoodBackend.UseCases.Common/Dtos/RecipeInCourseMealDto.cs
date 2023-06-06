@@ -13,7 +13,7 @@ public record RecipeInCourseMealDto
     /// <summary>
     /// Food recipe.
     /// </summary>
-    public LightFoodRecipeDto FoodRecipe { get; init; }
+    public DetailFoodRecipeDto FoodRecipe { get; init; }
 
     /// <summary>
     /// Food recipe in course meal weight value.

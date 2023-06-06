@@ -14,14 +14,16 @@ namespace FoodBackend.UseCases.CourseMeal.GetCourseMealById;
 internal class GetCourseMealByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetCourseMealByIdQuery, DetailCourseMealDto>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
+    private readonly ICountCourseMealCharacteristics countCourseMealCharacteristics;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetCourseMealByIdQueryHandler(IMapper mapper, IAppDbContext dbContext,
-        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
+    public GetCourseMealByIdQueryHandler(IMapper mapper, IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor,
+        ICountCourseMealCharacteristics countCourseMealCharacteristics) : base(mapper, dbContext)
     {
         this.loggedUserAccessor = loggedUserAccessor;
+        this.countCourseMealCharacteristics = countCourseMealCharacteristics;
     }
 
     /// <inheritdoc/>
@@ -32,7 +34,7 @@ internal class GetCourseMealByIdQueryHandler : BaseQueryHandler, IRequestHandler
             .ProjectTo<DetailCourseMealDto>(Mapper.ConfigurationProvider)
             .GetAsync(courseMeal => courseMeal.Id == request.CourseMealId,
                 cancellationToken);
-
-        return courseMeal;
+        return courseMeal with { CharacteristicsSum = await countCourseMealCharacteristics
+            .CountCourseMealCharacteristicsSum(courseMeal, cancellationToken) };
     }
 }

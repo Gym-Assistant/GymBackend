@@ -24,6 +24,11 @@ public record DetailCourseMealDto
     /// Consumed food recipes.
     /// </summary>
     public ICollection<RecipeInCourseMealDto> ConsumedRecipes { get; init; }
+    
+    /// <summary>
+    /// Course meal food characteristics sum values.
+    /// </summary>
+    public ICollection<FoodCharacteristicSumDto> CharacteristicsSum { get; set; }
 
     /// <summary>
     /// Time when meal was created.
