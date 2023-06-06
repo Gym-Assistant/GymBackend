@@ -12,27 +12,29 @@ namespace FoodBackend.UseCases.CourseMeal.GetAllCourseMealDay;
 /// <summary>
 /// Get all course meal day query handler.
 /// </summary>
-internal class GetAllCourseMealDayQueryHandler : BaseQueryHandler, IRequestHandler<GetAllCourseMealDayQuery, PagedListMetadataDto<LightCourseMealDayDto>>
+internal class GetAllCourseMealDayQueryHandler : BaseQueryHandler, IRequestHandler<GetAllCourseMealDayQuery, PagedListMetadataDto<DetailCourseMealDayDto>>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
+    private readonly ICountCourseMealDayCharacteristics countCourseMealDayCharacteristics;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetAllCourseMealDayQueryHandler(IMapper mapper, IAppDbContext dbContext,
-        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
+    public GetAllCourseMealDayQueryHandler(IMapper mapper, IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor,
+        ICountCourseMealDayCharacteristics countCourseMealDayCharacteristics) : base(mapper, dbContext)
     {
         this.loggedUserAccessor = loggedUserAccessor;
+        this.countCourseMealDayCharacteristics = countCourseMealDayCharacteristics;
     }
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public async Task<PagedListMetadataDto<LightCourseMealDayDto>> Handle(GetAllCourseMealDayQuery request, CancellationToken cancellationToken)
+    public async Task<PagedListMetadataDto<DetailCourseMealDayDto>> Handle(GetAllCourseMealDayQuery request, CancellationToken cancellationToken)
     {
         var courseMealDaysQuery = DbContext.CourseMealDays
             .Where(mealDay => mealDay.UserId == loggedUserAccessor.GetCurrentUserId())
-            .ProjectTo<LightCourseMealDayDto>(Mapper.ConfigurationProvider);
+            .ProjectTo<DetailCourseMealDayDto>(Mapper.ConfigurationProvider);
         if (request.CourseMealDayDate != null)
         {
             courseMealDaysQuery = courseMealDaysQuery.Where(courseMealDay => courseMealDay.CourseMealDate == request.CourseMealDayDate);
@@ -40,7 +42,12 @@ internal class GetAllCourseMealDayQueryHandler : BaseQueryHandler, IRequestHandl
         var pagedCourseMealDaysQuery = await
             EFPagedListFactory.FromSourceAsync(courseMealDaysQuery, request.Page, request.PageSize, 
                 cancellationToken);
-
-        return pagedCourseMealDaysQuery.ToMetadataObject();
+        var courseMealDays = pagedCourseMealDaysQuery.ToMetadataObject(); 
+        foreach (var courseMealDayDto in courseMealDays.Items)
+        {
+            courseMealDayDto.CharacteristicsSum =
+                await countCourseMealDayCharacteristics.CountCourseMealDayCharacteristicsSum(courseMealDayDto, cancellationToken);
+        }
+        return courseMealDays;
     }
 }

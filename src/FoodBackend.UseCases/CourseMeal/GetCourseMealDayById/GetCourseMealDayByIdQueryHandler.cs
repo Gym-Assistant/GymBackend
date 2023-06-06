@@ -11,28 +11,30 @@ namespace FoodBackend.UseCases.CourseMeal.GetCourseMealDayById;
 /// <summary>
 /// Get course meal day by id query.
 /// </summary>
-internal class GetCourseMealDayByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetCourseMealDayByIdQuery, LightCourseMealDayDto>
+internal class GetCourseMealDayByIdQueryHandler : BaseQueryHandler, IRequestHandler<GetCourseMealDayByIdQuery, DetailCourseMealDayDto>
 {
     private readonly ILoggedUserAccessor loggedUserAccessor;
+    private readonly ICountCourseMealDayCharacteristics countCourseMealDayCharacteristics;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetCourseMealDayByIdQueryHandler(IMapper mapper, IAppDbContext dbContext,
-        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
+    public GetCourseMealDayByIdQueryHandler(IMapper mapper, IAppDbContext dbContext, ILoggedUserAccessor loggedUserAccessor,
+        ICountCourseMealDayCharacteristics countCourseMealDayCharacteristics) : base(mapper, dbContext)
     {
         this.loggedUserAccessor = loggedUserAccessor;
+        this.countCourseMealDayCharacteristics = countCourseMealDayCharacteristics;
     }
 
     /// <inheritdoc/>
-    public async Task<LightCourseMealDayDto> Handle(GetCourseMealDayByIdQuery request, CancellationToken cancellationToken)
+    public async Task<DetailCourseMealDayDto> Handle(GetCourseMealDayByIdQuery request, CancellationToken cancellationToken)
     {
         var courseMealDay = await DbContext.CourseMealDays
             .Where(meal => meal.UserId == loggedUserAccessor.GetCurrentUserId())
-            .ProjectTo<LightCourseMealDayDto>(Mapper.ConfigurationProvider)
+            .ProjectTo<DetailCourseMealDayDto>(Mapper.ConfigurationProvider)
             .GetAsync(mealDay => mealDay.Id == request.CourseMealDayId,
                 cancellationToken);
-
-        return courseMealDay;
+        return courseMealDay with { CharacteristicsSum = await countCourseMealDayCharacteristics
+            .CountCourseMealDayCharacteristicsSum(courseMealDay, cancellationToken)};
     }
 }

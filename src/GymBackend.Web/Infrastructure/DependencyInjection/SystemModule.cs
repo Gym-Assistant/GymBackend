@@ -32,5 +32,6 @@ internal static class SystemModule
         services.AddScoped<ICreateCharacteristicsList, CreateCharacteristicsList>();
         services.AddScoped<ICountRecipeCharacteristics, CountRecipeCharacteristics>();
         services.AddScoped<ICountCourseMealCharacteristics, CountCourseMealCharacteristics>();
+        services.AddScoped<ICountCourseMealDayCharacteristics, CountCourseMealDayCharacteristics>();
     }
 }
