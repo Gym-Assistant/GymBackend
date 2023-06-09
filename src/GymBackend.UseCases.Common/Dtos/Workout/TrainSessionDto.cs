@@ -46,9 +46,6 @@ public record TrainSessionDto
     public Guid? CreatedById { get; set; }
 
     /// <inheritdoc />
-    public Domain.Users.User CreatedBy { get; set; }
-
-    /// <inheritdoc />
     public DateTimeOffset CreatedAt { get; set; }
 
     /// <inheritdoc />

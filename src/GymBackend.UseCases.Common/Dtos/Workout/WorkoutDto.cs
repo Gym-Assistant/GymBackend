@@ -6,7 +6,7 @@ namespace GymBackend.UseCases.Common.Dtos.Workout;
 /// <summary>
 /// Workout dto.
 /// </summary>
-public record WorkoutDto : ICreatableNullable, IUpdatable
+public record WorkoutDto
 {
     /// <summary>
     /// Id.
@@ -37,9 +37,6 @@ public record WorkoutDto : ICreatableNullable, IUpdatable
 
     /// <inheritdoc />
     public Guid? CreatedById { get; set; }
-
-    /// <inheritdoc />
-    public Domain.Users.User CreatedBy { get; set; }
 
     /// <inheritdoc />
     public DateTimeOffset CreatedAt { get; set; }
