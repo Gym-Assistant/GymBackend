@@ -1,34 +1,51 @@
-﻿using GymBackend.Domain.Workouts;
+﻿using Gym.Domain.Meta;
+using GymBackend.Domain.Workouts;
 
 namespace GymBackend.UseCases.Common.Dtos.Workout;
 
 /// <summary>
 /// Workout dto.
 /// </summary>
-public record WorkoutDto
+public record WorkoutDto : ICreatableNullable, IUpdatable
 {
     /// <summary>
     /// Id.
     /// </summary>
-    public Guid Id { get; init; }
-
-    /// <summary>
-    /// Exercises.
-    /// </summary>
-    public ICollection<LightExerciseDto> Exercises { get; init; }
+    public Guid Id { get; set; }
 
     /// <summary>
     /// Train session in this workout.
     /// </summary>
-    public ICollection<TrainSessionDto> TrainSessions { get; init; }
+    public ICollection<TrainSession> TrainSessions { get; set; } = new List<TrainSession>();
 
     /// <summary>
-    /// User Id.
+    /// Started at.
     /// </summary>
-    public Guid CreatedById { get; init; }
+    public DateTimeOffset? StartedAt { get; set; }
 
     /// <summary>
-    /// Created At.
+    /// Ended at.
     /// </summary>
-    public DateTime CreatedAt { get; init; }
+    public DateTimeOffset? EndedAt { get; set; }
+
+    /// <summary>
+    /// Workout type.
+    /// </summary>
+    public WorkoutType WorkoutType { get; set; }
+
+    #region Metadata
+
+    /// <inheritdoc />
+    public Guid? CreatedById { get; set; }
+
+    /// <inheritdoc />
+    public Domain.Users.User CreatedBy { get; set; }
+
+    /// <inheritdoc />
+    public DateTimeOffset CreatedAt { get; set; }
+
+    /// <inheritdoc />
+    public DateTimeOffset UpdatedAt { get; set; }
+
+    #endregion
 }

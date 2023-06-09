@@ -38,7 +38,7 @@ public class WorkoutController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Paged list workout.</returns>
     [HttpGet]
-    public async Task<PagedListMetadataDto<LightWorkoutDto>> GetWorkouts([FromQuery] GetAllWorkoutsQuery query, CancellationToken cancellationToken)
+    public async Task<IEnumerable<WorkoutDto>> GetWorkouts([FromQuery] GetAllWorkoutsQuery query, CancellationToken cancellationToken)
     {
         query = query with { UserId = loggedUserAccessor.GetCurrentUserId() };
         return await mediator.Send(query, cancellationToken);

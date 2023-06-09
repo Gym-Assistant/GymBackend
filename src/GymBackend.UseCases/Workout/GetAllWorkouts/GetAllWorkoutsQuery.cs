@@ -8,7 +8,7 @@ namespace GymBackend.UseCases.Workout.GetAllWorkouts;
 /// <summary>
 /// Get all workouts query.
 /// </summary>
-public record GetAllWorkoutsQuery : PageQueryFilter, IRequest<PagedListMetadataDto<LightWorkoutDto>>
+public record GetAllWorkoutsQuery : PageQueryFilter, IRequest<IEnumerable<WorkoutDto>>
 {
     /// <summary>
     /// User id.

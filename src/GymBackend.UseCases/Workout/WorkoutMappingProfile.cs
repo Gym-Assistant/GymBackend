@@ -17,7 +17,7 @@ public class WorkoutMappingProfile : Profile
         // Entity -> Dto.
         CreateMap<Domain.Workouts.Workout, WorkoutDto>();
         CreateMap<Domain.Workouts.Workout, LightWorkoutDto>();
-        CreateMap<Set, SetsDto>();
+        CreateMap<Set, SetDto>();
         CreateMap<TrainSession, TrainSessionDto>();
     }
 }
