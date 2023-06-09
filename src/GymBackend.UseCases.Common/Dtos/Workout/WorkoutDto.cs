@@ -16,7 +16,7 @@ public record WorkoutDto
     /// <summary>
     /// Train session in this workout.
     /// </summary>
-    public ICollection<TrainSession> TrainSessions { get; set; } = new List<TrainSession>();
+    public ICollection<TrainSessionDto> TrainSessions { get; set; } = new List<TrainSessionDto>();
 
     /// <summary>
     /// Started at.

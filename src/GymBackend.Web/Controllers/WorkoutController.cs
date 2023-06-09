@@ -51,7 +51,7 @@ public class WorkoutController : ControllerBase
     /// <param name="command">Command.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPut]
-    public async Task UploadWorkouts([FromForm] AddWorkoutsCommand command, CancellationToken cancellationToken)
+    public async Task UploadWorkouts([FromBody] AddWorkoutsCommand command, CancellationToken cancellationToken)
     {
         await mediator.Send(command, CancellationToken.None);
     }
