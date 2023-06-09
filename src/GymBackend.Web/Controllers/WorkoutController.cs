@@ -1,5 +1,6 @@
 ﻿using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.Dtos.Workout;
+using GymBackend.UseCases.Workout.AddWorkouts;
 using GymBackend.UseCases.Workout.GetAllWorkouts;
 using GymBackend.UseCases.Workout.GetWorkoutById;
 using GymBackend.UseCases.Workout.RemoveWorkout;
@@ -42,6 +43,17 @@ public class WorkoutController : ControllerBase
     {
         query = query with { UserId = loggedUserAccessor.GetCurrentUserId() };
         return await mediator.Send(query, cancellationToken);
+    }
+
+    /// <summary>
+    /// Upload (Add or Update) workouts.
+    /// </summary>
+    /// <param name="command">Command.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPut]
+    public async Task UploadWorkouts([FromForm] AddWorkoutsCommand command, CancellationToken cancellationToken)
+    {
+        await mediator.Send(command, CancellationToken.None);
     }
 
     /// <summary>
