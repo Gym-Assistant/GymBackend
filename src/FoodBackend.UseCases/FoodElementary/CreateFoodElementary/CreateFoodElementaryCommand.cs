@@ -32,5 +32,5 @@ public record CreateFoodElementaryCommand : IRequest<Guid>
     /// <summary>
     /// Food elementary calories characteristic value.
     /// </summary>
-    public double CaloriesValue { get; init; }
+    public double EmptyCaloriesValue { get; init; }
 }

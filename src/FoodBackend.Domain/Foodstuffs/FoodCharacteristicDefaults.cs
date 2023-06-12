@@ -19,6 +19,11 @@ public static class FoodCharacteristicDefaults
     /// Carbohydrate characteristic type id.
     /// </summary>
     public static readonly Guid CarbohydrateId = Guid.Parse("e3c6d689-4f63-44ff-8844-5bd11e4ed5af");
+    
+    /// <summary>
+    /// Calories characteristic type id.
+    /// </summary>
+    public static readonly Guid EmptyCaloriesId = Guid.Parse("9fe9959f-7c51-479e-8138-43950064712e");
 
     /// <summary>
     /// Calories characteristic type id.
