@@ -8,6 +8,4 @@ namespace FoodBackend.UseCases.FoodCharacteristic.GetAllFoodCharacteristicTypes;
 /// <summary>
 /// Get all food characteristic types query.
 /// </summary>
-/// <param name="UserId">Filter characteristic types for current user.</param>
-public record GetAllFoodCharacteristicTypesQuery(Guid? UserId) : 
-    PageQueryFilter, IRequest<PagedListMetadataDto<FoodCharacteristicTypeDto>>;
+public record GetAllFoodCharacteristicTypesQuery(string? SearchBy) : PageQueryFilter, IRequest<PagedListMetadataDto<FoodCharacteristicTypeDto>>;

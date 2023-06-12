@@ -8,4 +8,4 @@ namespace FoodBackend.UseCases.FoodRecipe.GetAllFoodRecipe;
 /// <summary>
 /// Get all food recipe with detail information query.
 /// </summary>
-public record GetAllFoodRecipeQuery(Guid? UserId) : PageQueryFilter, IRequest<PagedListMetadataDto<DetailFoodRecipeDto>>;
+public record GetAllFoodRecipeQuery(string? SearchBy) : PageQueryFilter, IRequest<PagedListMetadataDto<DetailFoodRecipeDto>>;

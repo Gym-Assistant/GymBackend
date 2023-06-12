@@ -17,6 +17,7 @@ namespace GymBackend.Web.Controllers;
 [ApiController]
 [Route("api/foodcharacteristictype")]
 [ApiExplorerSettings(GroupName = "FoodCharacteristicType")]
+[Authorize]
 public class FoodCharacteristicTypeController : ControllerBase
 {
     private readonly IMediator mediator;
@@ -58,7 +59,6 @@ public class FoodCharacteristicTypeController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Id of created food characteristic type.</returns>
     [HttpPost]
-    [Authorize]
     public async Task<Guid> CreateFoodCharacteristicType(
         CreateFoodCharacteristicTypeCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
@@ -70,7 +70,6 @@ public class FoodCharacteristicTypeController : ControllerBase
     /// <param name="command">Command.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPut("{foodCharacteristicTypeId}")]
-    [Authorize]
     public async Task EditFoodCharacteristicType(Guid foodCharacteristicTypeId,
         EditFoodCharacteristicTypeCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { FoodCharacteristicTypeId = foodCharacteristicTypeId }, cancellationToken);
@@ -81,7 +80,6 @@ public class FoodCharacteristicTypeController : ControllerBase
     /// <param name="foodCharacteristicTypeId">Food characteristic type id.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpDelete("{foodCharacteristicTypeId}")]
-    [Authorize]
     public async Task RemoveFoodCharacteristicTypeById(Guid foodCharacteristicTypeId, CancellationToken cancellationToken) =>
         await mediator.Send(new RemoveFoodCharacteristicTypeByIdCommand(foodCharacteristicTypeId), cancellationToken);
 }

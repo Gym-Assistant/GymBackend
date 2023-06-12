@@ -17,6 +17,7 @@ namespace GymBackend.Web.Controllers;
 [ApiController]
 [Route("api/mealtype")]
 [ApiExplorerSettings(GroupName = "MealTypes")]
+[Authorize]
 public class MealTypeController : ControllerBase
 {
     private readonly IMediator mediator;
@@ -56,7 +57,6 @@ public class MealTypeController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns></returns>
     [HttpPost]
-    [Authorize]
     public async Task<Guid> CreateMealType(CreateMealTypeCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
 
@@ -67,7 +67,6 @@ public class MealTypeController : ControllerBase
     /// <param name="command">Command.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPut("{mealTypeId}")]
-    [Authorize]
     public async Task EditMealType(Guid mealTypeId, EditMealTypeCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { MealTypeId = mealTypeId }, cancellationToken);
 
@@ -77,7 +76,6 @@ public class MealTypeController : ControllerBase
     /// <param name="mealTypeId">Meal type id.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpDelete("{mealTypeId}")]
-    [Authorize]
     public async Task RemoveMealType(Guid mealTypeId, CancellationToken cancellationToken) =>
         await mediator.Send(new RemoveMealTypeByIdCommand(mealTypeId), cancellationToken);
 }

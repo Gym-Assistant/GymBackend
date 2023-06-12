@@ -21,6 +21,11 @@ public record DetailFoodElementaryDto
     public Guid? UserId { get; init; }
     
     /// <summary>
+    /// Is food elementary default statement.
+    /// </summary>
+    public bool IsDefault { get; init; }
+    
+    /// <summary>
     /// Food elementary characteristics.
     /// </summary>
     public ICollection<DetailFoodCharacteristicDto> Characteristics { get; init; }
