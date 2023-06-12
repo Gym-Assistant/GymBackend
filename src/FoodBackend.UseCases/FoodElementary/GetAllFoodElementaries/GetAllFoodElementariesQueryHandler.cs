@@ -15,25 +15,37 @@ namespace FoodBackend.UseCases.FoodElementary.GetAllFoodElementaries;
 internal class GetAllFoodElementariesQueryHandler : BaseQueryHandler, 
     IRequestHandler<GetAllFoodElementariesQuery, PagedListMetadataDto<DetailFoodElementaryDto>>
 {
+    private readonly ILoggedUserAccessor loggedUserAccessor;
+
     /// <summary>
     /// Constructor.
     /// </summary>
-    public GetAllFoodElementariesQueryHandler(IAppDbContext dbContext, IMapper mapper) : base(mapper, dbContext)
+    public GetAllFoodElementariesQueryHandler(IAppDbContext dbContext, IMapper mapper,
+        ILoggedUserAccessor loggedUserAccessor) : base(mapper, dbContext)
     {
+        this.loggedUserAccessor = loggedUserAccessor;
     }
     
     /// <inheritdoc/>
     public async Task<PagedListMetadataDto<DetailFoodElementaryDto>> Handle(GetAllFoodElementariesQuery request, CancellationToken cancellationToken)
     {
-        var foodsQuery = DbContext.FoodElementaries
-            .ProjectTo<DetailFoodElementaryDto>(Mapper.ConfigurationProvider);
-        if (request.UserId != null)
+        const bool isDefaultStatement = true;
+        var foodElementariesQuery = DbContext.FoodElementaries
+            .Where(dto => dto.IsDefault == isDefaultStatement);
+        if (loggedUserAccessor.IsAuthenticated())
         {
-            foodsQuery = foodsQuery.Where(foodElementary => foodElementary.UserId == request.UserId);
+            foodElementariesQuery = foodElementariesQuery.Union(DbContext.FoodElementaries
+                .Where(dto => dto.UserId == loggedUserAccessor.GetCurrentUserId()));
         }
+        if (request.SearchBy != null)
+        {
+            foodElementariesQuery = foodElementariesQuery
+                .Where(dto => dto.Name.ToLower().Contains(request.SearchBy.ToLower()));
+        }
+        var foodElementariesDtos = foodElementariesQuery
+            .ProjectTo<DetailFoodElementaryDto>(Mapper.ConfigurationProvider);
         var pagedFoodsQuery = await
-            EFPagedListFactory.FromSourceAsync(foodsQuery, request.Page, request.PageSize, cancellationToken);
-
+            EFPagedListFactory.FromSourceAsync(foodElementariesDtos, request.Page, request.PageSize, cancellationToken);
         return pagedFoodsQuery.ToMetadataObject();
     }
 }

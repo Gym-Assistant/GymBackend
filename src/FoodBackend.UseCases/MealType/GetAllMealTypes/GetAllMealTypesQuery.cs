@@ -8,5 +8,4 @@ namespace FoodBackend.UseCases.MealType.GetAllMealTypes;
 /// <summary>
 /// Get all meal types query.
 /// </summary>
-public record GetAllMealTypesQuery : 
-    PageQueryFilter, IRequest<PagedListMetadataDto<LightMealTypeDto>>;
+public record GetAllMealTypesQuery(string? SearchBy) : PageQueryFilter, IRequest<PagedListMetadataDto<LightMealTypeDto>>;

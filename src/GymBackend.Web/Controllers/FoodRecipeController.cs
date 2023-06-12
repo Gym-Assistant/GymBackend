@@ -20,6 +20,7 @@ namespace GymBackend.Web.Controllers;
 [ApiController]
 [Route("api/foodrecipe")]
 [ApiExplorerSettings(GroupName = "FoodRecipe")]
+[Authorize]
 public class FoodRecipeController
 {
     private readonly IMediator mediator;
@@ -60,7 +61,6 @@ public class FoodRecipeController
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Id of created food recipe.</returns>
     [HttpPost]
-    [Authorize]
     public async Task<Guid> CreateFoodRecipe(CreateFoodRecipeCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
 
@@ -71,7 +71,6 @@ public class FoodRecipeController
     /// <param name="command">Command.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPut("{foodRecipeId}")]
-    [Authorize]
     public async Task EditFoodRecipe(Guid foodRecipeId, EditFoodRecipeCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { Id = foodRecipeId }, cancellationToken);
 
@@ -81,7 +80,6 @@ public class FoodRecipeController
     /// <param name="foodRecipeId">Food recipe id.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpDelete("{foodRecipeId}")]
-    [Authorize]
     public async Task RemoveFoodRecipe(Guid foodRecipeId, CancellationToken cancellationToken) =>
         await mediator.Send(new RemoveFoodRecipeByIdCommand(foodRecipeId), cancellationToken);
 
@@ -93,7 +91,6 @@ public class FoodRecipeController
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPut("{foodRecipeId}/ingredients")]
     [ApiExplorerSettings(GroupName = "ChangeFoodRecipe")]
-    [Authorize]
     public async Task AddIngredientToFoodRecipe(Guid foodRecipeId, AddIngredientToRecipeCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { FoodRecipeId = foodRecipeId }, cancellationToken);
 
@@ -105,7 +102,6 @@ public class FoodRecipeController
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpDelete("{foodRecipeId}/ingredients/{foodElementaryId}")]
     [ApiExplorerSettings(GroupName = "ChangeFoodRecipe")]
-    [Authorize]
     public async Task RemoveIngredientFromFoodRecipe(Guid foodRecipeId, Guid foodElementaryId, CancellationToken cancellationToken)
         => await mediator.Send(new RemoveIngredientFromRecipeCommand(foodRecipeId, foodElementaryId), cancellationToken);
 
@@ -118,7 +114,6 @@ public class FoodRecipeController
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPut("{foodRecipeId}/ingredients/{foodElementaryId}")]
     [ApiExplorerSettings(GroupName = "ChangeFoodRecipe")]
-    [Authorize]
     public async Task ChangeElementaryWeightInFoodRecipe(Guid foodRecipeId, Guid foodElementaryId,
         ChangeElementaryWeightInRecipeCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command with { FoodRecipeId = foodRecipeId, FoodElementaryId = foodElementaryId},cancellationToken);

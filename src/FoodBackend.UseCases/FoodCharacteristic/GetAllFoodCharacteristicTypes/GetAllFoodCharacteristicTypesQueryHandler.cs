@@ -30,14 +30,12 @@ internal class GetAllFoodCharacteristicTypesQueryHandler : BaseQueryHandler,
     public async Task<PagedListMetadataDto<FoodCharacteristicTypeDto>> Handle(GetAllFoodCharacteristicTypesQuery request,
         CancellationToken cancellationToken)
     {
-        const bool isDefaultCharacteristicStatement = true;
+        const bool isDefaultStatement = true;
         var foodCharacteristicTypesQuery = DbContext.FoodCharacteristicTypes
-            .ProjectTo<FoodCharacteristicTypeDto>(Mapper.ConfigurationProvider)
-            .Where(foodCharacteristic => foodCharacteristic.IsDefault == isDefaultCharacteristicStatement);
+            .Where(foodCharacteristic => foodCharacteristic.IsDefault == isDefaultStatement);
         if (loggedUserAccessor.IsAuthenticated())
         {
             foodCharacteristicTypesQuery = foodCharacteristicTypesQuery.Union(DbContext.FoodCharacteristicTypes
-                .ProjectTo<FoodCharacteristicTypeDto>(Mapper.ConfigurationProvider)
                 .Where(foodCharacteristic => foodCharacteristic.UserId == loggedUserAccessor.GetCurrentUserId()));
         }
         if (request.SearchBy != null)
@@ -45,10 +43,11 @@ internal class GetAllFoodCharacteristicTypesQueryHandler : BaseQueryHandler,
             foodCharacteristicTypesQuery = foodCharacteristicTypesQuery
                 .Where(dto => dto.Name.ToLower().Contains(request.SearchBy.ToLower()));
         }
+        var foodCharacteristicsTypesDtos = foodCharacteristicTypesQuery
+            .ProjectTo<FoodCharacteristicTypeDto>(Mapper.ConfigurationProvider);
         var pagedFoodCharacteristicTypesQuery = await
-            EFPagedListFactory.FromSourceAsync(foodCharacteristicTypesQuery, request.Page, request.PageSize, 
+            EFPagedListFactory.FromSourceAsync(foodCharacteristicsTypesDtos, request.Page, request.PageSize, 
                 cancellationToken);
-
         return pagedFoodCharacteristicTypesQuery.ToMetadataObject();
     }
 }

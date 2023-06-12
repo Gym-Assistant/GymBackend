@@ -19,6 +19,11 @@ public record DetailFoodRecipeDto
     /// Id of user who created recipe.
     /// </summary>
     public Guid? UserId { get; init; }
+    
+    /// <summary>
+    /// Is food recipe default statement.
+    /// </summary>
+    public bool IsDefault { get; init; }
 
     /// <summary>
     /// Ingredients collection.
