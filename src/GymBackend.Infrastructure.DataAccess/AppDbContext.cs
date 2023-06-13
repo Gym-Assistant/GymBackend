@@ -181,6 +181,7 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, Guid>, IApp
             new FoodCharacteristicType { Id = FoodCharacteristicDefaults.ProteinId, IsDefault = true, Name = "Белки", UserId = null, CreatedBy = null },
             new FoodCharacteristicType { Id = FoodCharacteristicDefaults.FatId, IsDefault = true, Name = "Жиры", UserId = null, CreatedBy = null },
             new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CarbohydrateId, IsDefault = true, Name = "Углеводы", UserId = null, CreatedBy = null },
+            new FoodCharacteristicType { Id = FoodCharacteristicDefaults.EmptyCaloriesId, IsDefault = true, Name = "Пустые Калории", UserId = null, CreatedBy = null },
             new FoodCharacteristicType { Id = FoodCharacteristicDefaults.CaloriesId, IsDefault = true, Name = "Калории", UserId = null, CreatedBy = null }
         );
 
