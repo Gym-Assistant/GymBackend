@@ -1,4 +1,5 @@
 using AutoMapper;
+using GymBackend.Domain.Workouts;
 using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.BaseHandlers;
 using GymBackend.UseCases.Common.Dtos.Workout;
@@ -42,7 +43,7 @@ public class AddWorkoutsCommandHandler : BaseCommandHandler, IRequestHandler<Add
         if (existWorkout == null)
         {
             var domainWorkout = Mapper.Map<Domain.Workouts.Workout>(workoutDto);
-            domainWorkout.CreatedById = userId;
+            SetCreatedById(userId, domainWorkout);
             DbContext.Workouts.Add(domainWorkout);
             return;
         }
@@ -50,6 +51,28 @@ public class AddWorkoutsCommandHandler : BaseCommandHandler, IRequestHandler<Add
         if (existWorkout.UpdatedAt < workoutDto.UpdatedAt)
         {
             Mapper.Map(workoutDto, existWorkout);
+            SetCreatedById(userId, existWorkout);
+        }
+    }
+
+    private void SetCreatedById(Guid userId, Domain.Workouts.Workout workout)
+    {
+        workout.CreatedById = userId;
+
+        // Set to train sessions
+        var trainSessions = workout.TrainSessions ?? new List<TrainSession>();
+        foreach (var trainSession in trainSessions)
+        {
+            trainSession.CreatedById = userId;
+            DbContext.TrainSessions.Add(trainSession);
+
+            // Sets.
+            var sets = trainSession.Sets ?? new List<Set>();
+            foreach (var set in sets)
+            {
+                set.CreatedById = userId;
+                DbContext.Sets.Add(set);
+            }
         }
     }
 }
