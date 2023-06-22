@@ -9,4 +9,10 @@ namespace GymBackend.UseCases.Exercise.GetAllExercises;
 /// Get all exercises for specific user.
 /// </summary>
 /// <param name="UserId">User id.</param>
-public record GetAllExercisesQuery(Guid UserId) : PageQueryFilter, IRequest<IEnumerable<LightExerciseDto>>;
+public record GetAllExercisesQuery(Guid UserId) : PageQueryFilter, IRequest<IEnumerable<LightExerciseDto>>
+{
+    /// <summary>
+    /// After date time.
+    /// </summary>
+    public DateTimeOffset? LastSyncedDate { get; set; }
+}

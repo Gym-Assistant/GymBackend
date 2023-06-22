@@ -25,10 +25,16 @@ public class GetAllWorkoutsQueryHandler : BaseQueryHandler, IRequestHandler<GetA
     /// <inheritdoc />
     public async Task<IEnumerable<WorkoutDto>> Handle(GetAllWorkoutsQuery request, CancellationToken cancellationToken)
     {
-        var workouts = await DbContext.Workouts.Where(workout => workout.CreatedById == request.UserId)
-            .ProjectTo<WorkoutDto>(Mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
+        var workoutsQuery = DbContext.Workouts.Where(workout => workout.CreatedById == request.UserId)
+            .ProjectTo<WorkoutDto>(Mapper.ConfigurationProvider);
 
+        if (request.LastSyncedDate.HasValue)
+        {
+            workoutsQuery = workoutsQuery
+                .Where(workout => workout.UpdatedAt > request.LastSyncedDate);
+        }
+
+        var workouts = await workoutsQuery.ToListAsync(cancellationToken);
         return workouts;
     }
 }

@@ -38,7 +38,7 @@ public record TrainSessionDto
     /// <summary>
     /// Number in workout.
     /// </summary>
-    public int Number { get; internal set; }
+    public int Number { get; set; }
 
     #region Metadata
 

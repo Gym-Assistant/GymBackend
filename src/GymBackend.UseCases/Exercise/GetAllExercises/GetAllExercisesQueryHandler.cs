@@ -29,7 +29,13 @@ public class GetAllExercisesQueryHandler : BaseQueryHandler, IRequestHandler<Get
         var exersiceQuery = DbContext.Exercises
             .Where(exercise => exercise.CreatedById == request.UserId)
             .ProjectTo<LightExerciseDto>(Mapper.ConfigurationProvider);
-        
+
+        if (request.LastSyncedDate.HasValue)
+        {
+            exersiceQuery = exersiceQuery
+                .Where(workout => workout.UpdatedAt > request.LastSyncedDate);
+        }
+
         return await exersiceQuery.ToListAsync(cancellationToken);
     }
 }

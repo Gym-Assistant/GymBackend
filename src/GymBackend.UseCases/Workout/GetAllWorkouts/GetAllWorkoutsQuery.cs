@@ -14,4 +14,9 @@ public record GetAllWorkoutsQuery : PageQueryFilter, IRequest<IEnumerable<Workou
     /// User id.
     /// </summary>
     public Guid UserId { get; init; }
+
+    /// <summary>
+    /// After date time.
+    /// </summary>
+    public DateTimeOffset? LastSyncedDate { get; init; }
 }
