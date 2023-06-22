@@ -1,5 +1,6 @@
 ﻿using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.Dtos.Workout;
+using GymBackend.UseCases.Workout.AddWorkouts;
 using GymBackend.UseCases.Workout.GetAllWorkouts;
 using GymBackend.UseCases.Workout.GetWorkoutById;
 using GymBackend.UseCases.Workout.RemoveWorkout;
@@ -38,10 +39,21 @@ public class WorkoutController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Paged list workout.</returns>
     [HttpGet]
-    public async Task<PagedListMetadataDto<LightWorkoutDto>> GetWorkouts([FromQuery] GetAllWorkoutsQuery query, CancellationToken cancellationToken)
+    public async Task<IEnumerable<WorkoutDto>> GetWorkouts([FromQuery] GetAllWorkoutsQuery query, CancellationToken cancellationToken)
     {
         query = query with { UserId = loggedUserAccessor.GetCurrentUserId() };
         return await mediator.Send(query, cancellationToken);
+    }
+
+    /// <summary>
+    /// Upload (Add or Update) workouts.
+    /// </summary>
+    /// <param name="command">Command.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPut]
+    public async Task UploadWorkouts([FromBody] AddWorkoutsCommand command, CancellationToken cancellationToken)
+    {
+        await mediator.Send(command, CancellationToken.None);
     }
 
     /// <summary>

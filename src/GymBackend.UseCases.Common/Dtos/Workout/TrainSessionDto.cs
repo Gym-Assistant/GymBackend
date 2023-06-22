@@ -8,30 +8,48 @@ public record TrainSessionDto
     /// <summary>
     /// Id.
     /// </summary>
-    public Guid Id { get; init; }
+    public Guid Id { get; set; }
 
     /// <summary>
-    /// Related exercise.
+    /// Exercise Id.
     /// </summary>
-    public LightExerciseDto Exercise { get; init; }
+    public Guid ExerciseId { get; set; }
 
     /// <summary>
     /// Sets.
     /// </summary>
-    public ICollection<SetsDto> Sets { get; init; }
+    public ICollection<SetDto> Sets { get; set; } = new List<SetDto>();
 
     /// <summary>
     /// Workout Id.
     /// </summary>
-    public Guid WorkoutId { get; init; }
+    public Guid WorkoutId { get; set; }
 
     /// <summary>
-    /// Created At.
+    /// When train session started.
     /// </summary>
-    public DateTime CreatedAt { get; init; }
+    public DateTimeOffset? StartedAt { get; set; }
 
     /// <summary>
-    /// User Id.
+    /// When train session ended.
     /// </summary>
-    public Guid CreatedById { get; init; }
+    public DateTimeOffset? EndedAt { get; set; }
+
+    /// <summary>
+    /// Number in workout.
+    /// </summary>
+    public int Number { get; set; }
+
+    #region Metadata
+
+    /// <inheritdoc />
+    public Guid? CreatedById { get; set; }
+
+    /// <inheritdoc />
+    public DateTimeOffset CreatedAt { get; set; }
+
+    /// <inheritdoc />
+    public DateTimeOffset UpdatedAt { get; set; }
+
+    #endregion
 }

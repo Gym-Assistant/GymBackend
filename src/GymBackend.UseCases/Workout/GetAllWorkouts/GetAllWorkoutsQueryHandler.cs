@@ -4,15 +4,14 @@ using GymBackend.Infrastructure.Abstractions.Interfaces;
 using GymBackend.UseCases.Common.BaseHandlers;
 using GymBackend.UseCases.Common.Dtos.Workout;
 using MediatR;
-using Saritasa.Tools.Common.Pagination;
-using Saritasa.Tools.EFCore.Pagination;
+using Microsoft.EntityFrameworkCore;
 
 namespace GymBackend.UseCases.Workout.GetAllWorkouts;
 
 /// <summary>
 /// Handler for <see cref="GetAllWorkoutsQuery"/>.
 /// </summary>
-public class GetAllWorkoutsQueryHandler : BaseQueryHandler, IRequestHandler<GetAllWorkoutsQuery, PagedListMetadataDto<LightWorkoutDto>>
+public class GetAllWorkoutsQueryHandler : BaseQueryHandler, IRequestHandler<GetAllWorkoutsQuery, IEnumerable<WorkoutDto>>
 {
     /// <summary>
     /// Constructor.
@@ -24,12 +23,18 @@ public class GetAllWorkoutsQueryHandler : BaseQueryHandler, IRequestHandler<GetA
     }
 
     /// <inheritdoc />
-    public async Task<PagedListMetadataDto<LightWorkoutDto>> Handle(GetAllWorkoutsQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<WorkoutDto>> Handle(GetAllWorkoutsQuery request, CancellationToken cancellationToken)
     {
-        var workoutQuery = DbContext.Workouts.Where(workout => workout.CreatedById == request.UserId)
-            .ProjectTo<LightWorkoutDto>(Mapper.ConfigurationProvider);
+        var workoutsQuery = DbContext.Workouts.Where(workout => workout.CreatedById == request.UserId)
+            .ProjectTo<WorkoutDto>(Mapper.ConfigurationProvider);
 
-        var pagedWorkouts = await EFPagedListFactory.FromSourceAsync(workoutQuery, request.Page, request.PageSize, cancellationToken);
-        return pagedWorkouts.ToMetadataObject();
+        if (request.LastSyncedDate.HasValue)
+        {
+            workoutsQuery = workoutsQuery
+                .Where(workout => workout.UpdatedAt > request.LastSyncedDate);
+        }
+
+        var workouts = await workoutsQuery.ToListAsync(cancellationToken);
+        return workouts;
     }
 }

@@ -44,12 +44,12 @@ public record TrainSession : ICreatable, IUpdatable
     /// <summary>
     /// When train session started.
     /// </summary>
-    public DateTime? StartedAt { get; private set; }
+    public DateTimeOffset? StartedAt { get; private set; }
 
     /// <summary>
     /// When train session ended.
     /// </summary>
-    public DateTime? EndedAt { get; private set; }
+    public DateTimeOffset? EndedAt { get; private set; }
 
     /// <summary>
     /// Number in workout.

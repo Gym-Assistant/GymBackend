@@ -24,12 +24,12 @@ public record Workout : ICreatable, IUpdatable
     /// <summary>
     /// Started at.
     /// </summary>
-    public DateTime? StartedAt { get; private set; }
+    public DateTimeOffset? StartedAt { get; private set; }
 
     /// <summary>
     /// Ended at.
     /// </summary>
-    public DateTime? EndedAt { get; private set; }
+    public DateTimeOffset? EndedAt { get; private set; }
 
     /// <summary>
     /// Workout type.
